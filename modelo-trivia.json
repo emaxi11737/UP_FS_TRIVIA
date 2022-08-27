@@ -1,0 +1,169 @@
+// Sumar JWT para manejo de tokens
+{
+users: {
+    _id: string,
+    username: string,    
+    email: string,
+    password: string, //Hashed
+    createdAt: date,
+    updatedAt: date,
+    deletedAt: date
+},
+questionsCategories: {
+    _id: string,
+    name: string,
+    description: string,
+    createdAt: date,
+    updatedAt: date,
+    deletedAt: date
+},
+questions: {
+    _id: string,
+    description: string,    
+    questionCategoryId: string,
+    createdAt: date,
+    updatedAt: date,
+    deletedAt: date
+},
+
+//(opciones del juego)
+game: {
+    _id: string,
+    time: timestamp, //tiempo inicio juego - tiempo fin juego    
+    user: User,
+    questionsQuantity: number,
+    chances: number,
+    isWinner: boolean,
+    createdAt: date,
+    updatedAt: date
+},    
+answers: {
+    _id: string,
+    description: string,
+    isRight: boolean,
+    questionId: string,
+    createdAt: date,
+    updatedAt: date,
+    deletedAt: date
+}
+}
+
+// endpoints
+- users:
+- POST /users
+StatusCode: 201
+Body:
+{
+    username: string,    
+    email: string,
+    password: string,
+}
+
+// LOGIN
+- POST /login
+StatusCode: 200
+Body: {
+    email: string,
+    password: string,
+}
+
+//TOKEN
+- PATCH /users/{:id}
+StatusCode: 200
+body: 
+{
+    username: string, 
+    oldPassword: string,
+    newPassword: string,
+}
+
+- DELETE /users/{:id}
+StatusCode: 204
+body: {} //vacío porque ya estás logueado
+
+- POST /questionsCategories
+StatusCode: 201
+Body: {
+    name: string,
+    description: string,
+}
+
+- GET /questionsCategories
+StatusCode: 200
+
+- PATCH /questionsCategories/{:id}
+StatusCode: 200
+body: 
+{
+    name: string,
+    description: string,
+}
+
+- DELETE /questionsCategories/{:id}
+StatusCode: 204
+body: {} //vacío porque ya estás logueado
+
+- POST /questions
+StatusCode: 201
+Body: {
+    description: string,    
+    questionCategoryName: string,
+}
+
+- GET /questions //paginado
+StatusCode: 200
+
+- GET /questionsRandom?quantity=10&questionsCategories=[]
+StatusCode: 200
+
+- PATCH /questions/{:id}
+StatusCode: 200
+body: 
+{
+    description: string,    
+    questionCategoryName: string,
+}
+
+- DELETE /questions/{:id}
+StatusCode: 204
+body: {} //vacío porque ya estás logueado
+
+- POST /game
+StatusCode: 201
+Body: {
+    time: timestamp,
+    user: User,
+    questionsQuantity: number,
+    chances: number,
+}
+
+- PATCH /game/{:id}
+StatusCode: 200
+body: 
+{
+    time: timestamp,
+    isWinner: boolean
+}
+
+- POST /answers
+StatusCode: 201
+Body: {
+    description: string,
+    questionId: string,
+    isRight: boolean
+}
+
+- PATCH /answers/{:id}
+StatusCode: 200
+Body: {
+    description: string,
+    questionId: string,
+    isRight: boolean
+}
+
+- DELETE /answers/{:id}
+StatusCode: 204
+body: {} //vacío porque ya estás logueado
+
+- GET /answers //paginado
+StatusCode: 200

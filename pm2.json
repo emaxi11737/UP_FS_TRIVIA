@@ -1,0 +1,10 @@
+{
+    "apps": [
+        {
+            "name": "trivia-backend",
+            "script": "yarn",
+            "args": "start",
+            "interpreter": "none"
+        }
+    ]
+}

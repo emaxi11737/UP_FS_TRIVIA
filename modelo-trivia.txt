@@ -48,8 +48,9 @@ answers: {
 }
 }
 
-// endpoints
+// endpoints 
 - users:
+-------------------- OK ---------------------
 - POST /users
 StatusCode: 201
 Body:
@@ -59,8 +60,9 @@ Body:
     password: string,
 }
 
+-------------------- OK ---------------------
 // LOGIN
-- POST /login
+- POST /auth/signin
 StatusCode: 200
 Body: {
     email: string,

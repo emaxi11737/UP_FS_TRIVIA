@@ -17,7 +17,7 @@ export default class UserMongoDBRepository implements IUserRepository {
     }
 
     public async create(user: User): Promise<User> {
-        const userExist: any = await this.model.findOne({ username: user.username });
+        const userExist: any = await this.model.findOne({ email: user.email });
 
         if (userExist) throw Error("User exist");
 
@@ -28,11 +28,11 @@ export default class UserMongoDBRepository implements IUserRepository {
     }
 
     public async read(user: User): Promise<User> {
-        const userObject: any = await this.model.findOne({ username: user.username });
+        const userObject: any = await this.model.findOne({ email: user.email });
 
         if (!userObject) throw Error("User not found");
 
-        if (userObject.password !== user.password) throw Error("Invalid username or password");
+        if (userObject.password !== user.password) throw Error("Invalid email or password");
 
         return UserMongoDBMapper.toEntity(userObject);
     }

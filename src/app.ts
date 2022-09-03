@@ -76,12 +76,7 @@ class App {
 	}
 
 	private async setMongoConfig() {
-		await connect("mongodb://trivia-db:27017/trivia_db", {
-			useNewUrlParser: true,
-			useUnifiedTopology: true,
-			useFindAndModify: false,
-			useCreateIndex: true,
-		});
+		await connect("mongodb://trivia-db:27017/trivia_db");
 	}
 }
 

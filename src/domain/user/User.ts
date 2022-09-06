@@ -1,5 +1,6 @@
+import md5 from 'md5';
 import { ApiModel, ApiModelProperty } from 'swagger-express-ts';
-import { IsString, IsHash, IsEmail } from "class-validator";
+import { IsString, IsEmail, IsOptional, IsNotEmpty } from "class-validator";
 
 @ApiModel({
     name: "User"
@@ -14,17 +15,19 @@ export default class User {
 
     @ApiModelProperty({
         description: "Name of user",
-        required: true,
+        required: false,
     })
     @IsString()
+    @IsOptional()
     public username: string;
 
     @ApiModelProperty({
         description: "Password of user",
         required: true,
     })
+
     @IsString()
-    @IsHash("md5")
+    @IsNotEmpty()
     public password: string;
 
     @ApiModelProperty({
@@ -45,11 +48,17 @@ export default class User {
         createdAt: string,
         updatedAt: string,
     ) {
+        this.checkEmptyPassword(password);
+
         this.id = id;
         this.username = username;
-        this.password = password;
+        this.password = md5(password);
         this.email = email;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+    }
+
+    private checkEmptyPassword(password: string) {
+        if (!password) throw Error("Check password");
     }
 }

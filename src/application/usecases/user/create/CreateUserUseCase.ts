@@ -1,5 +1,4 @@
 import { validate } from "class-validator";
-import md5 from 'md5';
 import IUserDto from '@application/usecases/user/IUserDto';
 import ICreateUserUseCase from '@application/usecases/user/create/ICreateUserUseCase';
 import IUserRepository from '@application/repositories/IUserRepository';
@@ -14,8 +13,6 @@ export default class CreateUserUseCase implements ICreateUserUseCase {
     }
 
     public async create(userDto: IUserDto): Promise<IUserDto> {
-        userDto.password = md5(userDto.password || "");
-
         const userEntity = new User(
             userDto.id,
             userDto.username,
@@ -26,7 +23,6 @@ export default class CreateUserUseCase implements ICreateUserUseCase {
         );
 
         const errors = await validate(userEntity);
-
         if (errors.length > 0) throw Error("Please, check input params");
 
         return await this.userRepository.create(userEntity);

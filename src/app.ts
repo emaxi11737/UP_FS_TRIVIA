@@ -11,16 +11,24 @@ import { TYPES } from "@constants/types";
 
 // import all services
 import UserService from '@configuration/usecases/UserService';
+import QuestionService from '@configuration/usecases/QuestionService';
+import QuestionCategoryService from '@configuration/usecases/QuestionCategoryService';
 import AuthService from '@configuration/usecases/AuthService';
 
 // Import all repositories interfaces
 import IUserRepository from '@application/repositories/IUserRepository';
+import IQuestionRepository from '@application/repositories/IQuestionRepository';
+import IQuestionCategoryRepository from '@application/repositories/IQuestionCategoryRepository';
 
 // Import all repositories
 import UserMongoDBRepository from '@infraestructure/repositories/user/UserMongoDBRepository';
+import QuestionMongoDBRepository from '@infraestructure/repositories/question/QuestionMongoDBRepository';
+import QuestionCategoryMongoDBRepository from '@infraestructure/repositories/questioncategory/QuestionCategoryMongoDBRepository';
 
 // Import all controllers
 import "@entrypoint/controllers/UserController";
+import "@entrypoint/controllers/QuestionController";
+import "@entrypoint/controllers/QuestionCategoryController";
 import "@entrypoint/controllers/AuthController";
 
 class App {
@@ -41,7 +49,11 @@ class App {
 
 	private bindClassesInjection(): void {
 		this.container.bind<UserService>(TYPES.UserService).to(UserService);
+		this.container.bind<QuestionCategoryService>(TYPES.QuestionCategoryService).to(QuestionCategoryService);
+		this.container.bind<QuestionService>(TYPES.QuestionService).to(QuestionService);
 		this.container.bind<IUserRepository>(TYPES.IUserRepository).to(UserMongoDBRepository);
+		this.container.bind<IQuestionCategoryRepository>(TYPES.IQuestionCategoryRepository).to(QuestionCategoryMongoDBRepository);
+		this.container.bind<IQuestionRepository>(TYPES.IQuestionRepository).to(QuestionMongoDBRepository);
 		this.container.bind<AuthService>(TYPES.AuthService).to(AuthService);
 	}
 

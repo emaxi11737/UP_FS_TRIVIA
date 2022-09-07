@@ -4,12 +4,13 @@ import IQuestionRepository from '@application/repositories/IQuestionRepository';
 import Question from '@domain/question/Question';
 import QuestionPartial from '@domain/question/QuestionPatch';
 import QuestionMongoDBMapper from '@infraestructure/repositories/question/QuestionMongoDBMapper';
-import questionMongoDBModel from '@infraestructure/repositories/question/questionMongoDBModel';
+import questionMongoDBModel from '@infraestructure/repositories/question/QuestionMongoDBModel';
+import IQuestionMongoDB from '@infraestructure/repositories/question/IQuestionMongoDB';
 
 @injectable()
 export default class QuestionMongoDBRepository implements IQuestionRepository {
 
-    private model: Model<Document>;
+    private model: Model<IQuestionMongoDB>;
 
     constructor() {
         this.model = questionMongoDBModel;

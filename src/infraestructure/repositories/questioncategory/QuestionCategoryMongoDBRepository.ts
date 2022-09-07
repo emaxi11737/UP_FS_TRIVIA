@@ -4,12 +4,13 @@ import IQuestionCategoryRepository from '@application/repositories/IQuestionCate
 import QuestionCategory from '@domain/questioncategory/QuestionCategory';
 import QuestionCategoryPartial from '@domain/questioncategory/QuestionCategoryPatch';
 import QuestionCategoryMongoDBMapper from '@infraestructure/repositories/questioncategory/QuestionCategoryMongoDBMapper';
-import questionCategoryMongoDBModel from '@infraestructure/repositories/questioncategory/questionCategoryMongoDBModel';
+import questionCategoryMongoDBModel from '@infraestructure/repositories/questioncategory/QuestionCategoryMongoDBModel';
+import IQuestionCategoryMongoDB from './IQuestionCategoryMongoDB';
 
 @injectable()
 export default class QuestionCategoryMongoDBRepository implements IQuestionCategoryRepository {
 
-    private model: Model<Document>;
+    private model: Model<IQuestionCategoryMongoDB>;
 
     constructor() {
         this.model = questionCategoryMongoDBModel;

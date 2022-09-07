@@ -2,7 +2,7 @@ export default interface IQuestionDto {
     id: string;
     name: string;
     description: string;
-    questionCategoryId: number;
+    questionCategoryId: string;
     createdAt: string;
     updatedAt: string;
 }

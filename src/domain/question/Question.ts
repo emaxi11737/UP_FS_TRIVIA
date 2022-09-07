@@ -30,8 +30,8 @@ export default class Question {
         description: "Id of QuestionCategory ",
         required: true,
     })
-    @IsNumber()
-    public questionCategoryId: number;
+    @IsString()
+    public questionCategoryId: string;
 
     
 
@@ -42,7 +42,7 @@ export default class Question {
         id: string,
         name: string,
         description: string,
-        questionCategoryId: number,
+        questionCategoryId: string,
         createdAt: string,
         updatedAt: string
     ) {

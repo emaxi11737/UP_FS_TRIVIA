@@ -2,9 +2,9 @@ import mongoose from 'mongoose';
 
 const questionMongoDBSchema = new mongoose.Schema(
     {
-        username: String,
-        password: String,
-        email: String
+        name: String,
+        description: String,
+        questionCategoryId: String
     },
     {
         versionKey: false,

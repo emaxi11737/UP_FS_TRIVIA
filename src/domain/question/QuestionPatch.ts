@@ -32,14 +32,14 @@ export default class QuestionPatch {
         description: "Id of QuestionCategory ",
         required: true,
     })
-    @IsNumber()
-    public questionCategoryId: number;
+    @IsString()
+    public questionCategoryId: string;
 
     constructor(
         id: string,
         name: string,
         description: string,
-        questionCategoryId: number
+        questionCategoryId: string
     ) {
         this.id = id;
         this.name = name;

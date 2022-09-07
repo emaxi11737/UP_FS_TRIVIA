@@ -1,3 +1,4 @@
+import md5 from 'md5';
 import { validate } from "class-validator";
 import IUserDto from '@application/usecases/user/IUserDto';
 import ICreateUserUseCase from '@application/usecases/user/create/ICreateUserUseCase';
@@ -16,7 +17,7 @@ export default class CreateUserUseCase implements ICreateUserUseCase {
         const userEntity = new User(
             userDto.id,
             userDto.username,
-            userDto.password,
+            userDto.password && md5(userDto.password),
             userDto.email,
             userDto.createdAt,
             userDto.updatedAt,
@@ -24,6 +25,11 @@ export default class CreateUserUseCase implements ICreateUserUseCase {
 
         const errors = await validate(userEntity);
         if (errors.length > 0) throw Error("Please, check input params");
+
+        const userExist = await this.userRepository.readByEmail(userEntity.email)
+            .catch((error) => console.error(error));
+
+        if (!!userExist) throw Error("User exist");
 
         return await this.userRepository.create(userEntity);
     }

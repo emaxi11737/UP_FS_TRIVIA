@@ -1,3 +1,4 @@
+import md5 from 'md5';
 import { validate } from 'class-validator';
 import ISignInUseCase from '@application/usecases/user/signin/ISignInUseCase';
 import IUserDto from '@application/usecases/user/IUserDto';
@@ -16,7 +17,7 @@ export default class SignInUseCase implements ISignInUseCase {
         const userEntity = new User(
             userDto.id,
             userDto.username,
-            userDto.password,
+            userDto.password && md5(userDto.password),
             userDto.email,
             userDto.createdAt,
             userDto.updatedAt,
@@ -25,6 +26,9 @@ export default class SignInUseCase implements ISignInUseCase {
         const errors = await validate(userEntity);
         if (errors.length > 0) throw Error("Please, check input params");
 
-        return await this.userRepository.read(userEntity);
+        const user = await this.userRepository.readByEmail(userEntity.email);
+        if (user.password !== userEntity.password) throw Error("Invalid password");
+
+        return user;
     }
 }

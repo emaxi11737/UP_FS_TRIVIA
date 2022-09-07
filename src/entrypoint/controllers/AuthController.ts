@@ -14,7 +14,7 @@ import IUserDto from '@application/usecases/user/IUserDto';
 })
 @controller("/auth")
 export default class AuthController implements interfaces.Controller {
-    
+
     private readonly signInUseCase: ISignInUseCase;
 
     constructor(@inject(TYPES.AuthService) authService: AuthService) {
@@ -24,8 +24,8 @@ export default class AuthController implements interfaces.Controller {
     @ApiOperationPost({
         description: "Sign in user",
         path: "/signin",
-        parameters : {
-            body : { description : "Sign in", required : true, model : "User" }
+        parameters: {
+            body: { description: "Sign in", required: true, model: "User" }
         },
         responses: {
             200: { description: "Success", type: SwaggerDefinitionConstant.Response.Type.OBJECT, model: "User" },

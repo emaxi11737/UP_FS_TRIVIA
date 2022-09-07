@@ -1,5 +1,5 @@
 import { ApiModel, ApiModelProperty } from 'swagger-express-ts';
-import { IsString, IsEmail, Matches } from "class-validator";
+import { IsString, Matches, IsOptional, IsHash } from "class-validator";
 
 @ApiModel({
     name: "UserPatch"
@@ -15,17 +15,40 @@ export default class UserPatch {
     public id: string;
 
     @ApiModelProperty({
-        description: "Email of user",
-        required: true,
+        description: "Name of user",
+        required: false,
     })
-    @IsEmail()
-    public email: string;
+    @IsString()
+    @IsOptional()
+    public username?: string;
+
+    @ApiModelProperty({
+        description: "Old password of user",
+        required: false,
+    })
+    @IsString()
+    @IsOptional()
+    @IsHash("md5")
+    public oldPassword?: string;
+
+    @ApiModelProperty({
+        description: "New password of user",
+        required: false,
+    })
+    @IsString()
+    @IsOptional()
+    @IsHash("md5")
+    public newPassword?: string;
 
     constructor(
         id: string,
-        email: string,
+        username?: string,
+        oldPassword?: string,
+        newPassword?: string
     ) {
         this.id = id;
-        this.email = email;
+        this.username = username;
+        this.oldPassword = oldPassword;
+        this.newPassword = newPassword;
     }
 }

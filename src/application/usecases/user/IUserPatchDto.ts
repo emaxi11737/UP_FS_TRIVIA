@@ -1,4 +1,6 @@
 export default interface IUserPatchDto {
     id: string;
-    email: string;
+    username?: string;
+    oldPassword?: string,
+    newPassword?: string,
 }

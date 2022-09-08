@@ -5,5 +5,9 @@ export const TYPES = {
     AuthService: Symbol.for("AuthService"),
     IUserRepository: Symbol.for("IUserRepository"),
     IQuestionCategoryRepository: Symbol.for("IQuestionCategoryRepository"),
-    IQuestionRepository: Symbol.for("IQuestionRepository")
+    IQuestionRepository: Symbol.for("IQuestionRepository"),
+    IGameRepository: Symbol.for("IGameRepository"),
+    GameService: Symbol.for("GameService"),
+    AnswerService: Symbol.for("AnswerService"),
+    IAnswerRepository: Symbol.for("IAnswerRepository")
 };

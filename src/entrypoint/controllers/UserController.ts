@@ -87,7 +87,7 @@ export default class UserController implements interfaces.Controller {
             },
         },
         responses: {
-            200: { description: "Success", type: SwaggerDefinitionConstant.Response.Type.ARRAY, model: "User" },
+            204: { description: "Success", type: SwaggerDefinitionConstant.Response.Type.ARRAY, model: "User" },
             400: { description: "Error", type: SwaggerDefinitionConstant.Response.Type.ARRAY }
         },
     })

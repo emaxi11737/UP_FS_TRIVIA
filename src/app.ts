@@ -14,22 +14,30 @@ import UserService from '@configuration/usecases/UserService';
 import QuestionService from '@configuration/usecases/QuestionService';
 import QuestionCategoryService from '@configuration/usecases/QuestionCategoryService';
 import AuthService from '@configuration/usecases/AuthService';
+import GameService from '@configuration/usecases/GameService';
+import AnswerService from "@configuration/usecases/AnswerService";
 
 // Import all repositories interfaces
 import IUserRepository from '@application/repositories/IUserRepository';
 import IQuestionRepository from '@application/repositories/IQuestionRepository';
 import IQuestionCategoryRepository from '@application/repositories/IQuestionCategoryRepository';
+import IGameRepository from '@application/repositories/IGameRepository';
+import IAnswerRepository from "@application/repositories/IAnswerRepository";
 
 // Import all repositories
 import UserMongoDBRepository from '@infraestructure/repositories/user/UserMongoDBRepository';
 import QuestionMongoDBRepository from '@infraestructure/repositories/question/QuestionMongoDBRepository';
 import QuestionCategoryMongoDBRepository from '@infraestructure/repositories/questioncategory/QuestionCategoryMongoDBRepository';
+import GameMongoDBRepository from '@infraestructure/repositories/game/GameMongoDBRepository';
+import AnswerMongoDBRepository from "@infraestructure/repositories/answer/AnswerMongoDBRepository";
 
 // Import all controllers
 import "@entrypoint/controllers/UserController";
 import "@entrypoint/controllers/QuestionController";
 import "@entrypoint/controllers/QuestionCategoryController";
 import "@entrypoint/controllers/AuthController";
+import "@entrypoint/controllers/GameController";
+import "@entrypoint/controllers/AnswerController";
 
 class App {
 	private container: Container;
@@ -55,6 +63,10 @@ class App {
 		this.container.bind<IQuestionCategoryRepository>(TYPES.IQuestionCategoryRepository).to(QuestionCategoryMongoDBRepository);
 		this.container.bind<IQuestionRepository>(TYPES.IQuestionRepository).to(QuestionMongoDBRepository);
 		this.container.bind<AuthService>(TYPES.AuthService).to(AuthService);
+		this.container.bind<GameService>(TYPES.GameService).to(GameService);
+		this.container.bind<IGameRepository>(TYPES.IGameRepository).to(GameMongoDBRepository);
+		this.container.bind<AnswerService>(TYPES.AnswerService).to(AnswerService);
+		this.container.bind<IAnswerRepository>(TYPES.IAnswerRepository).to(AnswerMongoDBRepository);
 	}
 
 	private initServer(): void {

@@ -4,6 +4,7 @@ const QuestionCategoryMongoDBSchema = new mongoose.Schema(
     {
         name: String,
         description: String,
+        deletedAt: Date
     },
     {
         versionKey: false,

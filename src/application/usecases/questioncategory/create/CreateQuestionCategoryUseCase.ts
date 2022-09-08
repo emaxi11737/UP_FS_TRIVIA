@@ -20,6 +20,7 @@ export default class CreateQuestionCategoryUseCase implements ICreateQuestionCat
             questionCategoryDto.description,
             questionCategoryDto.createdAt,
             questionCategoryDto.updatedAt,
+            questionCategoryDto.deletedAt
         );
 
         const errors = await validate(questionCategoryEntity);

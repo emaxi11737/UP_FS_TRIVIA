@@ -28,20 +28,23 @@ export default class QuestionCategory {
 
     
 
-    public createdAt: string;
-    public updatedAt: string;
+    public createdAt: Date;
+    public updatedAt: Date;
+    deletedAt: Date | null;
 
     constructor(
         id: string,
         name: string,
         description: string,
-        createdAt: string,
-        updatedAt: string,
+        createdAt: Date,
+        updatedAt: Date,
+        deletedAt: Date | null
     ) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.deletedAt = deletedAt;
     }
 }

@@ -1,7 +1,7 @@
 import * as express from "express";
 import { inject } from "inversify";
-import { controller, httpPost, interfaces, request, response, requestParam, httpPatch } from "inversify-express-utils";
-import { ApiPath, ApiOperationPost, SwaggerDefinitionConstant, ApiOperationPatch } from 'swagger-express-ts';
+import { controller, httpPost, interfaces, request, response, requestParam, httpPatch, httpDelete } from "inversify-express-utils";
+import { ApiPath, ApiOperationPost, SwaggerDefinitionConstant, ApiOperationPatch, ApiOperationDelete } from 'swagger-express-ts';
 import { TYPES } from "@constants/types";
 import ResponseObject from '@helpers/ResponseObject';
 import ICreateQuestionCategoryUseCase from '@application/usecases/questioncategory/create/ICreateQuestionCategoryUseCase';
@@ -9,6 +9,7 @@ import IUpdateQuestionCategoryUseCase from '@application/usecases/questioncatego
 import QuestionCategoryService from '@configuration/usecases/QuestionCategoryService';
 import IQuestionCategoryDto from '@application/usecases/questioncategory/IQuestionCategoryDto';
 import IQuestionCategoryPatchDto from '@application/usecases/questioncategory/IQuestionCategoryPatchDto';
+import IDeleteQuestionCategoryUseCase from "@application/usecases/questioncategory/delete/IDeleteQuestionCategoryUseCase";
 
 @ApiPath({
     path: "/questioncategories",
@@ -18,10 +19,12 @@ import IQuestionCategoryPatchDto from '@application/usecases/questioncategory/IQ
 export default class QuestionCategoryController implements interfaces.Controller {
     private readonly createQuestionCategoryUseCase: ICreateQuestionCategoryUseCase;
     private readonly updateQuestionCategoryUseCase: IUpdateQuestionCategoryUseCase;
+    private readonly deleteQuestionCategoryUseCase: IDeleteQuestionCategoryUseCase;
 
     constructor(@inject(TYPES.QuestionCategoryService) questionCategoryService: QuestionCategoryService) {
         this.createQuestionCategoryUseCase = questionCategoryService.getCreateQuestionCategoryUseCase();
         this.updateQuestionCategoryUseCase = questionCategoryService.getUpdateQuestionCategoryUseCase();
+        this.deleteQuestionCategoryUseCase = questionCategoryService.getDeleteQuestionCategoryUseCase();
     }
 
     @ApiOperationPost({
@@ -62,12 +65,36 @@ export default class QuestionCategoryController implements interfaces.Controller
         },
     })
     @httpPatch("/:id")
-    public async updatePartial(@requestParam("id") id: string, @request() req: express.Request, @response() res: express.Response) {
+    public async update(@requestParam("id") id: string, @request() req: express.Request, @response() res: express.Response) {
         let questionCategoryPatchDto: IQuestionCategoryPatchDto = req.body;
         questionCategoryPatchDto.id = id;
 
         return this.updateQuestionCategoryUseCase.updatePartial(questionCategoryPatchDto)
             .then((questionCategory: IQuestionCategoryDto) => res.status(200).json(ResponseObject.makeSuccessResponse(questionCategory)))
+            .catch((err: Error) => res.status(400).json(ResponseObject.makeErrorResponse("400", err)));
+    }
+
+    @ApiOperationDelete({
+        description: "Delete question category object",
+        path: "/{id}",
+        parameters: {
+            path: {
+                id: {
+                    description: "Id of question category",
+                    type: SwaggerDefinitionConstant.Parameter.Type.STRING,
+                    required: true
+                }
+            },
+        },
+        responses: {
+            200: { description: "Success", type: SwaggerDefinitionConstant.Response.Type.ARRAY, model: "QuestionCategory" },
+            400: { description: "Error", type: SwaggerDefinitionConstant.Response.Type.ARRAY }
+        },
+    })
+    @httpDelete("/:id")
+    public async delete(@requestParam("id") id: string, @request() req: express.Request, @response() res: express.Response) {
+        return this.deleteQuestionCategoryUseCase.delete(id)
+            .then(() => res.status(204).json())
             .catch((err: Error) => res.status(400).json(ResponseObject.makeErrorResponse("400", err)));
     }
 }

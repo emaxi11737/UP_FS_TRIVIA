@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const questionMongoDBSchema = new mongoose.Schema(
+const QuestionMongoDBSchema = new mongoose.Schema(
     {
         name: String,
         description: String,
@@ -12,6 +12,6 @@ const questionMongoDBSchema = new mongoose.Schema(
     }
 );
 
-const questionMongoDBModel = mongoose.model('question', questionMongoDBSchema);
+const QuestionMongoDBModel = mongoose.model('question', QuestionMongoDBSchema);
 
-export default questionMongoDBModel;
+export default QuestionMongoDBModel;

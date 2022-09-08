@@ -27,7 +27,7 @@ questions: {
 },
 
 //(opciones del juego)
-game: {
+games: {
     _id: string,
     userId: User,
     score: number,
@@ -131,14 +131,14 @@ StatusCode: 204
 body: {} //vacío porque ya estás logueado
 
 -------------------- OK ---------------------
-- POST /game
+- POST /games
 StatusCode: 201
 Body: {
     user: User    
 }
 
 -------------------- OK ---------------------
-- PATCH /game/{:id}
+- PATCH /games/{:id}
 StatusCode: 200
 body: 
 {
@@ -147,7 +147,7 @@ body:
 }
 
 -------------------- OK ---------------------
-- GET /game/{:id}
+- GET /games/{:id}
 StatusCode: 200
 
 -------------------- OK ---------------------

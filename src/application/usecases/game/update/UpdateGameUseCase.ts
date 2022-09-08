@@ -1,8 +1,8 @@
 import { validate } from 'class-validator';
 import IUpdateGameUseCase from '@application/usecases/game/update/IUpdateGameUseCase';
 import IGameRepository from '@application/repositories/IGameRepository';
-import IGamePatchDto from '../IGamePatchDto';
-import IGameDto from '../IGameDto';
+import IGamePatchDto from '@application/usecases/game/IGamePatchDto';
+import IGameDto from '@application/usecases/game/IGameDto';
 import GamePatch from '@domain/game/GamePatch';
 
 export default class UpdateGameUseCase implements IUpdateGameUseCase {

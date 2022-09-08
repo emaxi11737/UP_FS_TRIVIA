@@ -22,8 +22,8 @@ export default class UserMongoDBRepository implements IUserRepository {
         return UserMongoDBMapper.toEntity(userObject);
     }
 
-    public async read(id: string): Promise<User> {
-        const userObject: any = await this.model.findById({ _id: id });
+    public async read(userId: string): Promise<User> {
+        const userObject: any = await this.model.findById({ _id: userId });
 
         if (!userObject) throw Error("User not found");
 

@@ -29,11 +29,9 @@ questions: {
 //(opciones del juego)
 game: {
     _id: string,
-    time: timestamp, //tiempo inicio juego - tiempo fin juego    
-    user: User,
-    questionsQuantity: number,
-    chances: number,
-    isWinner: boolean,
+    userId: User,
+    score: number,
+    level: number,
     createdAt: date,
     updatedAt: date
 },    
@@ -132,22 +130,25 @@ body:
 StatusCode: 204
 body: {} //vacío porque ya estás logueado
 
+-------------------- OK ---------------------
 - POST /game
 StatusCode: 201
 Body: {
-    time: timestamp,
-    user: User,
-    questionsQuantity: number,
-    chances: number,
+    user: User    
 }
 
+-------------------- OK ---------------------
 - PATCH /game/{:id}
 StatusCode: 200
 body: 
 {
-    time: timestamp,
-    isWinner: boolean
+    score: number,
+    level: number
 }
+
+-------------------- OK ---------------------
+- GET /game/{:id}
+StatusCode: 200
 
 - POST /answers
 StatusCode: 201

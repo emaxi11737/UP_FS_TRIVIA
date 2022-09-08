@@ -21,6 +21,7 @@ export default class SignInUseCase implements ISignInUseCase {
             userDto.email,
             userDto.createdAt,
             userDto.updatedAt,
+            userDto.deletedAt
         );
 
         const errors = await validate(userEntity);

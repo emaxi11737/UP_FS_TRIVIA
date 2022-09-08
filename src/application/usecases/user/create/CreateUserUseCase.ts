@@ -21,6 +21,7 @@ export default class CreateUserUseCase implements ICreateUserUseCase {
             userDto.email,
             userDto.createdAt,
             userDto.updatedAt,
+            userDto.deletedAt,
         );
 
         const errors = await validate(userEntity);

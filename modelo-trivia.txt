@@ -69,6 +69,7 @@ Body: {
     password: string,
 }
 
+-------------------- OK ---------------------
 //TOKEN
 - PATCH /users/{:id}
 StatusCode: 200
@@ -79,6 +80,7 @@ body:
     newPassword: string,
 }
 
+-------------------- OK ---------------------
 - DELETE /users/{:id}
 StatusCode: 204
 body: {} //vacío porque ya estás logueado

@@ -37,16 +37,18 @@ export default class User {
     @IsEmail()
     public email: string;
 
-    public createdAt: string;
-    public updatedAt: string;
+    public createdAt: Date;
+    public updatedAt: Date;
+    public deletedAt: Date | null;
 
     constructor(
         id: string,
         username: string,
         password: string,
         email: string,
-        createdAt: string,
-        updatedAt: string,
+        createdAt: Date,
+        updatedAt: Date,
+        deletedAt: Date | null,
     ) {
         this.id = id;
         this.username = username;
@@ -54,5 +56,6 @@ export default class User {
         this.email = email;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.deletedAt = deletedAt;
     }
 }

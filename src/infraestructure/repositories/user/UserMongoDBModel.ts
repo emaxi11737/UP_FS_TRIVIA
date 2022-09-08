@@ -4,7 +4,8 @@ const UserMongoDBSchema = new Schema(
     {
         username: String,
         password: String,
-        email: String
+        email: String,
+        deletedAt: Date,
     },
     {
         versionKey: false,

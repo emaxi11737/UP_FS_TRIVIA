@@ -3,6 +3,7 @@ export default interface IUserDto {
     username: string;
     password: string;
     email: string;
-    createdAt: string;
-    updatedAt: string;
+    createdAt: Date;
+    updatedAt: Date;
+    deletedAt: Date | null;
 }

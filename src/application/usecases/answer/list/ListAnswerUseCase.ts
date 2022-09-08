@@ -15,8 +15,8 @@ export default class ListAnswerUseCase implements IListAnswerUseCase {
 
     public async list(paginationDto?: IPaginationFilterDto, filtersDto?: IFilterDto): Promise<IAnswerDto[]> {
         const pagination = new PaginationFilter(
-            paginationDto.limit || 10,
-            paginationDto.page || 0
+            paginationDto?.limit || 10,
+            paginationDto?.page || 0
         );
 
         return await this.answerRepository.list(pagination, filtersDto);

@@ -11,6 +11,7 @@ import IReadAnswerUseCase from "@application/usecases/answer/read/IReadAnswerUse
 import IListAnswerUseCase from "@application/usecases/answer/list/IListAnswerUseCase";
 import IAnswerDto from "@application/usecases/answer/IAnswerDto";
 import IAnswerPatchDto from "@application/usecases/answer/IAnswerPatchDto";
+import IPaginationFilterDto from "@application/usecases/pagination/IPaginationFilterDto";
 
 @ApiPath({
     path: "/answers",
@@ -27,6 +28,7 @@ export default class AnswerController implements interfaces.Controller {
         this.createAnswerUseCase = answerService.getCreateAnswerUseCase();
         this.updateAnswerUseCase = answerService.getUpdateAnswerUseCase();
         this.readAnswerUseCase = answerService.getReadAnswerUseCase();
+        this.listAnswerUseCase = answerService.getListAnswerUseCase();
     }
 
     @ApiOperationPost({
@@ -73,6 +75,26 @@ export default class AnswerController implements interfaces.Controller {
 
         return this.updateAnswerUseCase.updatePartial(answerPatchDto)
             .then((answer: IAnswerDto) => res.status(200).json(ResponseObject.makeSuccessResponse(answer)))
+            .catch((err: Error) => res.status(400).json(ResponseObject.makeErrorResponse("400", err)));
+    }
+
+    @ApiOperationGet({
+        description: "List answers",
+        responses: {
+            200: { description: "Success", type: SwaggerDefinitionConstant.Response.Type.ARRAY, model: "Answer" },
+            400: { description: "Error", type: SwaggerDefinitionConstant.Response.Type.ARRAY }
+        },
+    })
+    @httpGet("/")
+    public async list(@request() req: express.Request, @response() res: express.Response) {
+        const paginationDto: IPaginationFilterDto = {
+            limit: Number(req.query.limit),
+            page: Number(req.query.page)
+        }
+        // TODO add filters
+
+        return this.listAnswerUseCase.list(paginationDto)
+            .then((answers: IAnswerDto[]) => res.status(200).json(ResponseObject.makeSuccessResponse(answers)))
             .catch((err: Error) => res.status(400).json(ResponseObject.makeErrorResponse("400", err)));
     }
 

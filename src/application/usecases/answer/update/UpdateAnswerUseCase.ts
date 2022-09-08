@@ -31,7 +31,6 @@ export default class UpdateAnswerUseCase implements IUpdateAnswerUseCase {
         if (errors.length > 0) throw Error("Please, check input params");
         const answer = await this.answerRepository.read(answerDto.id);
 
-
         if (answerPatchEntity.questionId) {
             // TODO
             // const questionExist = await this.questionRepository.read(answerEntity.questionId);
@@ -41,7 +40,7 @@ export default class UpdateAnswerUseCase implements IUpdateAnswerUseCase {
         }
 
         if (answerPatchEntity.description) answer.description = answerPatchEntity.description;
-        if (answerPatchEntity.isRight) answer.isRight = answerPatchEntity.isRight;
+        if (typeof answerPatchEntity.isRight !== undefined) answer.isRight = answerPatchEntity.isRight;
 
         return await this.answerRepository.update(answer);
     }

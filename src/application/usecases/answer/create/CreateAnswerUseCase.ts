@@ -2,7 +2,6 @@ import { validate } from "class-validator";
 import ICreateAnswerUseCase from "@application/usecases/answer/create/ICreateAnswerUseCase";
 import IAnswerRepository from '@application/repositories/IAnswerRepository';
 import IAnswerDto from "@application/usecases/answer/IAnswerDto";
-import IUserRepository from "@application/repositories/IUserRepository";
 import IQuestionRepository from "@application/repositories/IQuestionRepository";
 import Answer from "@domain/answer/Answer";
 

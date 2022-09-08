@@ -49,6 +49,6 @@ export default class AnswerPatch {
         this.id = id;
         if (questionId) this.questionId = questionId;
         if (description) this.description = description;
-        if (isRight) this.isRight = isRight;
+        if (typeof isRight !== undefined) this.isRight = isRight;
     }
 }

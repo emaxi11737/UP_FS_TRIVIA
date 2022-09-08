@@ -12,6 +12,6 @@ const GameMongoDBSchema = new Schema(
     }
 );
 
-const GameMongoDBModel = model('game', GameMongoDBSchema);
+const GameMongoDBModel = model('games', GameMongoDBSchema);
 
 export default GameMongoDBModel;

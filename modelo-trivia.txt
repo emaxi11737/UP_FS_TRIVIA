@@ -150,6 +150,7 @@ body:
 - GET /game/{:id}
 StatusCode: 200
 
+-------------------- OK ---------------------
 - POST /answers
 StatusCode: 201
 Body: {
@@ -158,6 +159,7 @@ Body: {
     isRight: boolean
 }
 
+-------------------- OK ---------------------
 - PATCH /answers/{:id}
 StatusCode: 200
 Body: {
@@ -170,5 +172,6 @@ Body: {
 StatusCode: 204
 body: {} //vacío porque ya estás logueado
 
+-------------------- OK ---------------------
 - GET /answers //paginado
 StatusCode: 200

@@ -13,6 +13,6 @@ const UserMongoDBSchema = new Schema(
     }
 );
 
-const UserMongoDBModel = model('user', UserMongoDBSchema);
+const UserMongoDBModel = model('users', UserMongoDBSchema);
 
 export default UserMongoDBModel;

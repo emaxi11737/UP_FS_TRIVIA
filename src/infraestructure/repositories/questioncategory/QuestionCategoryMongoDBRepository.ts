@@ -2,11 +2,11 @@ import { Model } from 'mongoose';
 import { injectable } from 'inversify';
 import IQuestionCategoryRepository from '@application/repositories/IQuestionCategoryRepository';
 import QuestionCategory from '@domain/questioncategory/QuestionCategory';
-import QuestionCategoryPartial from '@domain/questioncategory/QuestionCategoryPatch';
 import QuestionCategoryMongoDBMapper from '@infraestructure/repositories/questioncategory/QuestionCategoryMongoDBMapper';
 import QuestionCategoryMongoDBModel from '@infraestructure/repositories/questioncategory/QuestionCategoryMongoDBModel';
 import IQuestionCategoryMongoDB from '@infraestructure/repositories/questioncategory/IQuestionCategoryMongoDB';
-
+import Filter from '@domain/filter/Filter';
+import PaginationFilter from '@domain/pagination/PaginationFilter';
 @injectable()
 export default class QuestionCategoryMongoDBRepository implements IQuestionCategoryRepository {
 
@@ -27,19 +27,28 @@ export default class QuestionCategoryMongoDBRepository implements IQuestionCateg
         return QuestionCategoryMongoDBMapper.toEntity(questionCategoryObject);
     }
 
-    public async read(questionCategory: QuestionCategory): Promise<QuestionCategory> {
-        const questionCategoryObject: any = await this.model.findOne({ name: questionCategory.name });
+    public async read(id: string): Promise<QuestionCategory> {
+        const questionCategoryObject: any = await this.model.findOne({ _id: id });
 
         if (!questionCategoryObject) throw Error("QuestionCategory not found");
 
         return QuestionCategoryMongoDBMapper.toEntity(questionCategoryObject);
     }
 
-    public async updatePartial(questionCategory: QuestionCategoryPartial): Promise<QuestionCategory> {
+    public async update(questionCategory: QuestionCategory): Promise<QuestionCategory> {
         const questionCategoryObject: any = await this.model.findByIdAndUpdate(questionCategory.id, questionCategory, { new: true });
 
         if (!questionCategoryObject) throw Error("QuestionCategory not found");
 
         return QuestionCategoryMongoDBMapper.toEntity(questionCategoryObject);
+    }
+
+    public async list(pagination: PaginationFilter, filters?: Filter): Promise<QuestionCategory[]> {
+        const questionCategoriesResults = await this.model.find()
+            .sort({ createdAt: 'asc' })
+            .skip(pagination.page * pagination.limit)
+            .limit(pagination.limit);
+
+        return questionCategoriesResults.map((questionCategoryModel: any) => QuestionCategoryMongoDBMapper.toEntity(questionCategoryModel));
     }
 }

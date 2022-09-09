@@ -2,6 +2,7 @@ export default interface IQuestionCategoryDto {
     id: string;
     name: string;
     description: string;
-    createdAt: string;
-    updatedAt: string;
+    createdAt: Date;
+    updatedAt: Date;
+    deletedAt: Date | null;
 }

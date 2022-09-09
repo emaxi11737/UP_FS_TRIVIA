@@ -4,6 +4,7 @@ const QuestionCategoryMongoDBSchema = new mongoose.Schema(
     {
         name: String,
         description: String,
+        deletedAt: Date
     },
     {
         versionKey: false,
@@ -11,6 +12,6 @@ const QuestionCategoryMongoDBSchema = new mongoose.Schema(
     }
 );
 
-const QuestionCategoryMongoDBModel = mongoose.model('questioncategory', QuestionCategoryMongoDBSchema);
+const QuestionCategoryMongoDBModel = mongoose.model('questionCategories', QuestionCategoryMongoDBSchema);
 
 export default QuestionCategoryMongoDBModel;

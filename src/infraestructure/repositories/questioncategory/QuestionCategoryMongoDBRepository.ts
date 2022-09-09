@@ -5,7 +5,8 @@ import QuestionCategory from '@domain/questioncategory/QuestionCategory';
 import QuestionCategoryMongoDBMapper from '@infraestructure/repositories/questioncategory/QuestionCategoryMongoDBMapper';
 import QuestionCategoryMongoDBModel from '@infraestructure/repositories/questioncategory/QuestionCategoryMongoDBModel';
 import IQuestionCategoryMongoDB from '@infraestructure/repositories/questioncategory/IQuestionCategoryMongoDB';
-
+import Filter from '@domain/filter/Filter';
+import PaginationFilter from '@domain/pagination/PaginationFilter';
 @injectable()
 export default class QuestionCategoryMongoDBRepository implements IQuestionCategoryRepository {
 
@@ -40,5 +41,14 @@ export default class QuestionCategoryMongoDBRepository implements IQuestionCateg
         if (!questionCategoryObject) throw Error("QuestionCategory not found");
 
         return QuestionCategoryMongoDBMapper.toEntity(questionCategoryObject);
+    }
+
+    public async list(pagination: PaginationFilter, filters?: Filter): Promise<QuestionCategory[]> {
+        const questionCategoriesResults = await this.model.find()
+            .sort({ createdAt: 'asc' })
+            .skip(pagination.page * pagination.limit)
+            .limit(pagination.limit);
+
+        return questionCategoriesResults.map((questionCategoryModel: any) => QuestionCategoryMongoDBMapper.toEntity(questionCategoryModel));
     }
 }

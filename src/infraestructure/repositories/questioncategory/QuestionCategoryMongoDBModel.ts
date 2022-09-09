@@ -12,6 +12,6 @@ const QuestionCategoryMongoDBSchema = new mongoose.Schema(
     }
 );
 
-const QuestionCategoryMongoDBModel = mongoose.model('questioncategory', QuestionCategoryMongoDBSchema);
+const QuestionCategoryMongoDBModel = mongoose.model('questionCategories', QuestionCategoryMongoDBSchema);
 
 export default QuestionCategoryMongoDBModel;

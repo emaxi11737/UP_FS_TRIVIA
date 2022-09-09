@@ -27,7 +27,7 @@ export default class QuestionCategoryController implements interfaces.Controller
     constructor(@inject(TYPES.QuestionCategoryService) questionCategoryService: QuestionCategoryService) {
         this.createQuestionCategoryUseCase = questionCategoryService.getCreateQuestionCategoryUseCase();
         this.updateQuestionCategoryUseCase = questionCategoryService.getUpdateQuestionCategoryUseCase();
-        this.listQuestionCategoryUseCase = questionCategoryService.getListAnswerUseCase();
+        this.listQuestionCategoryUseCase = questionCategoryService.getListQuestionCategoryUseCase();
         this.deleteQuestionCategoryUseCase = questionCategoryService.getDeleteQuestionCategoryUseCase();
     }
 

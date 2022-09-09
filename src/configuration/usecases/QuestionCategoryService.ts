@@ -23,7 +23,7 @@ export default class QuestionCategoryService {
         return new DeleteQuestionCategoryUseCase(this.questionCategoryRepository);
     }
 
-    public getListAnswerUseCase() {
+    public getListQuestionCategoryUseCase() {
         return new ListQuestionCategoryUseCase(this.questionCategoryRepository);
     }
 }

@@ -1,4 +1,4 @@
-import IQuestionCategoryDto from '@application/usecases/questionCategory/IQuestionCategoryDto';
+import IQuestionCategoryDto from '@application/usecases/questioncategory/IQuestionCategoryDto';
 import IFilterDto from '@application/usecases/filter/IFIlterDto';
 import IPaginationFilterDto from '@application/usecases/pagination/IPaginationFilterDto';
 

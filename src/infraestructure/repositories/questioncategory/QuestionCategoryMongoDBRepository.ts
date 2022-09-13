@@ -7,6 +7,7 @@ import QuestionCategoryMongoDBModel from '@infraestructure/repositories/question
 import IQuestionCategoryMongoDB from '@infraestructure/repositories/questioncategory/IQuestionCategoryMongoDB';
 import Filter from '@domain/filter/Filter';
 import PaginationFilter from '@domain/pagination/PaginationFilter';
+
 @injectable()
 export default class QuestionCategoryMongoDBRepository implements IQuestionCategoryRepository {
 
@@ -19,7 +20,7 @@ export default class QuestionCategoryMongoDBRepository implements IQuestionCateg
     public async create(questionCategory: QuestionCategory): Promise<QuestionCategory> {
         const questionCategoryExist: any = await this.model.findOne({ name: questionCategory.name });
 
-        if (questionCategoryExist) throw Error("QuestionCategory exist");
+        if (questionCategoryExist) return questionCategoryExist;
 
         const newQuestionCategoryObject = new this.model(questionCategory);
         const questionCategoryObject: any = await newQuestionCategoryObject.save();

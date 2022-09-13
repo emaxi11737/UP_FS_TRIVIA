@@ -25,6 +25,14 @@ export default class UpdateQuestionUseCase implements IUpdateQuestionUseCase {
 
         if (errors.length > 0) throw Error("Please, check input params");
 
-        return await this.questionRepository.updatePartial(questionPatchEntity);
+        const question = await this.questionRepository.read(questionDto.id);
+        if (!!questionPatchEntity.name) question.name = questionPatchEntity.name;
+        if (!!questionPatchEntity.description) question.description = questionPatchEntity.description;
+        if (!!questionPatchEntity.questionCategoryId){ 
+            const questionCategoryExist = await this.questionRepository.read(questionPatchEntity.questionCategoryId);
+            if (!questionCategoryExist) throw Error("Question category not found");
+            question.questionCategoryId = questionPatchEntity.questionCategoryId;
+        }
+        return await this.questionRepository.update(question);
     }
 }

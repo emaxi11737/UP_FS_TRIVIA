@@ -20,12 +20,16 @@ export default class CreateQuestionUseCase implements ICreateQuestionUseCase {
             questionDto.description,
             questionDto.questionCategoryId,
             questionDto.createdAt,
-            questionDto.updatedAt
+            questionDto.updatedAt,
+            questionDto.deletedAt
         );
 
         const errors = await validate(questionEntity);
 
         if (errors.length > 0) throw Error("Please, check input params");
+
+        const questionCategoryExist = await this.questionRepository.read(questionEntity.questionCategoryId);
+        if (!questionCategoryExist) throw Error("Question Category not found");
 
         return await this.questionRepository.create(questionEntity);
     }

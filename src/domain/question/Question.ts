@@ -1,5 +1,5 @@
 import { ApiModel, ApiModelProperty } from 'swagger-express-ts';
-import { IsNumber, IsString } from "class-validator";
+import { IsString } from "class-validator";
 
 @ApiModel({
     name: "Question"
@@ -35,16 +35,18 @@ export default class Question {
 
     
 
-    public createdAt: string;
-    public updatedAt: string;
+    public createdAt: Date;
+    public updatedAt: Date;
+    deletedAt: Date | null;
 
     constructor(
         id: string,
         name: string,
         description: string,
         questionCategoryId: string,
-        createdAt: string,
-        updatedAt: string
+        createdAt: Date,
+        updatedAt: Date,
+        deletedAt: Date | null
     ) {
         this.id = id;
         this.name = name;
@@ -52,5 +54,6 @@ export default class Question {
         this.questionCategoryId = questionCategoryId;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.deletedAt = deletedAt;
     }
 }

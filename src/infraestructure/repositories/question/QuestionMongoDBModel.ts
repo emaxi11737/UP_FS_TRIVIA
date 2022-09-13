@@ -4,7 +4,8 @@ const QuestionMongoDBSchema = new mongoose.Schema(
     {
         name: String,
         description: String,
-        questionCategoryId: String
+        questionCategoryId: String,
+        deletedAt: Date
     },
     {
         versionKey: false,

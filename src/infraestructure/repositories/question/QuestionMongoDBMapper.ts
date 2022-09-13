@@ -4,9 +4,9 @@ import Question from '@domain/question/Question';
 export default class QuestionMongoDBMapper {
 
     public static toEntity(questionMapper: IQuestionDto): Question {
-        const { id, name, description,questionCategoryId, createdAt, updatedAt } = questionMapper;
+        const { id, name, description,questionCategoryId, createdAt, updatedAt, deletedAt } = questionMapper;
 
-        const questionEntity = new Question(id, name, description, questionCategoryId, createdAt, updatedAt);
+        const questionEntity = new Question(id, name, description, questionCategoryId, createdAt, updatedAt, deletedAt);
 
         return questionEntity;
     }

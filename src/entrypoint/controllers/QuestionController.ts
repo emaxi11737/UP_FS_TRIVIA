@@ -14,10 +14,10 @@ import IQuestionPatchDto from '@application/usecases/question/IQuestionPatchDto'
 import IPaginationFilterDto from "@application/usecases/pagination/IPaginationFilterDto";
 
 @ApiPath({
-    path: "/question",
+    path: "/questions",
     name: "Question",
 })
-@controller("/question")
+@controller("/questions")
 export default class QuestionController implements interfaces.Controller {
     private readonly createQuestionUseCase: ICreateQuestionUseCase;
     private readonly updateQuestionUseCase: IUpdateQuestionUseCase;

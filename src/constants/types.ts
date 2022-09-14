@@ -10,5 +10,6 @@ export const TYPES = {
     GameService: Symbol.for("GameService"),
     AnswerService: Symbol.for("AnswerService"),
     IAnswerRepository: Symbol.for("IAnswerRepository"),
-    LoggerMiddleware: Symbol.for("LoggerMiddleware")
+    LoggerMiddleware: Symbol.for("LoggerMiddleware"),
+    ITokenRepository: Symbol.for("ITokenRepository")
 };

@@ -1,22 +1,25 @@
 import md5 from 'md5';
 import { validate } from 'class-validator';
-import Jwt from "jsonwebtoken";
 import ISignInUseCase from '@application/usecases/user/signin/ISignInUseCase';
+import ITokenDto from '@application/usecases/token/ITokenDto';
 import IUserDto from '@application/usecases/user/IUserDto';
 import IUserRepository from '@application/repositories/IUserRepository';
+import ITokenRepository from '@application/repositories/ITokenRepository';
 import User from '@domain/user/User';
 
 export default class SignInUseCase implements ISignInUseCase {
-    private static readonly TOKEN_SECRET: string = process.env.SECRET_KEY;
-    private static readonly TOKEN_EXPIRES: string = '1800s';
-
     private userRepository: IUserRepository;
+    private tokenRepository: ITokenRepository;
 
-    constructor(userRepository: IUserRepository) {
+    constructor(
+        userRepository: IUserRepository,
+        tokenRepository: ITokenRepository
+    ) {
         this.userRepository = userRepository;
+        this.tokenRepository = tokenRepository;
     }
 
-    public async signin(userDto: IUserDto): Promise<IUserDto> {
+    public async signin(userDto: IUserDto): Promise<ITokenDto> {
         const userEntity = new User(
             userDto.id,
             userDto.username,
@@ -33,14 +36,6 @@ export default class SignInUseCase implements ISignInUseCase {
         const user = await this.userRepository.readByEmail(userEntity.email);
         if (user.password !== userEntity.password) throw Error("Invalid password");
 
-        // TODO
-        console.log(this.generateAccessToken(user));
-
-        return user;
-    }
-
-    private generateAccessToken(user: User) {
-        console.log(SignInUseCase.TOKEN_SECRET, SignInUseCase.TOKEN_EXPIRES, JSON.stringify(user))
-        return Jwt.sign({ id: user.id }, SignInUseCase.TOKEN_SECRET, { expiresIn: SignInUseCase.TOKEN_EXPIRES });
+        return await this.tokenRepository.create(userEntity);
     }
 }

@@ -23,6 +23,7 @@ import IQuestionRepository from '@application/repositories/IQuestionRepository';
 import IQuestionCategoryRepository from '@application/repositories/IQuestionCategoryRepository';
 import IGameRepository from '@application/repositories/IGameRepository';
 import IAnswerRepository from "@application/repositories/IAnswerRepository";
+import ITokenRepository from "@application/repositories/ITokenRepository";
 
 // Import all repositories
 import UserMongoDBRepository from '@infraestructure/repositories/user/UserMongoDBRepository';
@@ -30,6 +31,7 @@ import QuestionMongoDBRepository from '@infraestructure/repositories/question/Qu
 import QuestionCategoryMongoDBRepository from '@infraestructure/repositories/questioncategory/QuestionCategoryMongoDBRepository';
 import GameMongoDBRepository from '@infraestructure/repositories/game/GameMongoDBRepository';
 import AnswerMongoDBRepository from "@infraestructure/repositories/answer/AnswerMongoDBRepository";
+import JsonWebTokenRepository from "@infraestructure/repositories/token/JsonWebTokenRepository";
 
 // Import all controllers
 import "@entrypoint/controllers/UserController";
@@ -71,6 +73,7 @@ class App {
 		this.container.bind<AnswerService>(TYPES.AnswerService).to(AnswerService);
 		this.container.bind<IAnswerRepository>(TYPES.IAnswerRepository).to(AnswerMongoDBRepository);
 		this.container.bind<LoggerMiddleware>(TYPES.LoggerMiddleware).to(LoggerMiddleware);
+		this.container.bind<ITokenRepository>(TYPES.ITokenRepository).to(JsonWebTokenRepository);
 	}
 
 	private initServer(): void {

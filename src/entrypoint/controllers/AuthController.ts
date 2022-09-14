@@ -7,6 +7,7 @@ import ResponseObject from '@helpers/ResponseObject';
 import AuthService from '@configuration/usecases/AuthService';
 import ISignInUseCase from '@application/usecases/user/signin/ISignInUseCase';
 import IUserDto from '@application/usecases/user/IUserDto';
+import ITokenDto from "@application/usecases/token/ITokenDto";
 
 @ApiPath({
     path: "/auth",
@@ -37,7 +38,7 @@ export default class AuthController implements interfaces.Controller {
         const userDto: IUserDto = req.body;
 
         return this.signInUseCase.signin(userDto)
-            .then((user: IUserDto) => res.status(200).json(ResponseObject.makeSuccessResponse(user)))
+            .then((token: ITokenDto) => res.status(200).json(ResponseObject.makeSuccessResponse(token)))
             .catch((err: Error) => res.status(400).json(ResponseObject.makeErrorResponse("400", err)));
     }
 }

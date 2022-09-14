@@ -78,6 +78,7 @@ body:
     newPassword: string,
 }
 
+-------------------- OK ---------------------
 - GET /users/{:id}
 StatusCode: 200
 

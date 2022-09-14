@@ -117,7 +117,7 @@ export default class UserController implements interfaces.Controller {
             400: { description: "Error", type: SwaggerDefinitionConstant.Response.Type.ARRAY }
         },
     })
-    @httpGet("/:id")
+    @httpGet("/:id", TYPES.LoggerMiddleware)
     public async read(@requestParam("id") id: string, @request() req: express.Request, @response() res: express.Response) {
         return this.readUserUseCase.read(id)
             .then((user: IUserDto) => res.status(200).json(ResponseObject.makeSuccessResponse(user)))

@@ -37,7 +37,7 @@ export default class Question {
 
     public createdAt: Date;
     public updatedAt: Date;
-    deletedAt: Date | null;
+    public deletedAt: Date | null;
 
     constructor(
         id: string,

@@ -32,7 +32,7 @@ export default class QuestionMongoDBRepository implements IQuestionRepository {
     public async read(id: string): Promise<Question> {
         const questionObject: any = await this.model.findOne({ _id: id });
 
-        if (!questionObject) throw Error("Question not found");
+        if (!questionObject) throw Error("Question not founsd");
 
         return QuestionMongoDBMapper.toEntity(questionObject);
     }
@@ -46,11 +46,11 @@ export default class QuestionMongoDBRepository implements IQuestionRepository {
     }
 
     public async list(pagination: PaginationFilter, filters?: Filter): Promise<Question[]> {
-        const questionCategoriesResults = await this.model.find()
+        const questionResults = await this.model.find()
             .sort({ createdAt: 'asc' })
             .skip(pagination.page * pagination.limit)
             .limit(pagination.limit);
 
-        return questionCategoriesResults.map((questionModel: any) => QuestionMongoDBMapper.toEntity(questionModel));
+        return questionResults.map((questionModel: any) => QuestionMongoDBMapper.toEntity(questionModel));
     }
 }

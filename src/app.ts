@@ -39,6 +39,9 @@ import "@entrypoint/controllers/AuthController";
 import "@entrypoint/controllers/GameController";
 import "@entrypoint/controllers/AnswerController";
 
+// Import all middlewares
+import LoggerMiddleware from "@entrypoint/middlewares/LoggerMiddleware";
+
 class App {
 	private container: Container;
 	private app: express.Application;
@@ -67,6 +70,7 @@ class App {
 		this.container.bind<IGameRepository>(TYPES.IGameRepository).to(GameMongoDBRepository);
 		this.container.bind<AnswerService>(TYPES.AnswerService).to(AnswerService);
 		this.container.bind<IAnswerRepository>(TYPES.IAnswerRepository).to(AnswerMongoDBRepository);
+		this.container.bind<LoggerMiddleware>(TYPES.LoggerMiddleware).to(LoggerMiddleware);
 	}
 
 	private initServer(): void {

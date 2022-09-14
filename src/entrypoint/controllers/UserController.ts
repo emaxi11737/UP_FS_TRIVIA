@@ -15,7 +15,7 @@ import IDeleteUserUseCase from "@application/usecases/user/delete/IDeleteUserUse
     path: "/users",
     name: "User",
 })
-@controller("/users")
+@controller("/users", TYPES.LoggerMiddleware)
 export default class UserController implements interfaces.Controller {
     private readonly createUserUseCase: ICreateUserUseCase;
     private readonly updateUserUseCase: IUpdateUserUseCase;

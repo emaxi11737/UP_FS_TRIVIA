@@ -78,6 +78,15 @@ body:
     newPassword: string,
 }
 
+- GET /users/{:id}
+StatusCode: 200
+
+- POST /token/refresh
+StatusCode: 200
+body: {
+    refreshToken: string
+}
+
 -------------------- OK ---------------------
 - DELETE /users/{:id}
 StatusCode: 204

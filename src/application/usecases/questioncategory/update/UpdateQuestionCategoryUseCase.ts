@@ -28,6 +28,6 @@ export default class UpdateQuestionCategoryUseCase implements IUpdateQuestionCat
         if (!!questionCategoryPatchEntity.name) questionCategory.name = questionCategoryPatchEntity.name;
         if (!!questionCategoryPatchEntity.description) questionCategory.description = questionCategoryPatchEntity.description;
 
-        return await this.questionCategoryRepository.update(questioncategory);
+        return await this.questionCategoryRepository.update(questionCategory);
     }
 }

@@ -32,7 +32,7 @@ export default class QuestionMongoDBRepository implements IQuestionRepository {
     public async read(id: string): Promise<Question> {
         const questionObject: any = await this.model.findOne({ _id: id });
 
-        if (!questionObject) throw Error("Question not founsd");
+        if (!questionObject) throw Error("Question not found");
 
         return QuestionMongoDBMapper.toEntity(questionObject);
     }

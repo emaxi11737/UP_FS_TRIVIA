@@ -6,8 +6,8 @@ import { TYPES } from "@constants/types";
 import ResponseObject from '@helpers/ResponseObject';
 import AuthService from '@configuration/usecases/AuthService';
 import ISignInUseCase from '@application/usecases/user/signin/ISignInUseCase';
-import IUserDto from '@application/usecases/user/IUserDto';
 import ITokenDto from "@application/usecases/token/ITokenDto";
+import IUserSignInDto from "@application/usecases/user/IUserSignInDto";
 
 @ApiPath({
     path: "/auth",
@@ -26,16 +26,16 @@ export default class AuthController implements interfaces.Controller {
         description: "Sign in user",
         path: "/signin",
         parameters: {
-            body: { description: "Sign in", required: true, model: "User" }
+            body: { description: "Sign in", required: true, model: "UserSignIn" }
         },
         responses: {
-            200: { description: "Success", type: SwaggerDefinitionConstant.Response.Type.OBJECT, model: "User" },
+            200: { description: "Success", type: SwaggerDefinitionConstant.Response.Type.OBJECT, model: "Token" },
             400: { description: "Error", type: SwaggerDefinitionConstant.Response.Type.ARRAY }
         },
     })
     @httpPost("/signin")
     public async signin(@request() req: express.Request, @response() res: express.Response) {
-        const userDto: IUserDto = req.body;
+        const userDto: IUserSignInDto = req.body;
 
         return this.signInUseCase.signin(userDto)
             .then((token: ITokenDto) => res.status(200).json(ResponseObject.makeSuccessResponse(token)))

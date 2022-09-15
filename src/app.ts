@@ -5,7 +5,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import { connect } from "mongoose";
 import { Container } from "inversify";
-import { InversifyExpressServer } from "inversify-express-utils";
+import { InversifyExpressServer, next } from "inversify-express-utils";
 import * as swagger from "swagger-express-ts";
 import { TYPES } from "@constants/types";
 
@@ -98,8 +98,8 @@ class App {
 
 	private helloWorld(): void {
 		this.app.get('/', (req, res) => {
-			res.send('Hello World');
-		})
+			res.send('Hello World').status(200);
+		});
 	}
 
 	private listenServer(): void {

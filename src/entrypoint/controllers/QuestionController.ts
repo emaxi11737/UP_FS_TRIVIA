@@ -17,7 +17,7 @@ import IPaginationFilterDto from "@application/usecases/pagination/IPaginationFi
     path: "/questions",
     name: "Question",
 })
-@controller("/questions")
+@controller("/question", TYPES.LoggerMiddleware)
 export default class QuestionController implements interfaces.Controller {
     private readonly createQuestionUseCase: ICreateQuestionUseCase;
     private readonly updateQuestionUseCase: IUpdateQuestionUseCase;

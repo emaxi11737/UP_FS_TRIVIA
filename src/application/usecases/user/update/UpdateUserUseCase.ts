@@ -18,8 +18,8 @@ export default class UpdateUserUseCase implements IUpdateUserUseCase {
         const userPatchEntity = new UserPatch(
             userDto.id,
             userDto.username,
-            userDto.oldPassword && md5(userDto.oldPassword),
-            userDto.newPassword && md5(userDto.newPassword)
+            userDto.oldPassword && md5(String(userDto.oldPassword)),
+            userDto.newPassword && md5(String(userDto.newPassword))
         );
 
         const errors = await validate(userPatchEntity);

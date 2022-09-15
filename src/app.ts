@@ -5,7 +5,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import { connect } from "mongoose";
 import { Container } from "inversify";
-import { InversifyExpressServer } from "inversify-express-utils";
+import { InversifyExpressServer, next } from "inversify-express-utils";
 import * as swagger from "swagger-express-ts";
 import { TYPES } from "@constants/types";
 
@@ -23,6 +23,7 @@ import IQuestionRepository from '@application/repositories/IQuestionRepository';
 import IQuestionCategoryRepository from '@application/repositories/IQuestionCategoryRepository';
 import IGameRepository from '@application/repositories/IGameRepository';
 import IAnswerRepository from "@application/repositories/IAnswerRepository";
+import ITokenRepository from "@application/repositories/ITokenRepository";
 
 // Import all repositories
 import UserMongoDBRepository from '@infraestructure/repositories/user/UserMongoDBRepository';
@@ -30,6 +31,7 @@ import QuestionMongoDBRepository from '@infraestructure/repositories/question/Qu
 import QuestionCategoryMongoDBRepository from '@infraestructure/repositories/questioncategory/QuestionCategoryMongoDBRepository';
 import GameMongoDBRepository from '@infraestructure/repositories/game/GameMongoDBRepository';
 import AnswerMongoDBRepository from "@infraestructure/repositories/answer/AnswerMongoDBRepository";
+import JsonWebTokenRepository from "@infraestructure/repositories/token/JsonWebTokenRepository";
 
 // Import all controllers
 import "@entrypoint/controllers/UserController";
@@ -38,6 +40,9 @@ import "@entrypoint/controllers/QuestionCategoryController";
 import "@entrypoint/controllers/AuthController";
 import "@entrypoint/controllers/GameController";
 import "@entrypoint/controllers/AnswerController";
+
+// Import all middlewares
+import LoggerMiddleware from "@entrypoint/middlewares/LoggerMiddleware";
 
 class App {
 	private container: Container;
@@ -67,6 +72,8 @@ class App {
 		this.container.bind<IGameRepository>(TYPES.IGameRepository).to(GameMongoDBRepository);
 		this.container.bind<AnswerService>(TYPES.AnswerService).to(AnswerService);
 		this.container.bind<IAnswerRepository>(TYPES.IAnswerRepository).to(AnswerMongoDBRepository);
+		this.container.bind<LoggerMiddleware>(TYPES.LoggerMiddleware).to(LoggerMiddleware);
+		this.container.bind<ITokenRepository>(TYPES.ITokenRepository).to(JsonWebTokenRepository);
 	}
 
 	private initServer(): void {
@@ -91,8 +98,8 @@ class App {
 
 	private helloWorld(): void {
 		this.app.get('/', (req, res) => {
-			res.send('Hello World');
-		})
+			res.send('Hello World').status(200);
+		});
 	}
 
 	private listenServer(): void {

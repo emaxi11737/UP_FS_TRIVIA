@@ -79,6 +79,18 @@ body:
 }
 
 -------------------- OK ---------------------
+- GET /users/{:id}
+StatusCode: 200
+
+
+-------------------- OK ---------------------
+- POST /token/refresh
+StatusCode: 200
+body: {
+    refreshToken: string
+}
+ 
+-------------------- OK ---------------------
 - DELETE /users/{:id}
 StatusCode: 204
 body: {} //vacío porque ya estás logueado

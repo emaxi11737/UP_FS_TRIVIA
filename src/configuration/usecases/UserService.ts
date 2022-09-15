@@ -4,6 +4,7 @@ import IUserRepository from '@application/repositories/IUserRepository';
 import CreateUserUseCase from '@application/usecases/user/create/CreateUserUseCase';
 import UpdateUserUseCase from '@application/usecases/user/update/UpdateUserUseCase';
 import DeleteUserUseCase from "@application/usecases/user/delete/DeleteUserUseCase";
+import ReadUserUseCase from "@application/usecases/user/read/ReadUserUseCase";
 
 @injectable()
 export default class UserService {
@@ -20,5 +21,9 @@ export default class UserService {
 
     public getDeleteUserUseCase() {
         return new DeleteUserUseCase(this.userRepository);
+    }
+
+    public getReadUserUseCase() {
+        return new ReadUserUseCase(this.userRepository);
     }
 }

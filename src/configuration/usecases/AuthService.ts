@@ -3,6 +3,7 @@ import { TYPES } from "@constants/types";
 import IUserRepository from "@application/repositories/IUserRepository";
 import SignInUseCase from "@application/usecases/user/signin/SignInUseCase";
 import ITokenRepository from "@application/repositories/ITokenRepository";
+import RefreshTokenUseCase from "@application/usecases/token/refresh/RefreshTokenUseCase";
 
 @injectable()
 export default class AuthService {
@@ -14,5 +15,9 @@ export default class AuthService {
 
     public GetSignInUseCase() {
         return new SignInUseCase(this.userRepository, this.tokenRepository);
+    }
+
+    public GetRefreshTokenUseCase() {
+        return new RefreshTokenUseCase(this.tokenRepository);
     }
 }

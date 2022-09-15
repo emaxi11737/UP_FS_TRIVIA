@@ -4,6 +4,7 @@ import { validate } from 'class-validator';
 import ITokenRepository from '@application/repositories/ITokenRepository';
 import Token from '@domain/token/Token';
 import User from '@domain/user/User';
+import IUserDto from '@application/usecases/user/IUserDto';
 
 @injectable()
 export default class JsonWebTokenRepository implements ITokenRepository {
@@ -15,8 +16,8 @@ export default class JsonWebTokenRepository implements ITokenRepository {
     constructor() { }
 
     public async create(user: User): Promise<Token> {
-        const accessToken = Jwt.sign({ userId: user.id }, JsonWebTokenRepository.TOKEN_SECRET, { expiresIn: `${JsonWebTokenRepository.TOKEN_EXPIRES}s`, algorithm: 'HS256' });
-        const refreshToken = Jwt.sign({ userId: user.id }, JsonWebTokenRepository.REFRESH_TOKEN_SECRET, { expiresIn: `${JsonWebTokenRepository.REFRESH_TOKEN_EXPIRES}d`, algorithm: 'HS256' });
+        const accessToken = Jwt.sign({ ...user }, JsonWebTokenRepository.TOKEN_SECRET, { expiresIn: `${JsonWebTokenRepository.TOKEN_EXPIRES}s`, algorithm: 'HS256' });
+        const refreshToken = Jwt.sign({ ...user }, JsonWebTokenRepository.REFRESH_TOKEN_SECRET, { expiresIn: `${JsonWebTokenRepository.REFRESH_TOKEN_EXPIRES}d`, algorithm: 'HS256' });
 
         const tokenEntity = new Token(
             accessToken,
@@ -34,7 +35,7 @@ export default class JsonWebTokenRepository implements ITokenRepository {
         const checkRefreshToken = await this.verifyRefreshToken(refreshToken);
         if (checkRefreshToken) throw Error("Invalid refresh token");
 
-        const accessToken = Jwt.sign({ userId: user.id }, JsonWebTokenRepository.TOKEN_SECRET, { expiresIn: `${JsonWebTokenRepository.TOKEN_EXPIRES}s` });
+        const accessToken = Jwt.sign({ ...user }, JsonWebTokenRepository.TOKEN_SECRET, { expiresIn: `${JsonWebTokenRepository.TOKEN_EXPIRES}s` });
         const tokenEntity = new Token(
             accessToken,
             refreshToken,
@@ -58,12 +59,28 @@ export default class JsonWebTokenRepository implements ITokenRepository {
     }
 
     public async verifyRefreshToken(refreshToken: string): Promise<boolean> {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             Jwt.verify(refreshToken, JsonWebTokenRepository.REFRESH_TOKEN_SECRET,
                 (err) => {
                     if (err) resolve(false);
                     return resolve(true);
                 });
         });
+    }
+
+    public async decodeToken(token: string): Promise<User> {
+        const userData = Jwt.decode(token) as IUserDto;
+
+        const userEntity = new User(
+            userData.id,
+            userData.username,
+            userData.password,
+            userData.email,
+            userData.createdAt,
+            userData.updatedAt,
+            userData.deletedAt
+        );
+
+        return userEntity;
     }
 }

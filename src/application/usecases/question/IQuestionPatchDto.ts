@@ -1,6 +1,6 @@
 export default interface IQuestionPatchDto {
     id: string;
-    name: string;
-    description: string;
-    questionCategoryId: string;
+    name?: string;
+    description?: string;
+    questionCategoryId?: string;
 }

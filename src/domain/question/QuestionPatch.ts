@@ -1,5 +1,5 @@
 import { ApiModel, ApiModelProperty } from 'swagger-express-ts';
-import { IsNumber, IsString, Matches } from "class-validator";
+import { IsString, Matches, IsOptional } from "class-validator";
 
 @ApiModel({
     name: "QuestionPatch"
@@ -16,30 +16,33 @@ export default class QuestionPatch {
 
     @ApiModelProperty({
         description: "Name of question",
-        required: true,
+        required: false,
     })
     @IsString()
-    public name: string;
+    @IsOptional()
+    public name?: string;
 
     @ApiModelProperty({
         description: "Description of question",
-        required: true,
+        required: false,
     })
     @IsString()
-    public description: string;
+    @IsOptional()
+    public description?: string;
 
     @ApiModelProperty({
         description: "Id of QuestionCategory ",
-        required: true,
+        required: false,
     })
     @IsString()
-    public questionCategoryId: string;
+    @IsOptional()
+    public questionCategoryId?: string;
 
     constructor(
         id: string,
-        name: string,
-        description: string,
-        questionCategoryId: string
+        name?: string,
+        description?: string,
+        questionCategoryId?: string
     ) {
         this.id = id;
         this.name = name;

@@ -21,7 +21,6 @@ export default class UpdateQuestionCategoryUseCase implements IUpdateQuestionCat
         );
 
         const errors = await validate(questionCategoryPatchEntity);
-
         if (errors.length > 0) throw Error("Please, check input params");
 
         const questionCategory = await this.questionCategoryRepository.read(questionCategoryDto.id);

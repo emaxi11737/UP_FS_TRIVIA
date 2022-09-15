@@ -6,6 +6,8 @@ import QuestionPartial from '@domain/question/QuestionPatch';
 import QuestionMongoDBMapper from '@infraestructure/repositories/question/QuestionMongoDBMapper';
 import QuestionMongoDBModel from '@infraestructure/repositories/question/QuestionMongoDBModel';
 import IQuestionMongoDB from '@infraestructure/repositories/question/IQuestionMongoDB';
+import Filter from '@domain/filter/Filter';
+import PaginationFilter from '@domain/pagination/PaginationFilter';
 
 @injectable()
 export default class QuestionMongoDBRepository implements IQuestionRepository {
@@ -19,7 +21,7 @@ export default class QuestionMongoDBRepository implements IQuestionRepository {
     public async create(question: Question): Promise<Question> {
         const questionExist: any = await this.model.findOne({ name: question.name });
 
-        if (questionExist) throw Error("Question exist");
+        if (questionExist) return questionExist;
 
         const newQuestionObject = new this.model(question);
         const questionObject: any = await newQuestionObject.save();
@@ -27,19 +29,28 @@ export default class QuestionMongoDBRepository implements IQuestionRepository {
         return QuestionMongoDBMapper.toEntity(questionObject);
     }
 
-    public async read(question: Question): Promise<Question> {
-        const questionObject: any = await this.model.findOne({ name: question.name });
+    public async read(id: string): Promise<Question> {
+        const questionObject: any = await this.model.findOne({ _id: id });
 
         if (!questionObject) throw Error("Question not found");
 
         return QuestionMongoDBMapper.toEntity(questionObject);
     }
 
-    public async updatePartial(question: QuestionPartial): Promise<Question> {
+    public async update(question: QuestionPartial): Promise<Question> {
         const questionObject: any = await this.model.findByIdAndUpdate(question.id, question, { new: true });
 
         if (!questionObject) throw Error("Question not found");
 
         return QuestionMongoDBMapper.toEntity(questionObject);
+    }
+
+    public async list(pagination: PaginationFilter, filters?: Filter): Promise<Question[]> {
+        const questionResults = await this.model.find()
+            .sort({ createdAt: 'asc' })
+            .skip(pagination.page * pagination.limit)
+            .limit(pagination.limit);
+
+        return questionResults.map((questionModel: any) => QuestionMongoDBMapper.toEntity(questionModel));
     }
 }

@@ -3,17 +3,32 @@ import { TYPES } from "@constants/types";
 import IQuestionRepository from '@application/repositories/IQuestionRepository';
 import CreateQuestionUseCase from '@application/usecases/question/create/CreateQuestionUseCase';
 import UpdateQuestionUseCase from '@application/usecases/question/update/UpdateQuestionUseCase';
+import DeleteQuestionUseCase from '@application/usecases/question/delete/DeleteQuestionUseCase';
+import ListQuestionUseCase from '@application/usecases/question/list/ListQuestionUseCase';
+import IQuestionCategoryRepository from "@application/repositories/IQuestionCategoryRepository";
 
 @injectable()
 export default class QuestionService {
 
-    constructor(@inject(TYPES.IQuestionRepository) private questionRepository: IQuestionRepository) {}
+    constructor(
+        @inject(TYPES.IQuestionRepository) private questionRepository: IQuestionRepository,
+        @inject(TYPES.IQuestionCategoryRepository) private questionCategoryRepository: IQuestionCategoryRepository
+        ) {}
 
     public getCreateQuestionUseCase() {
-        return new CreateQuestionUseCase(this.questionRepository);
+        return new CreateQuestionUseCase(this.questionRepository,this.questionCategoryRepository);
     }
 
     public getUpdateQuestionUseCase() {
-        return new UpdateQuestionUseCase(this.questionRepository);
+        return new UpdateQuestionUseCase(this.questionRepository,this.questionCategoryRepository);
+    }
+
+    public getDeleteQuestionUseCase() {
+        return new DeleteQuestionUseCase(this.questionRepository);
+    }
+
+    public getListQuestionUseCase() {
+        return new ListQuestionUseCase(this.questionRepository);
     }
 }
+

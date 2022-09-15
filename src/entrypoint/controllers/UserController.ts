@@ -14,7 +14,7 @@ import IReadUserUseCase from "@application/usecases/user/read/IReadUserUseCase";
 
 @ApiPath({
     path: "/users",
-    name: "User",
+    name: "User"
 })
 @controller("/users")
 export default class UserController implements interfaces.Controller {
@@ -49,6 +49,7 @@ export default class UserController implements interfaces.Controller {
     }
 
     @ApiOperationPatch({
+        security: { BearerToken: [] },
         description: "Patch user object",
         path: "/{id}",
         parameters: {
@@ -77,6 +78,7 @@ export default class UserController implements interfaces.Controller {
     }
 
     @ApiOperationDelete({
+        security: { BearerToken: [] },
         description: "Delete user object",
         path: "/{id}",
         parameters: {
@@ -101,6 +103,7 @@ export default class UserController implements interfaces.Controller {
     }
 
     @ApiOperationGet({
+        security: { BearerToken: [] },
         description: "Read user object",
         path: "/{id}",
         parameters: {

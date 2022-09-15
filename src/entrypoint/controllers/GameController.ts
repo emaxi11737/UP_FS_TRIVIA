@@ -15,7 +15,7 @@ import IGamePatchDto from "@application/usecases/game/IGamePatchDto";
     path: "/games",
     name: "Game",
 })
-@controller("/games")
+@controller("/games", TYPES.LoggerMiddleware)
 export default class GameController implements interfaces.Controller {
     private readonly createGameUseCase: ICreateGameUseCase;
     private readonly updateGameUseCase: IUpdateGameUseCase;

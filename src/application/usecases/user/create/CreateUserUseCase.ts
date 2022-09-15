@@ -17,7 +17,7 @@ export default class CreateUserUseCase implements ICreateUserUseCase {
         const userEntity = new User(
             userDto.id,
             userDto.username,
-            userDto.password && md5(userDto.password),
+            userDto.password && md5(String(userDto.password)),
             userDto.email,
             userDto.createdAt,
             userDto.updatedAt,

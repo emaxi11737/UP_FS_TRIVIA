@@ -64,7 +64,7 @@ export default class UserController implements interfaces.Controller {
             400: { description: "Error", type: SwaggerDefinitionConstant.Response.Type.ARRAY }
         },
     })
-    @httpPatch("/:id")
+    @httpPatch("/:id", TYPES.LoggerMiddleware)
     public async update(@requestParam("id") id: string, @request() req: express.Request, @response() res: express.Response) {
         let userPatchDto: IUserPatchDto = req.body;
         userPatchDto.id = id;
@@ -91,7 +91,7 @@ export default class UserController implements interfaces.Controller {
             400: { description: "Error", type: SwaggerDefinitionConstant.Response.Type.ARRAY }
         },
     })
-    @httpDelete("/:id")
+    @httpDelete("/:id", TYPES.LoggerMiddleware)
     public async delete(@requestParam("id") id: string, @request() req: express.Request, @response() res: express.Response) {
         return this.deleteUserUseCase.delete(id)
             .then(() => res.status(204).json())

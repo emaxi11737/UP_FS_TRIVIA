@@ -14,7 +14,7 @@ import IQuestionPatchDto from '@application/usecases/question/IQuestionPatchDto'
     path: "/question",
     name: "Question",
 })
-@controller("/question")
+@controller("/question", TYPES.LoggerMiddleware)
 export default class QuestionController implements interfaces.Controller {
     private readonly createQuestionUseCase: ICreateQuestionUseCase;
     private readonly updateQuestionUseCase: IUpdateQuestionUseCase;

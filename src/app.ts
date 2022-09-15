@@ -89,6 +89,13 @@ class App {
 						title: "TRIVIA-BACKEND",
 						version: "1.0.0"
 					},
+					securityDefinitions: {
+						BearerToken: {
+							type: swagger.SwaggerDefinitionConstant.Security.Type.API_KEY,
+							in: swagger.SwaggerDefinitionConstant.Security.In.HEADER,
+							name: "Authorization"
+						}
+					}
 				}
 			}));
 		});

@@ -14,6 +14,7 @@ import IGamePatchDto from "@application/usecases/game/IGamePatchDto";
 @ApiPath({
     path: "/games",
     name: "Game",
+    security: { BearerToken: [] },
 })
 @controller("/games", TYPES.LoggerMiddleware)
 export default class GameController implements interfaces.Controller {

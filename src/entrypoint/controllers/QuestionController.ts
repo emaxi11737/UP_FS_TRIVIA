@@ -16,6 +16,7 @@ import IPaginationFilterDto from "@application/usecases/pagination/IPaginationFi
 @ApiPath({
     path: "/questions",
     name: "Question",
+    security: { BearerToken: [] },
 })
 @controller("/question", TYPES.LoggerMiddleware)
 export default class QuestionController implements interfaces.Controller {

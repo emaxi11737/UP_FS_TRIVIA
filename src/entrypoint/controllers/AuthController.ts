@@ -13,7 +13,7 @@ import IRefreshTokenUseCase from "@application/usecases/token/refresh/IRefreshTo
 
 @ApiPath({
     path: "/auth",
-    name: "Auth",
+    name: "Auth"
 })
 @controller("/auth")
 export default class AuthController implements interfaces.Controller {
@@ -50,7 +50,11 @@ export default class AuthController implements interfaces.Controller {
         description: "Refresh token",
         path: "/refresh/token",
         parameters: {
-            body: { description: "Refresh token", required: true, model: "RefreshToken" }
+            body: {
+                description: "Refresh token",
+                required: true,
+                model: 'RefreshToken'
+            }
         },
         responses: {
             200: { description: "Success", type: SwaggerDefinitionConstant.Response.Type.OBJECT, model: "Token" },

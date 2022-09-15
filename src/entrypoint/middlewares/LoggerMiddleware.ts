@@ -21,7 +21,7 @@ export default class LoggerMiddleware extends BaseMiddleware {
         if (!authHeader || !token) return res.sendStatus(401);
 
         const tokenIsValid = await this.verifyTokenUseCase.verify(token);
-        if (tokenIsValid) return res.sendStatus(403);
+        if (!tokenIsValid) return res.sendStatus(403);
 
         next();
     }

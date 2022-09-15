@@ -1,27 +1,28 @@
 import express from "express";
-import { injectable } from "inversify";
+import { inject, injectable } from "inversify";
 import { BaseMiddleware } from "inversify-express-utils";
-import Jwt from "jsonwebtoken";
+import IVerifyTokenUseCase from "@application/usecases/token/verify/IVerifyTokenUseCase";
+import AuthService from "@configuration/usecases/AuthService";
+import { TYPES } from "@constants/types";
 
 @injectable()
 export default class LoggerMiddleware extends BaseMiddleware {
-    private static readonly TOKEN_SECRET: string = process.env.SECRET_KEY;
 
-    public handler(req: express.Request, res: express.Response, next: express.NextFunction) {
-        const authHeader = req.headers['authorization']
-        const token = authHeader && authHeader.split(' ')[1]
+    private readonly verifyTokenUseCase: IVerifyTokenUseCase;
 
-        if (token == null) return res.sendStatus(401);
+    constructor(@inject(TYPES.AuthService) authService: AuthService) {
+        super();
+        this.verifyTokenUseCase = authService.GetVerifyTokenUseCase();
+    }
 
-        Jwt.verify(token, LoggerMiddleware.TOKEN_SECRET as string, (err: any, user: any) => {
-            console.error(err);
+    public async handler(req: express.Request, res: express.Response, next: express.NextFunction) {
+        const authHeader = req.headers['authorization'];
+        const token = authHeader && authHeader.split(' ')[1];
+        if (!authHeader || !token) return res.sendStatus(401);
 
-            if (err) return res.sendStatus(403);
+        const tokenIsValid = await this.verifyTokenUseCase.verify(token);
+        if (tokenIsValid) return res.sendStatus(403);
 
-            console.log(user);
-            // req.user = user
-
-            next();
-        });
+        next();
     }
 }

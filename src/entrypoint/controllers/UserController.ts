@@ -64,7 +64,9 @@ export default class UserController implements interfaces.Controller {
         },
         responses: {
             200: { description: "Success", type: SwaggerDefinitionConstant.Response.Type.ARRAY, model: "User" },
-            400: { description: "Error", type: SwaggerDefinitionConstant.Response.Type.ARRAY }
+            400: { description: "Error", type: SwaggerDefinitionConstant.Response.Type.ARRAY },
+            401: { description: "Unauthorized", type: SwaggerDefinitionConstant.Response.Type.STRING },
+            403: { description: "Forbidden", type: SwaggerDefinitionConstant.Response.Type.STRING }
         },
     })
     @httpPatch("/:id", TYPES.LoggerMiddleware)
@@ -92,7 +94,9 @@ export default class UserController implements interfaces.Controller {
         },
         responses: {
             204: { description: "Success", type: SwaggerDefinitionConstant.Response.Type.ARRAY, model: "User" },
-            400: { description: "Error", type: SwaggerDefinitionConstant.Response.Type.ARRAY }
+            400: { description: "Error", type: SwaggerDefinitionConstant.Response.Type.ARRAY },
+            401: { description: "Unauthorized", type: SwaggerDefinitionConstant.Response.Type.STRING },
+            403: { description: "Forbidden", type: SwaggerDefinitionConstant.Response.Type.STRING }
         },
     })
     @httpDelete("/:id", TYPES.LoggerMiddleware)
@@ -117,7 +121,9 @@ export default class UserController implements interfaces.Controller {
         },
         responses: {
             200: { description: "Success", type: SwaggerDefinitionConstant.Response.Type.ARRAY, model: "User" },
-            400: { description: "Error", type: SwaggerDefinitionConstant.Response.Type.ARRAY }
+            400: { description: "Error", type: SwaggerDefinitionConstant.Response.Type.ARRAY },
+            401: { description: "Unauthorized", type: SwaggerDefinitionConstant.Response.Type.STRING },
+            403: { description: "Forbidden", type: SwaggerDefinitionConstant.Response.Type.STRING }
         },
     })
     @httpGet("/:id", TYPES.LoggerMiddleware)

@@ -39,7 +39,9 @@ export default class AnswerController implements interfaces.Controller {
         },
         responses: {
             201: { description: "Success", type: SwaggerDefinitionConstant.Response.Type.OBJECT, model: "Answer" },
-            400: { description: "Error", type: SwaggerDefinitionConstant.Response.Type.ARRAY }
+            400: { description: "Error", type: SwaggerDefinitionConstant.Response.Type.ARRAY },
+            401: { description: "Unauthorized", type: SwaggerDefinitionConstant.Response.Type.STRING },
+            403: { description: "Forbidden", type: SwaggerDefinitionConstant.Response.Type.STRING }
         },
     })
     @httpPost("/")
@@ -66,7 +68,10 @@ export default class AnswerController implements interfaces.Controller {
         },
         responses: {
             200: { description: "Success", type: SwaggerDefinitionConstant.Response.Type.ARRAY, model: "Answer" },
-            400: { description: "Error", type: SwaggerDefinitionConstant.Response.Type.ARRAY }
+            400: { description: "Error", type: SwaggerDefinitionConstant.Response.Type.ARRAY },
+            401: { description: "Unauthorized", type: SwaggerDefinitionConstant.Response.Type.STRING },
+            403: { description: "Forbidden", type: SwaggerDefinitionConstant.Response.Type.STRING },
+
         },
     })
     @httpPatch("/:id")
@@ -83,7 +88,9 @@ export default class AnswerController implements interfaces.Controller {
         description: "List answers",
         responses: {
             200: { description: "Success", type: SwaggerDefinitionConstant.Response.Type.ARRAY, model: "Answer" },
-            400: { description: "Error", type: SwaggerDefinitionConstant.Response.Type.ARRAY }
+            400: { description: "Error", type: SwaggerDefinitionConstant.Response.Type.ARRAY },
+            401: { description: "Unauthorized", type: SwaggerDefinitionConstant.Response.Type.STRING },
+            403: { description: "Forbidden", type: SwaggerDefinitionConstant.Response.Type.STRING }
         },
     })
     @httpGet("/")
@@ -113,7 +120,9 @@ export default class AnswerController implements interfaces.Controller {
         },
         responses: {
             200: { description: "Success", type: SwaggerDefinitionConstant.Response.Type.ARRAY, model: "Answer" },
-            400: { description: "Error", type: SwaggerDefinitionConstant.Response.Type.ARRAY }
+            400: { description: "Error", type: SwaggerDefinitionConstant.Response.Type.ARRAY },
+            401: { description: "Unauthorized", type: SwaggerDefinitionConstant.Response.Type.STRING },
+            403: { description: "Forbidden", type: SwaggerDefinitionConstant.Response.Type.STRING }
         },
     })
     @httpGet("/:id")

@@ -4,6 +4,7 @@ import IUserRepository from "@application/repositories/IUserRepository";
 import SignInUseCase from "@application/usecases/user/signin/SignInUseCase";
 import ITokenRepository from "@application/repositories/ITokenRepository";
 import RefreshTokenUseCase from "@application/usecases/token/refresh/RefreshTokenUseCase";
+import VerifyTokenUseCase from "@application/usecases/token/verify/VerifyTokenUseCase";
 
 @injectable()
 export default class AuthService {
@@ -19,5 +20,9 @@ export default class AuthService {
 
     public GetRefreshTokenUseCase() {
         return new RefreshTokenUseCase(this.tokenRepository);
+    }
+
+    public GetVerifyTokenUseCase() {
+        return new VerifyTokenUseCase(this.tokenRepository);
     }
 }

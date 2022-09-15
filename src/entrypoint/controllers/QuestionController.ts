@@ -39,7 +39,9 @@ export default class QuestionController implements interfaces.Controller {
         },
         responses: {
             201: { description: "Success", type: SwaggerDefinitionConstant.Response.Type.OBJECT, model: "Question" },
-            400: { description: "Error", type: SwaggerDefinitionConstant.Response.Type.ARRAY }
+            400: { description: "Error", type: SwaggerDefinitionConstant.Response.Type.ARRAY },
+            401: { description: "Unauthorized", type: SwaggerDefinitionConstant.Response.Type.STRING },
+            403: { description: "Forbidden", type: SwaggerDefinitionConstant.Response.Type.STRING }
         },
     })
     @httpPost("/")
@@ -66,7 +68,9 @@ export default class QuestionController implements interfaces.Controller {
         },
         responses: {
             200: { description: "Success", type: SwaggerDefinitionConstant.Response.Type.ARRAY, model: "Question" },
-            400: { description: "Error", type: SwaggerDefinitionConstant.Response.Type.ARRAY }
+            400: { description: "Error", type: SwaggerDefinitionConstant.Response.Type.ARRAY },
+            401: { description: "Unauthorized", type: SwaggerDefinitionConstant.Response.Type.STRING },
+            403: { description: "Forbidden", type: SwaggerDefinitionConstant.Response.Type.STRING }
         },
     })
     @httpPatch("/:id")
@@ -83,7 +87,9 @@ export default class QuestionController implements interfaces.Controller {
         description: "List question categories",
         responses: {
             200: { description: "Success", type: SwaggerDefinitionConstant.Response.Type.ARRAY, model: "Question" },
-            400: { description: "Error", type: SwaggerDefinitionConstant.Response.Type.ARRAY }
+            400: { description: "Error", type: SwaggerDefinitionConstant.Response.Type.ARRAY },
+            401: { description: "Unauthorized", type: SwaggerDefinitionConstant.Response.Type.STRING },
+            403: { description: "Forbidden", type: SwaggerDefinitionConstant.Response.Type.STRING }
         },
     })
     @httpGet("/")
@@ -113,7 +119,9 @@ export default class QuestionController implements interfaces.Controller {
         },
         responses: {
             200: { description: "Success", type: SwaggerDefinitionConstant.Response.Type.ARRAY, model: "Question" },
-            400: { description: "Error", type: SwaggerDefinitionConstant.Response.Type.ARRAY }
+            400: { description: "Error", type: SwaggerDefinitionConstant.Response.Type.ARRAY },
+            401: { description: "Unauthorized", type: SwaggerDefinitionConstant.Response.Type.STRING },
+            403: { description: "Forbidden", type: SwaggerDefinitionConstant.Response.Type.STRING }
         },
     })
     @httpDelete("/:id")

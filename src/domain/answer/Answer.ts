@@ -40,6 +40,7 @@ export default class Answer {
 
     public createdAt: Date;
     public updatedAt: Date;
+    public deletedAt: Date;
 
     constructor(
         id: string,
@@ -48,6 +49,7 @@ export default class Answer {
         isRight: boolean,
         createdAt: Date,
         updatedAt: Date,
+        deletedAt: Date
     ) {
         this.id = id;
         this.questionId = questionId;
@@ -55,5 +57,6 @@ export default class Answer {
         this.isRight = isRight || false;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.deletedAt = deletedAt;
     }
 }

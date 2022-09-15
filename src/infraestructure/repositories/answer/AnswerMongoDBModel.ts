@@ -5,6 +5,7 @@ const AnswerMongoDBSchema = new Schema(
         questionId: String,
         description: String,
         isRight: Boolean,
+        deletedAt: Date,
     },
     {
         versionKey: false,

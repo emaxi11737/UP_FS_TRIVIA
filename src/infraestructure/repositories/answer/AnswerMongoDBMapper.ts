@@ -4,9 +4,9 @@ import Answer from '@domain/answer/Answer';
 export default class AnswerMongoDBMapper {
 
     public static toEntity(answerMapper: IAnswerDto): Answer {
-        const { id, questionId, description, isRight, createdAt, updatedAt } = answerMapper;
+        const { id, questionId, description, isRight, createdAt, updatedAt, deletedAt } = answerMapper;
 
-        const answerEntity = new Answer(id, questionId, description, isRight, createdAt, updatedAt);
+        const answerEntity = new Answer(id, questionId, description, isRight, createdAt, updatedAt, deletedAt);
 
         return answerEntity;
     }

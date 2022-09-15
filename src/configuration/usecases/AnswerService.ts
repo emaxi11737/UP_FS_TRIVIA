@@ -6,6 +6,7 @@ import UpdateAnswerUseCase from "@application/usecases/answer/update/UpdateAnswe
 import ReadAnswerUseCase from "@application/usecases/answer/read/ReadAnswerUseCase";
 import IQuestionRepository from "@application/repositories/IQuestionRepository";
 import ListAnswerUseCase from "@application/usecases/answer/list/ListAnswerUseCase";
+import DeleteAnswerUseCase from "@application/usecases/answer/delete/DeleteAnswerUseCase";
 
 @injectable()
 export default class AnswerService {
@@ -29,5 +30,9 @@ export default class AnswerService {
 
     public getListAnswerUseCase() {
         return new ListAnswerUseCase(this.answerRepository);
+    }
+
+    public getDeleteAnswerUseCase() {
+        return new DeleteAnswerUseCase(this.answerRepository);
     }
 }

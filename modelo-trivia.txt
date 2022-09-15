@@ -180,6 +180,7 @@ Body: {
     isRight: boolean
 }
 
+-------------------- OK ---------------------
 - DELETE /answers/{:id}
 StatusCode: 204
 body: {} //vacío porque ya estás logueado

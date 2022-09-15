@@ -25,7 +25,8 @@ export default class CreateAnswerUseCase implements ICreateAnswerUseCase {
             answerDto.description,
             answerDto.isRight,
             answerDto.createdAt,
-            answerDto.updatedAt
+            answerDto.updatedAt,
+            undefined
         );
 
         const errors = await validate(answerEntity);

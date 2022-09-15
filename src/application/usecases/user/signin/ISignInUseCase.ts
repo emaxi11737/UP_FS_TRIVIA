@@ -1,6 +1,6 @@
 import ITokenDto from '@application/usecases/token/ITokenDto';
-import IUserDto from '@application/usecases/user/IUserDto';
+import IUserSignInDto from '@application/usecases/user/IUserSignInDto';
 
 export default interface ISignInUseCase {
-    signin(userDto: IUserDto): Promise<ITokenDto>;
+    signin(userDto: IUserSignInDto): Promise<ITokenDto>;
 }

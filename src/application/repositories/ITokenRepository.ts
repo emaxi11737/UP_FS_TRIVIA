@@ -6,4 +6,5 @@ export default interface ITokenRepository {
     refresh(user: User, refreshToken: string): Promise<Token>;
     verifyAccessToken(accessToken: string): Promise<boolean>;
     verifyRefreshToken(refreshToken: string): Promise<boolean>;
+    decodeToken(token: string): Promise<User>;
 }

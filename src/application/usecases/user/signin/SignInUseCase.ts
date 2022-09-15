@@ -2,10 +2,10 @@ import md5 from 'md5';
 import { validate } from 'class-validator';
 import ISignInUseCase from '@application/usecases/user/signin/ISignInUseCase';
 import ITokenDto from '@application/usecases/token/ITokenDto';
-import IUserDto from '@application/usecases/user/IUserDto';
+import IUserSignInDto from '@application/usecases/user/IUserSignInDto';
 import IUserRepository from '@application/repositories/IUserRepository';
 import ITokenRepository from '@application/repositories/ITokenRepository';
-import User from '@domain/user/User';
+import UserSignIn from '@domain/user/UserSignIn';
 
 export default class SignInUseCase implements ISignInUseCase {
     private userRepository: IUserRepository;
@@ -19,15 +19,10 @@ export default class SignInUseCase implements ISignInUseCase {
         this.tokenRepository = tokenRepository;
     }
 
-    public async signin(userDto: IUserDto): Promise<ITokenDto> {
-        const userEntity = new User(
-            userDto.id,
-            userDto.username,
-            userDto.password && md5(userDto.password),
-            userDto.email,
-            userDto.createdAt,
-            userDto.updatedAt,
-            userDto.deletedAt
+    public async signin(userDto: IUserSignInDto): Promise<ITokenDto> {
+        const userEntity = new UserSignIn(
+            userDto.password && md5(String(userDto.password)),
+            userDto.email
         );
 
         const errors = await validate(userEntity);
@@ -36,6 +31,6 @@ export default class SignInUseCase implements ISignInUseCase {
         const user = await this.userRepository.readByEmail(userEntity.email);
         if (user.password !== userEntity.password) throw Error("Invalid password");
 
-        return await this.tokenRepository.create(userEntity);
+        return await this.tokenRepository.create(user);
     }
 }

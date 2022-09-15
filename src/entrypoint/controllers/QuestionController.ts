@@ -18,7 +18,7 @@ import IPaginationFilterDto from "@application/usecases/pagination/IPaginationFi
     name: "Question",
     security: { BearerToken: [] },
 })
-@controller("/question", TYPES.LoggerMiddleware)
+@controller("/questions", TYPES.LoggerMiddleware)
 export default class QuestionController implements interfaces.Controller {
     private readonly createQuestionUseCase: ICreateQuestionUseCase;
     private readonly updateQuestionUseCase: IUpdateQuestionUseCase;
@@ -118,7 +118,7 @@ export default class QuestionController implements interfaces.Controller {
             },
         },
         responses: {
-            200: { description: "Success", type: SwaggerDefinitionConstant.Response.Type.ARRAY, model: "Question" },
+            204: { description: "Success" },
             400: { description: "Error", type: SwaggerDefinitionConstant.Response.Type.ARRAY },
             401: { description: "Unauthorized", type: SwaggerDefinitionConstant.Response.Type.STRING },
             403: { description: "Forbidden", type: SwaggerDefinitionConstant.Response.Type.STRING }

@@ -149,7 +149,7 @@ export default class AnswerController implements interfaces.Controller {
             },
         },
         responses: {
-            204: { description: "Success", type: SwaggerDefinitionConstant.Response.Type.ARRAY, model: "Answer" },
+            204: { description: "Success" },
             400: { description: "Error", type: SwaggerDefinitionConstant.Response.Type.ARRAY },
             401: { description: "Unauthorized", type: SwaggerDefinitionConstant.Response.Type.STRING },
             403: { description: "Forbidden", type: SwaggerDefinitionConstant.Response.Type.STRING }

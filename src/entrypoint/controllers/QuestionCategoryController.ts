@@ -118,7 +118,7 @@ export default class QuestionCategoryController implements interfaces.Controller
             },
         },
         responses: {
-            200: { description: "Success", type: SwaggerDefinitionConstant.Response.Type.ARRAY, model: "QuestionCategory" },
+            204: { description: "Success" },
             400: { description: "Error", type: SwaggerDefinitionConstant.Response.Type.ARRAY },
             401: { description: "Unauthorized", type: SwaggerDefinitionConstant.Response.Type.STRING },
             403: { description: "Forbidden", type: SwaggerDefinitionConstant.Response.Type.STRING }

@@ -191,6 +191,7 @@ StatusCode: 200
 
 
 // FALTANTES
+- chequear PR faltante
 - filtros en questions, questionsCategories y answers
 - endpoint questionsRandom con filtros
 - agregar roles [admin, user] a los usuarios

@@ -20,6 +20,8 @@ export default class DeleteAnswerUseCase implements IDeleteAnswerUseCase {
         if (errors.length > 0) throw Error("Please, check input params");
 
         const answer = await this.answerRepository.read(answerId);
+        if (!!answer.deletedAt) return;
+
         answer.deletedAt = new Date();
 
         await this.answerRepository.update(answer);

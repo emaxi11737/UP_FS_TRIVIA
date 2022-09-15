@@ -23,6 +23,8 @@ export default class DeleteUserUseCase implements IDeleteUserUseCase {
         if (errors.length > 0) throw Error("Please, check input params");
 
         const user = await this.userRepository.read(userId);
+        if (!!user.deletedAt) return;
+
         user.deletedAt = new Date();
 
         await this.userRepository.update(user);

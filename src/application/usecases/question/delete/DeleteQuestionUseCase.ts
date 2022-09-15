@@ -23,6 +23,8 @@ export default class DeleteQuestionUseCase implements IDeleteQuestionUseCase {
         if (errors.length > 0) throw Error("Please, check input params");
 
         const question = await this.questionRepository.read(questionId);
+        if (!!question.deletedAt) return;
+
         question.deletedAt = new Date();
 
         await this.questionRepository.update(question);

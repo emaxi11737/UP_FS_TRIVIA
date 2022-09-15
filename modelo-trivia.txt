@@ -188,3 +188,13 @@ body: {} //vacío porque ya estás logueado
 -------------------- OK ---------------------
 - GET /answers //paginado
 StatusCode: 200
+
+
+// FALTANTES
+- filtros en questions, questionsCategories y answers
+- endpoint questionsRandom con filtros
+- agregar roles [admin, user] a los usuarios
+- precargar por default el usuario admin por única vez
+- tests unitarios
+- chequear Readme.md que esté ok
+- chequear Swagger que esté ok

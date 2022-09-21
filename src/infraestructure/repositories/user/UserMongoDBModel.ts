@@ -5,6 +5,7 @@ const UserMongoDBSchema = new Schema(
         username: String,
         password: String,
         email: String,
+        roles: [String],
         deletedAt: Date,
     },
     {

@@ -1,5 +1,6 @@
 import { ApiModel, ApiModelProperty } from 'swagger-express-ts';
 import { IsString, IsEmail, IsOptional, IsNotEmpty, IsHash } from "class-validator";
+import { Role } from '@constants/role';
 
 @ApiModel({
     name: "User"
@@ -37,6 +38,13 @@ export default class User {
     @IsEmail()
     public email: string;
 
+    @ApiModelProperty({
+        description: "Roles of user",
+        required: false,
+    })
+    @IsNotEmpty()
+    public roles?: Role[];
+
     public createdAt: Date;
     public updatedAt: Date;
     public deletedAt: Date | null;
@@ -49,11 +57,13 @@ export default class User {
         createdAt: Date,
         updatedAt: Date,
         deletedAt: Date | null,
+        roles?: Role[]
     ) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
+        this.roles = !!roles && roles.length !== 0 ? roles : [Role.USER];
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.deletedAt = deletedAt;

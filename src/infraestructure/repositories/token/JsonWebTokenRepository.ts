@@ -78,7 +78,8 @@ export default class JsonWebTokenRepository implements ITokenRepository {
             userData.email,
             userData.createdAt,
             userData.updatedAt,
-            userData.deletedAt
+            userData.deletedAt,
+            userData.roles
         );
 
         return userEntity;

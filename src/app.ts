@@ -5,7 +5,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import { connect } from "mongoose";
 import { Container } from "inversify";
-import { InversifyExpressServer, next } from "inversify-express-utils";
+import { InversifyExpressServer } from "inversify-express-utils";
 import * as swagger from "swagger-express-ts";
 import { TYPES } from "@constants/types";
 

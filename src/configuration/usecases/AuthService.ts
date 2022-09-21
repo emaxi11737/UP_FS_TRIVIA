@@ -5,6 +5,7 @@ import SignInUseCase from "@application/usecases/user/signin/SignInUseCase";
 import ITokenRepository from "@application/repositories/ITokenRepository";
 import RefreshTokenUseCase from "@application/usecases/token/refresh/RefreshTokenUseCase";
 import VerifyTokenUseCase from "@application/usecases/token/verify/VerifyTokenUseCase";
+import DecodeTokenUseCase from "@application/usecases/token/decode/DecodeTokenUseCase";
 
 @injectable()
 export default class AuthService {
@@ -24,5 +25,9 @@ export default class AuthService {
 
     public GetVerifyTokenUseCase() {
         return new VerifyTokenUseCase(this.tokenRepository);
+    }
+
+    public GetDecodeTokenUseCase() {
+        return new DecodeTokenUseCase(this.tokenRepository);
     }
 }

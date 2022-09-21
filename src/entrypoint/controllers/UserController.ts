@@ -26,6 +26,7 @@ export default class UserController implements interfaces.Controller {
     constructor(@inject(TYPES.UserService) userService: UserService) {
         this.createUserUseCase = userService.getCreateUserUseCase();
         this.updateUserUseCase = userService.getUpdateUserUseCase();
+        this.deleteUserUseCase = userService.getDeleteUserUseCase();
         this.readUserUseCase = userService.getReadUserUseCase();
     }
 
@@ -99,7 +100,7 @@ export default class UserController implements interfaces.Controller {
             403: { description: "Forbidden", type: SwaggerDefinitionConstant.Response.Type.STRING }
         },
     })
-    @httpDelete("/:id", TYPES.LoggerMiddleware)
+    @httpDelete("/:id", TYPES.LoggerMiddleware, TYPES.AdminRoleMiddleware)
     public async delete(@requestParam("id") id: string, @request() req: express.Request, @response() res: express.Response) {
         return this.deleteUserUseCase.delete(id)
             .then(() => res.status(204).json())

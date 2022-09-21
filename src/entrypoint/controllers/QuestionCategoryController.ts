@@ -44,7 +44,7 @@ export default class QuestionCategoryController implements interfaces.Controller
             403: { description: "Forbidden", type: SwaggerDefinitionConstant.Response.Type.STRING }
         },
     })
-    @httpPost("/")
+    @httpPost("/", TYPES.AdminRoleMiddleware)
     public async create(@request() req: express.Request, @response() res: express.Response) {
         const questionCategoryDto: IQuestionCategoryDto = req.body;
 
@@ -73,7 +73,7 @@ export default class QuestionCategoryController implements interfaces.Controller
             403: { description: "Forbidden", type: SwaggerDefinitionConstant.Response.Type.STRING }
         },
     })
-    @httpPatch("/:id")
+    @httpPatch("/:id", TYPES.AdminRoleMiddleware)
     public async update(@requestParam("id") id: string, @request() req: express.Request, @response() res: express.Response) {
         let questionCategoryPatchDto: IQuestionCategoryPatchDto = req.body;
         questionCategoryPatchDto.id = id;
@@ -124,7 +124,7 @@ export default class QuestionCategoryController implements interfaces.Controller
             403: { description: "Forbidden", type: SwaggerDefinitionConstant.Response.Type.STRING }
         },
     })
-    @httpDelete("/:id")
+    @httpDelete("/:id", TYPES.AdminRoleMiddleware)
     public async delete(@requestParam("id") id: string, @request() req: express.Request, @response() res: express.Response) {
         return this.deleteQuestionCategoryUseCase.delete(id)
             .then(() => res.status(204).json())

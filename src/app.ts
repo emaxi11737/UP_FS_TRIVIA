@@ -43,6 +43,7 @@ import "@entrypoint/controllers/AnswerController";
 
 // Import all middlewares
 import LoggerMiddleware from "@entrypoint/middlewares/LoggerMiddleware";
+import AdminRoleMiddleware from "@entrypoint/middlewares/AdminRoleMiddleware";
 
 class App {
 	private container: Container;
@@ -73,6 +74,7 @@ class App {
 		this.container.bind<AnswerService>(TYPES.AnswerService).to(AnswerService);
 		this.container.bind<IAnswerRepository>(TYPES.IAnswerRepository).to(AnswerMongoDBRepository);
 		this.container.bind<LoggerMiddleware>(TYPES.LoggerMiddleware).to(LoggerMiddleware);
+		this.container.bind<AdminRoleMiddleware>(TYPES.AdminRoleMiddleware).to(AdminRoleMiddleware);
 		this.container.bind<ITokenRepository>(TYPES.ITokenRepository).to(JsonWebTokenRepository);
 	}
 

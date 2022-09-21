@@ -1,3 +1,5 @@
+import { Role } from "@constants/role";
+
 export default interface IUserDto {
     id: string;
     username: string;
@@ -6,4 +8,5 @@ export default interface IUserDto {
     createdAt: Date;
     updatedAt: Date;
     deletedAt: Date | null;
+    roles?: Role[];
 }

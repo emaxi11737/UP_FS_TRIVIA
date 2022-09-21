@@ -194,8 +194,6 @@ StatusCode: 200
 - chequear PR faltante
 - filtros en questions y answers
 - endpoint questionsRandom con filtros
-- agregar roles [admin, user] a los usuarios
-- precargar por default el usuario admin por única vez
 - tests unitarios
 - chequear Readme.md que esté ok
 - chequear Swagger que esté ok

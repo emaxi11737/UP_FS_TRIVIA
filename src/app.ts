@@ -5,7 +5,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import { connect } from "mongoose";
 import { Container } from "inversify";
-import { InversifyExpressServer, next } from "inversify-express-utils";
+import { InversifyExpressServer } from "inversify-express-utils";
 import * as swagger from "swagger-express-ts";
 import { TYPES } from "@constants/types";
 
@@ -43,6 +43,7 @@ import "@entrypoint/controllers/AnswerController";
 
 // Import all middlewares
 import LoggerMiddleware from "@entrypoint/middlewares/LoggerMiddleware";
+import AdminRoleMiddleware from "@entrypoint/middlewares/AdminRoleMiddleware";
 
 class App {
 	private container: Container;
@@ -73,6 +74,7 @@ class App {
 		this.container.bind<AnswerService>(TYPES.AnswerService).to(AnswerService);
 		this.container.bind<IAnswerRepository>(TYPES.IAnswerRepository).to(AnswerMongoDBRepository);
 		this.container.bind<LoggerMiddleware>(TYPES.LoggerMiddleware).to(LoggerMiddleware);
+		this.container.bind<AdminRoleMiddleware>(TYPES.AdminRoleMiddleware).to(AdminRoleMiddleware);
 		this.container.bind<ITokenRepository>(TYPES.ITokenRepository).to(JsonWebTokenRepository);
 	}
 

@@ -47,7 +47,7 @@ export default class AnswerController implements interfaces.Controller {
             403: { description: "Forbidden", type: SwaggerDefinitionConstant.Response.Type.STRING }
         },
     })
-    @httpPost("/")
+    @httpPost("/", TYPES.AdminRoleMiddleware)
     public async create(@request() req: express.Request, @response() res: express.Response) {
         const answerDto: IAnswerDto = req.body;
 
@@ -77,7 +77,7 @@ export default class AnswerController implements interfaces.Controller {
 
         },
     })
-    @httpPatch("/:id")
+    @httpPatch("/:id", TYPES.AdminRoleMiddleware)
     public async update(@requestParam("id") id: string, @request() req: express.Request, @response() res: express.Response) {
         let answerPatchDto: IAnswerPatchDto = req.body;
         answerPatchDto.id = id;
@@ -155,7 +155,7 @@ export default class AnswerController implements interfaces.Controller {
             403: { description: "Forbidden", type: SwaggerDefinitionConstant.Response.Type.STRING }
         },
     })
-    @httpDelete("/:id", TYPES.LoggerMiddleware)
+    @httpDelete("/:id", TYPES.AdminRoleMiddleware)
     public async delete(@requestParam("id") id: string, @request() req: express.Request, @response() res: express.Response) {
         return this.deleteAnswerUseCase.delete(id)
             .then(() => res.status(204).json())

@@ -4,6 +4,7 @@ import IUserDto from '@application/usecases/user/IUserDto';
 import ICreateUserUseCase from '@application/usecases/user/create/ICreateUserUseCase';
 import IUserRepository from '@application/repositories/IUserRepository';
 import User from '@domain/user/User';
+import { Role } from '@constants/role';
 
 export default class CreateUserUseCase implements ICreateUserUseCase {
 
@@ -14,6 +15,9 @@ export default class CreateUserUseCase implements ICreateUserUseCase {
     }
 
     public async create(userDto: IUserDto): Promise<IUserDto> {
+        const listOfRoles = Object.values(Role);
+        const roles = userDto.roles.filter((role) => listOfRoles.findIndex((roleValue) => roleValue === role) !== -1);
+
         const userEntity = new User(
             userDto.id,
             userDto.username,
@@ -22,6 +26,7 @@ export default class CreateUserUseCase implements ICreateUserUseCase {
             userDto.createdAt,
             userDto.updatedAt,
             undefined,
+            roles
         );
 
         const errors = await validate(userEntity);

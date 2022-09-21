@@ -1,7 +1,7 @@
 import IAnswerDto from '@application/usecases/answer/IAnswerDto';
-import IFilterDto from '@application/usecases/filter/IFIlterDto';
+import IAnswerFilterDto from '@application/usecases/answer/IAnswerFilterDto';
 import IPaginationFilterDto from '@application/usecases/pagination/IPaginationFilterDto';
 
 export default interface IListAnswerUseCase {
-    list(paginationDto?: IPaginationFilterDto, filters?: IFilterDto): Promise<IAnswerDto[]>;
+    list(paginationDto?: IPaginationFilterDto, filters?: IAnswerFilterDto): Promise<IAnswerDto[]>;
 }

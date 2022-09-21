@@ -124,7 +124,7 @@ Body: {
     questionCategoryName: string,
 }
 
-- GET /questions //paginado
+- GET /questions //paginado y filtros
 StatusCode: 200
 
 - GET /questionsRandom?quantity=10&questionsCategories=[]
@@ -186,14 +186,15 @@ StatusCode: 204
 body: {} //vacío porque ya estás logueado
 
 -------------------- OK ---------------------
-- GET /answers //paginado
+- GET /answers //paginado y filtros
 StatusCode: 200
 
 
 // FALTANTES
 - chequear PR faltante
-- filtros en questions y answers
+- filtros en questions
 - endpoint questionsRandom con filtros
 - tests unitarios
 - chequear Readme.md que esté ok
 - chequear Swagger que esté ok
+- actualizar Postman

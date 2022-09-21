@@ -13,6 +13,7 @@ import IDeleteAnswerUseCase from "@application/usecases/answer/delete/IDeleteAns
 import IAnswerDto from "@application/usecases/answer/IAnswerDto";
 import IAnswerPatchDto from "@application/usecases/answer/IAnswerPatchDto";
 import IPaginationFilterDto from "@application/usecases/pagination/IPaginationFilterDto";
+import IAnswerFilterDto from "@application/usecases/answer/IAnswerFilterDto";
 
 @ApiPath({
     path: "/answers",
@@ -89,6 +90,25 @@ export default class AnswerController implements interfaces.Controller {
 
     @ApiOperationGet({
         description: "List answers",
+        parameters: {
+            query: {
+                page: {
+                    description: "Page of answers",
+                    type: SwaggerDefinitionConstant.Parameter.Type.NUMBER,
+                    required: false
+                },
+                limit: {
+                    description: "Limit of answers",
+                    type: SwaggerDefinitionConstant.Parameter.Type.NUMBER,
+                    required: false
+                },
+                questionId: {
+                    description: "Question id of answers",
+                    type: SwaggerDefinitionConstant.Parameter.Type.STRING,
+                    required: false
+                }
+            },
+        },
         responses: {
             200: { description: "Success", type: SwaggerDefinitionConstant.Response.Type.ARRAY, model: "Answer" },
             400: { description: "Error", type: SwaggerDefinitionConstant.Response.Type.ARRAY },
@@ -102,9 +122,12 @@ export default class AnswerController implements interfaces.Controller {
             limit: Number(req.query.limit),
             page: Number(req.query.page)
         }
-        // TODO add filters
 
-        return this.listAnswerUseCase.list(paginationDto)
+        const answersFilters: IAnswerFilterDto = {
+            questionId: req.query.questionId ? String(req.query.questionId) : undefined
+        };
+
+        return this.listAnswerUseCase.list(paginationDto, answersFilters)
             .then((answers: IAnswerDto[]) => res.status(200).json(ResponseObject.makeSuccessResponse(answers)))
             .catch((err: Error) => res.status(400).json(ResponseObject.makeErrorResponse("400", err)));
     }

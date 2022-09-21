@@ -7,6 +7,7 @@ import IAnswerRepository from '@application/repositories/IAnswerRepository';
 import Answer from '@domain/answer/Answer';
 import Filter from '@domain/filter/Filter';
 import PaginationFilter from '@domain/pagination/PaginationFilter';
+import AnswerFilter from '@domain/answer/AnswerFilter';
 
 @injectable()
 export default class AnswerMongoDBRepository implements IAnswerRepository {
@@ -17,8 +18,8 @@ export default class AnswerMongoDBRepository implements IAnswerRepository {
         this.model = AnswerMongoDBModel;
     }
 
-    public async list(pagination: PaginationFilter, filters?: Filter): Promise<Answer[]> {
-        const answerResults = await this.model.find()
+    public async list(pagination: PaginationFilter, filters?: AnswerFilter): Promise<Answer[]> {
+        const answerResults = await this.model.find(filters)
             .sort({ createdAt: 'asc' })
             .skip(pagination.page * pagination.limit)
             .limit(pagination.limit);

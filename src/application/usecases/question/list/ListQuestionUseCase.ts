@@ -2,9 +2,10 @@ import IListQuestionUseCase from '@application/usecases/question/list/IListQuest
 import IQuestionDto from '@application/usecases/question/IQuestionDto';
 import IQuestionRepository from '@application/repositories/IQuestionRepository';
 import IPaginationFilterDto from '@application/usecases/pagination/IPaginationFilterDto';
-import IFilterDto from '@application/usecases/filter/IFIlterDto';
+import IQuestionFilterDto from '@application/usecases/question/IQuestionFilterDto';
 import PaginationFilter from '@domain/pagination/PaginationFilter';
-
+import QuestionFilter from '@domain/question/QuestionFilter';
+import { validate } from 'class-validator';
 export default class ListQuestionUseCase implements IListQuestionUseCase {
 
     private questionRepository: IQuestionRepository;
@@ -13,12 +14,19 @@ export default class ListQuestionUseCase implements IListQuestionUseCase {
         this.questionRepository = questionRepository;
     }
 
-    public async list(paginationDto?: IPaginationFilterDto, filtersDto?: IFilterDto): Promise<IQuestionDto[]> {
+    public async list(paginationDto?: IPaginationFilterDto, questionFilterDto?: IQuestionFilterDto): Promise<IQuestionDto[]> {
         const pagination = new PaginationFilter(
             paginationDto?.limit || 10,
             paginationDto?.page || 0
         );
 
-        return await this.questionRepository.list(pagination, filtersDto);
+        let questionFilter;
+        if (!!questionFilterDto.questionCategoryId) {
+            questionFilter = new QuestionFilter(questionFilterDto.questionCategoryId);
+            const errors = await validate(questionFilter);
+            if (errors.length > 0) throw Error("Please, check input params");
+        }
+
+        return await this.questionRepository.list(pagination, questionFilter);
     }
 }

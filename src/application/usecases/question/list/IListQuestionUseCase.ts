@@ -1,7 +1,7 @@
 import IQuestionDto from '@application/usecases/question/IQuestionDto';
-import IFilterDto from '@application/usecases/filter/IFIlterDto';
+import IQuestionFilterDto from '@application/usecases/question/IQuestionFilterDto';
 import IPaginationFilterDto from '@application/usecases/pagination/IPaginationFilterDto';
 
 export default interface IListQuestionUseCase {
-    list(paginationDto?: IPaginationFilterDto, filters?: IFilterDto): Promise<IQuestionDto[]>;
+    list(paginationDto?: IPaginationFilterDto, filters?: IQuestionFilterDto): Promise<IQuestionDto[]>;
 }

@@ -16,7 +16,11 @@ export default class CreateUserUseCase implements ICreateUserUseCase {
 
     public async create(userDto: IUserDto): Promise<IUserDto> {
         const listOfRoles = Object.values(Role);
-        const roles = userDto.roles.filter((role) => listOfRoles.findIndex((roleValue) => roleValue === role) !== -1);
+
+        let roles: Array<Role> = [];
+        if (userDto.roles && userDto.roles.length !== 0) {
+            roles = userDto.roles.filter((role) => listOfRoles.findIndex((roleValue) => roleValue === role) !== -1);
+        }
 
         const userEntity = new User(
             userDto.id,

@@ -45,6 +45,14 @@ answers: {
     updatedAt: date,
     deletedAt: date
 }
+ranking: {
+    _id: string,
+    userId: string,
+    score: number,
+    createdAt: date,
+    updatedAt: date,
+    deletedAt: date
+},
 }
 
 // endpoints 
@@ -192,6 +200,17 @@ body: {} //vacío porque ya estás logueado
 - GET /answers //paginado y filtros
 StatusCode: 200
 
+-------------------- OK ---------------------
+- POST /rankings
+StatusCode: 201
+Body: {
+    userId: string,
+    score: number,
+}
+
+-------------------- OK ---------------------
+- GET /ranking //paginado y filtros
+StatusCode: 200
 
 // FALTANTES
 - chequear PR faltante
@@ -206,6 +225,7 @@ StatusCode: 200
 - corregir filtro questions error id(maxi)
 - pasar obligatoriamente las categorias de las preguntas (limite de 10)(maxi)
 - agregarle el nivel a las preguntas(dami)
+-Agregar ranking
 - Al momento de pasarle al random las categories pasarle un array(maxi)
 -Agregar enum con niveles de dificultad(dami)
 

@@ -23,7 +23,8 @@ questions: {
     questionCategoryId: string,
     createdAt: date,
     updatedAt: date,
-    deletedAt: date
+    deletedAt: date,
+    level: number
 },
 
 //(opciones del juego)
@@ -44,6 +45,14 @@ answers: {
     updatedAt: date,
     deletedAt: date
 }
+ranking: {
+    _id: string,
+    userId: string,
+    score: number,
+    createdAt: date,
+    updatedAt: date,
+    deletedAt: date
+},
 }
 
 // endpoints 
@@ -122,6 +131,7 @@ StatusCode: 201
 Body: {
     description: string,    
     questionCategoryName: string,
+    level: number // default 1
 }
 
 - GET /questions //paginado y filtros
@@ -136,6 +146,7 @@ body:
 {
     description: string,    
     questionCategoryName: string,
+    level: number
 }
 
 - DELETE /questions/{:id}
@@ -189,12 +200,51 @@ body: {} //vacío porque ya estás logueado
 - GET /answers //paginado y filtros
 StatusCode: 200
 
+-------------------- OK ---------------------
+- POST /rankings
+StatusCode: 201
+Body: {
+    userId: string,
+    score: number,
+}
+
+-------------------- OK ---------------------
+- GET /ranking //paginado y filtros
+StatusCode: 200
 
 // FALTANTES
 - chequear PR faltante
-- filtros en questions
-- endpoint questionsRandom con filtros
-- tests unitarios
-- chequear Readme.md que esté ok
-- chequear Swagger que esté ok
-- actualizar Postman
+- filtros en questions (max9)
+- endpoint questionsRandom con filtros(maxi)
+- tests unitarios(dividido entre los 2)
+- chequear Readme.md que esté ok(maxi)
+- chequear Swagger que esté ok(dami)
+- actualizar Postman(dami)
+- verificar que al momento de traer question random la categoria ingresada tenga preguntas relacionadas,sino devolver exception(maxi)
+- pensar algoritmo(maxi)
+- corregir filtro questions error id(maxi)
+- pasar obligatoriamente las categorias de las preguntas (limite de 10)(maxi)
+- agregarle el nivel a las preguntas(dami)
+-Agregar ranking
+- Al momento de pasarle al random las categories pasarle un array(maxi)
+-Agregar enum con niveles de dificultad(dami)
+
+------------------------------------------------------------------------------------------------------------------------------
+
+Requerimientos 
+
+Detalle de tecnologías utilizadas.
+Librerías frameworks
+Consideraciones funcionales especificas del juego elegido.
+
+El proyecto será la implementación técnica de un proyecto web, con capa API y capa de frontend.
+
+El mismo contará de dos entregables cuyas fechas están publicadas en el calendario de la materia.
+
+En la primer entrega se evaluará la capa API del sistema (endpoints, persistencia, etc).
+
+Requisitos mínimos:
+
+Al menos tres niveles
+Guardar la puntuación del usuario
+Generar un ranking

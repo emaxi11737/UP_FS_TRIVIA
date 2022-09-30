@@ -97,8 +97,8 @@ export default class QuestionController implements interfaces.Controller {
                     type: SwaggerDefinitionConstant.Parameter.Type.NUMBER,
                     required: false
                 },
-                questionId: {
-                    description: "Question id of questions",
+                questionCategoryId: {
+                    description: "Question category id of questions",
                     type: SwaggerDefinitionConstant.Parameter.Type.STRING,
                     required: false
                 }

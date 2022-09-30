@@ -7,7 +7,7 @@ import { IsString, Matches, IsOptional } from "class-validator";
 
 export default class QuestionFilter {
     @ApiModelProperty({
-        description: "Question id of answer",
+        description: "Question category id of question",
         required: false,
     })
     @IsString()

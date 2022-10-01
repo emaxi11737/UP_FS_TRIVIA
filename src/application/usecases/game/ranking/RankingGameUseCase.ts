@@ -1,4 +1,4 @@
-import IListGameUseCase from '@application/usecases/game/list/IListGameUseCase';
+import IRankingGameUseCase from '@application/usecases/game/ranking/IRankingGameUseCase';
 import IGameRankingDto from '@application/usecases/game/IGameRankingDto';
 import IGameRepository from '@application/repositories/IGameRepository';
 import PaginationFilter from '@domain/pagination/PaginationFilter';
@@ -6,7 +6,7 @@ import { PAGINATION } from '@constants/pagination';
 import IUserRepository from '@application/repositories/IUserRepository';
 import GameRanking from '@domain/game/GameRanking';
 
-export default class ListGameUseCase implements IListGameUseCase {
+export default class RankingGameUseCase implements IRankingGameUseCase {
 
     private gameRepository: IGameRepository;
     private userRepository: IUserRepository;
@@ -19,7 +19,7 @@ export default class ListGameUseCase implements IListGameUseCase {
         this.userRepository = userRepository;
     }
 
-    public async list(): Promise<IGameRankingDto[]> {
+    public async ranking(): Promise<IGameRankingDto[]> {
         const pagination = new PaginationFilter(PAGINATION.LIMIT, PAGINATION.PAGE);
         const lastGames = await this.gameRepository.list(pagination);
 

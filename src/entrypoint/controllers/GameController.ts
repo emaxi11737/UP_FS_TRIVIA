@@ -8,7 +8,7 @@ import GameService from "@configuration/usecases/GameService";
 import ICreateGameUseCase from "@application/usecases/game/create/ICreateGameUseCase";
 import IUpdateGameUseCase from "@application/usecases/game/update/IUpdateGameUseCase";
 import IReadGameUseCase from "@application/usecases/game/read/IReadGameUseCase";
-import IListGameUseCase from "@application/usecases/game/list/IListGameUseCase";
+import IRankingGameUseCase from "@application/usecases/game/ranking/IRankingGameUseCase";
 import IGameDto from "@application/usecases/game/IGameDto";
 import IGamePatchDto from "@application/usecases/game/IGamePatchDto";
 import IGameRankingDto from "@application/usecases/game/IGameRankingDto";
@@ -23,13 +23,13 @@ export default class GameController implements interfaces.Controller {
     private readonly createGameUseCase: ICreateGameUseCase;
     private readonly updateGameUseCase: IUpdateGameUseCase;
     private readonly readGameUseCase: IReadGameUseCase;
-    private readonly listGameUseCase: IListGameUseCase;
+    private readonly rankingGameUseCase: IRankingGameUseCase;
 
     constructor(@inject(TYPES.GameService) gameService: GameService) {
         this.createGameUseCase = gameService.getCreateGameUseCase();
         this.updateGameUseCase = gameService.getUpdateGameUseCase();
         this.readGameUseCase = gameService.getReadGameUseCase();
-        this.listGameUseCase = gameService.getListGameUseCase();
+        this.rankingGameUseCase = gameService.getRankingGameUseCase();
     }
 
     @ApiOperationGet({
@@ -44,7 +44,7 @@ export default class GameController implements interfaces.Controller {
     })
     @httpGet("/ranking")
     public async ranking(@request() req: express.Request, @response() res: express.Response) {
-        return this.listGameUseCase.list()
+        return this.rankingGameUseCase.ranking()
             .then((gameRanking: IGameRankingDto[]) => res.status(200).json(ResponseObject.makeSuccessResponse(gameRanking)))
             .catch((err: Error) => res.status(400).json(ResponseObject.makeErrorResponse("400", err)));
     }

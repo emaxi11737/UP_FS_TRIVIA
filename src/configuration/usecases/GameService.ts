@@ -5,7 +5,7 @@ import CreateGameUseCase from "@application/usecases/game/create/CreateGameUseCa
 import UpdateGameUseCase from "@application/usecases/game/update/UpdateGameUseCase";
 import ReadGameUseCase from "@application/usecases/game/read/ReadGameUseCase";
 import IUserRepository from "@application/repositories/IUserRepository";
-import ListGameUseCase from "@application/usecases/game/list/ListGameUseCase";
+import RankingGameUseCase from "@application/usecases/game/ranking/RankingGameUseCase";
 
 @injectable()
 export default class GameService {
@@ -27,7 +27,7 @@ export default class GameService {
         return new ReadGameUseCase(this.gameRepository);
     }
 
-    public getListGameUseCase() {
-        return new ListGameUseCase(this.gameRepository, this.userRepository);
+    public getRankingGameUseCase() {
+        return new RankingGameUseCase(this.gameRepository, this.userRepository);
     }
 }

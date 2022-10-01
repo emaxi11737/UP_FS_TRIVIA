@@ -140,13 +140,13 @@ export default class QuestionController implements interfaces.Controller {
                     description: "Question categories id of questions",
                     type: SwaggerDefinitionConstant.Parameter.Type.ARRAY,
                     required: true,
-                    
+
                 },
                 level: {
                     description: "Questions Level",
                     type: SwaggerDefinitionConstant.Parameter.Type.NUMBER,
                     required: true,
-                    
+
                 }
             },
         },
@@ -160,11 +160,9 @@ export default class QuestionController implements interfaces.Controller {
     @httpGet("/random")
     public async random(@request() req: express.Request, @response() res: express.Response) {
         const questionFilters: IRandomQuestionFilterDto = {
-            questionCategoriesId: req.query.questionCategoriesId.toString().split(','),
-            level: req.query.level ? Number(req.query.level) : undefined,
-            size: 10
+            questionCategoriesId: req.query.questionCategoriesId ? req.query.questionCategoriesId.toString().split(',') : [],
+            level: Number(req.query.level),
         };
-
 
         return this.randomQuestionUseCase.random(questionFilters)
             .then((questioncategories: IQuestionDto[]) => res.status(200).json(ResponseObject.makeSuccessResponse(questioncategories)))

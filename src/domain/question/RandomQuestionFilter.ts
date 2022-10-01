@@ -1,5 +1,5 @@
 import { ApiModel, ApiModelProperty } from 'swagger-express-ts';
-import { IsArray, IsNumber } from "class-validator";
+import { IsArray, IsNotEmpty, IsNumber } from "class-validator";
 
 @ApiModel({
     name: "RandomQuestionFilter"
@@ -11,6 +11,7 @@ export default class RandomQuestionFilter {
         required: true,
     })
     @IsArray()
+    @IsNotEmpty()
     public questionCategoriesId: Array<string>
 
     @ApiModelProperty({
@@ -18,6 +19,7 @@ export default class RandomQuestionFilter {
         required: true,
     })
     @IsNumber()
+    @IsNotEmpty()
     public level: number
 
     @ApiModelProperty({
@@ -25,6 +27,7 @@ export default class RandomQuestionFilter {
         required: true,
     })
     @IsNumber()
+    @IsNotEmpty()
     public size: number
 
     constructor(

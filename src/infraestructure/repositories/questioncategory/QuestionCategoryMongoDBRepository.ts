@@ -30,7 +30,7 @@ export default class QuestionCategoryMongoDBRepository implements IQuestionCateg
     public async read(id: string): Promise<QuestionCategory> {
         const questionCategoryObject: any = await this.model.findOne({ _id: id });
 
-        if (!questionCategoryObject) throw Error("QuestionCategory not found");
+        if (!questionCategoryObject) throw Error("Question category not found");
 
         return QuestionCategoryMongoDBMapper.toEntity(questionCategoryObject);
     }
@@ -38,7 +38,7 @@ export default class QuestionCategoryMongoDBRepository implements IQuestionCateg
     public async update(questionCategory: QuestionCategory): Promise<QuestionCategory> {
         const questionCategoryObject: any = await this.model.findByIdAndUpdate(questionCategory.id, questionCategory, { new: true });
 
-        if (!questionCategoryObject) throw Error("QuestionCategory not found");
+        if (!questionCategoryObject) throw Error("Question category not found");
 
         return QuestionCategoryMongoDBMapper.toEntity(questionCategoryObject);
     }

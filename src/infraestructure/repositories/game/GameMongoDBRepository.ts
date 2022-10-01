@@ -5,6 +5,8 @@ import GameMongoDBModel from '@infraestructure/repositories/game/GameMongoDBMode
 import GameMongoDBMapper from '@infraestructure/repositories/game/GameMongoDBMapper';
 import IGameRepository from '@application/repositories/IGameRepository';
 import Game from '@domain/game/Game';
+import PaginationFilter from '@domain/pagination/PaginationFilter';
+import Filter from '@domain/filter/Filter';
 
 @injectable()
 export default class GameMongoDBRepository implements IGameRepository {
@@ -13,6 +15,15 @@ export default class GameMongoDBRepository implements IGameRepository {
 
     constructor() {
         this.model = GameMongoDBModel;
+    }
+
+    public async list(pagination: PaginationFilter, filters?: Filter): Promise<Game[]> {
+        const gameResults = await this.model.find(filters)
+            .sort({ score: 'desc', createdAt: 'desc' })
+            .skip(pagination.page * pagination.limit)
+            .limit(pagination.limit);
+
+        return gameResults.map((gameModel: any) => GameMongoDBMapper.toEntity(gameModel));
     }
 
     public async create(game: Game): Promise<Game> {

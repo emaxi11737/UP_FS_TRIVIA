@@ -213,13 +213,12 @@ Body: {
 StatusCode: 200
 
 // FALTANTES
-- tests unitarios(dividido entre los 2)
 - chequear Readme.md que esté ok(maxi)
+- tests unitarios(dividido entre los 2)
 
 - agregarle el nivel a las preguntas(dami)
 - Agregar enum con niveles de dificultad(dami)
 - Validar que al game le llegue un level valido(dami)
-
 
 ------------------------------------------------------------------------------------------------------------------------------
 

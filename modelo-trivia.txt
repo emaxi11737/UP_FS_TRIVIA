@@ -228,6 +228,7 @@ StatusCode: 200
 -Agregar ranking
 - Al momento de pasarle al random las categories pasarle un array(maxi)
 -Agregar enum con niveles de dificultad(dami)
+-Validar que al game le llegue un level valido(dami)
 
 ------------------------------------------------------------------------------------------------------------------------------
 

@@ -9,10 +9,12 @@ import ICreateQuestionUseCase from '@application/usecases/question/create/ICreat
 import IUpdateQuestionUseCase from '@application/usecases/question/update/IUpdateQuestionUseCase';
 import IListQuestionUseCase from "@application/usecases/question/list/IListQuestionUseCase";
 import IDeleteQuestionUseCase from "@application/usecases/question/delete/IDeleteQuestionUseCase";
+import IRandomQuestionUseCase from "@application/usecases/question/random/IRandomQuestionUseCase";
 import IQuestionDto from '@application/usecases/question/IQuestionDto';
 import IQuestionPatchDto from '@application/usecases/question/IQuestionPatchDto';
 import IPaginationFilterDto from "@application/usecases/pagination/IPaginationFilterDto";
 import IQuestionFilterDto from "@application/usecases/question/IQuestionFilterDto";
+import IRandomQuestionFilterDto from "@application/usecases/question/IRandomQuestionFilterDto";
 @ApiPath({
     path: "/questions",
     name: "Question",
@@ -24,12 +26,14 @@ export default class QuestionController implements interfaces.Controller {
     private readonly updateQuestionUseCase: IUpdateQuestionUseCase;
     private readonly listQuestionUseCase: IListQuestionUseCase;
     private readonly deleteQuestionUseCase: IDeleteQuestionUseCase;
+    private readonly randomQuestionUseCase: IRandomQuestionUseCase;
 
     constructor(@inject(TYPES.QuestionService) questionService: QuestionService) {
         this.createQuestionUseCase = questionService.getCreateQuestionUseCase();
         this.updateQuestionUseCase = questionService.getUpdateQuestionUseCase();
         this.listQuestionUseCase = questionService.getListQuestionUseCase();
         this.deleteQuestionUseCase = questionService.getDeleteQuestionUseCase();
+        this.randomQuestionUseCase = questionService.getRandomQuestionUseCase();
     }
 
     @ApiOperationPost({
@@ -123,6 +127,53 @@ export default class QuestionController implements interfaces.Controller {
 
 
         return this.listQuestionUseCase.list(paginationDto,questionFilters)
+            .then((questioncategories: IQuestionDto[]) => res.status(200).json(ResponseObject.makeSuccessResponse(questioncategories)))
+            .catch((err: Error) => res.status(400).json(ResponseObject.makeErrorResponse("400", err)));
+    }
+
+    @ApiOperationGet({
+        path: "/random",
+        description: "Random question categories",
+        parameters: {
+            query: {
+                page: {
+                    description: "Page of questions",
+                    type: SwaggerDefinitionConstant.Parameter.Type.NUMBER,
+                    required: false
+                },
+                limit: {
+                    description: "Limit of questions",
+                    type: SwaggerDefinitionConstant.Parameter.Type.NUMBER,
+                    required: false
+                },
+                questionCategoriesId: {
+                    description: "Question categories id of questions",
+                    type: SwaggerDefinitionConstant.Parameter.Type.ARRAY,
+                    required: true
+                }
+            },
+        },
+        responses: {
+            200: { description: "Success", type: SwaggerDefinitionConstant.Response.Type.ARRAY, model: "Question" },
+            400: { description: "Error", type: SwaggerDefinitionConstant.Response.Type.ARRAY },
+            401: { description: "Unauthorized", type: SwaggerDefinitionConstant.Response.Type.STRING },
+            403: { description: "Forbidden", type: SwaggerDefinitionConstant.Response.Type.STRING }
+        },
+    })
+    @httpGet("/random/")
+    public async random(@request() req: express.Request, @response() res: express.Response) {
+        const paginationDto: IPaginationFilterDto = {
+            limit: Number(req.query.limit),
+            page: Number(req.query.page)
+        }
+
+        console.log(req.query.questionCategoriesId);
+        const questionFilters: IRandomQuestionFilterDto = {
+            questionCategoriesId: req.query.questionCategoriesId ? req.query.questionCategoriesId.toString().split(',') : undefined
+        };
+
+
+        return this.randomQuestionUseCase.random(paginationDto,questionFilters)
             .then((questioncategories: IQuestionDto[]) => res.status(200).json(ResponseObject.makeSuccessResponse(questioncategories)))
             .catch((err: Error) => res.status(400).json(ResponseObject.makeErrorResponse("400", err)));
     }

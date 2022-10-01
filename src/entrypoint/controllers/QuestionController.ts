@@ -157,7 +157,7 @@ export default class QuestionController implements interfaces.Controller {
             403: { description: "Forbidden", type: SwaggerDefinitionConstant.Response.Type.STRING }
         },
     })
-    @httpGet("/random/")
+    @httpGet("/random")
     public async random(@request() req: express.Request, @response() res: express.Response) {
         const questionFilters: IRandomQuestionFilterDto = {
             questionCategoriesId: req.query.questionCategoriesId.toString().split(','),

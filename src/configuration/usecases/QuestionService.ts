@@ -5,6 +5,7 @@ import CreateQuestionUseCase from '@application/usecases/question/create/CreateQ
 import UpdateQuestionUseCase from '@application/usecases/question/update/UpdateQuestionUseCase';
 import DeleteQuestionUseCase from '@application/usecases/question/delete/DeleteQuestionUseCase';
 import ListQuestionUseCase from '@application/usecases/question/list/ListQuestionUseCase';
+import RandomQuestionUseCase from '@application/usecases/question/random/RandomQuestionUseCase';
 import IQuestionCategoryRepository from "@application/repositories/IQuestionCategoryRepository";
 
 @injectable()
@@ -29,6 +30,10 @@ export default class QuestionService {
 
     public getListQuestionUseCase() {
         return new ListQuestionUseCase(this.questionRepository);
+    }
+    
+    public getRandomQuestionUseCase() {
+        return new RandomQuestionUseCase(this.questionRepository,this.questionCategoryRepository);
     }
 }
 

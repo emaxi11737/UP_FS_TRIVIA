@@ -7,6 +7,7 @@ import QuestionMongoDBMapper from '@infraestructure/repositories/question/Questi
 import QuestionMongoDBModel from '@infraestructure/repositories/question/QuestionMongoDBModel';
 import IQuestionMongoDB from '@infraestructure/repositories/question/IQuestionMongoDB';
 import QuestionFilter from '@domain/question/QuestionFilter';
+import RandomQuestionFilter from '@domain/question/RandomQuestionFilter';
 import PaginationFilter from '@domain/pagination/PaginationFilter';
 
 @injectable()
@@ -51,6 +52,12 @@ export default class QuestionMongoDBRepository implements IQuestionRepository {
             .skip(pagination.page * pagination.limit)
             .limit(pagination.limit);
 
+        return questionResults.map((questionModel: any) => QuestionMongoDBMapper.toEntity(questionModel));
+    }
+
+    public async random(filters?: RandomQuestionFilter): Promise<Question[]> {
+        const questionResults = await this.model.aggregate([ { $match: { "questionCategoryId" : {$in: filters.questionCategoriesId}}} , { $sample: { size : filters.size} } ]);
+        
         return questionResults.map((questionModel: any) => QuestionMongoDBMapper.toEntity(questionModel));
     }
 }

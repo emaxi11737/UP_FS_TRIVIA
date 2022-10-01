@@ -122,7 +122,7 @@ export default class QuestionController implements interfaces.Controller {
         };
 
 
-        return this.listQuestionUseCase.list(paginationDto,questionFilters)
+        return this.listQuestionUseCase.list(paginationDto, questionFilters)
             .then((questioncategories: IQuestionDto[]) => res.status(200).json(ResponseObject.makeSuccessResponse(questioncategories)))
             .catch((err: Error) => res.status(400).json(ResponseObject.makeErrorResponse("400", err)));
     }

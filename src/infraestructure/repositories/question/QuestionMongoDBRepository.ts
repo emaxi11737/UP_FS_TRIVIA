@@ -6,7 +6,7 @@ import QuestionPartial from '@domain/question/QuestionPatch';
 import QuestionMongoDBMapper from '@infraestructure/repositories/question/QuestionMongoDBMapper';
 import QuestionMongoDBModel from '@infraestructure/repositories/question/QuestionMongoDBModel';
 import IQuestionMongoDB from '@infraestructure/repositories/question/IQuestionMongoDB';
-import Filter from '@domain/filter/Filter';
+import QuestionFilter from '@domain/question/QuestionFilter';
 import PaginationFilter from '@domain/pagination/PaginationFilter';
 
 @injectable()
@@ -45,8 +45,8 @@ export default class QuestionMongoDBRepository implements IQuestionRepository {
         return QuestionMongoDBMapper.toEntity(questionObject);
     }
 
-    public async list(pagination: PaginationFilter, filters?: Filter): Promise<Question[]> {
-        const questionResults = await this.model.find()
+    public async list(pagination: PaginationFilter, filters?: QuestionFilter): Promise<Question[]> {
+        const questionResults = await this.model.find(filters)
             .sort({ createdAt: 'asc' })
             .skip(pagination.page * pagination.limit)
             .limit(pagination.limit);

@@ -12,7 +12,7 @@ import IDeleteQuestionUseCase from "@application/usecases/question/delete/IDelet
 import IQuestionDto from '@application/usecases/question/IQuestionDto';
 import IQuestionPatchDto from '@application/usecases/question/IQuestionPatchDto';
 import IPaginationFilterDto from "@application/usecases/pagination/IPaginationFilterDto";
-
+import IQuestionFilterDto from "@application/usecases/question/IQuestionFilterDto";
 @ApiPath({
     path: "/questions",
     name: "Question",
@@ -85,6 +85,25 @@ export default class QuestionController implements interfaces.Controller {
 
     @ApiOperationGet({
         description: "List question categories",
+        parameters: {
+            query: {
+                page: {
+                    description: "Page of questions",
+                    type: SwaggerDefinitionConstant.Parameter.Type.NUMBER,
+                    required: false
+                },
+                limit: {
+                    description: "Limit of questions",
+                    type: SwaggerDefinitionConstant.Parameter.Type.NUMBER,
+                    required: false
+                },
+                questionCategoryId: {
+                    description: "Question category id of questions",
+                    type: SwaggerDefinitionConstant.Parameter.Type.STRING,
+                    required: false
+                }
+            },
+        },
         responses: {
             200: { description: "Success", type: SwaggerDefinitionConstant.Response.Type.ARRAY, model: "Question" },
             400: { description: "Error", type: SwaggerDefinitionConstant.Response.Type.ARRAY },
@@ -98,9 +117,12 @@ export default class QuestionController implements interfaces.Controller {
             limit: Number(req.query.limit),
             page: Number(req.query.page)
         }
-        // TODO add filters
+        const questionFilters: IQuestionFilterDto = {
+            questionCategoryId: req.query.questionCategoryId ? String(req.query.questionCategoryId) : undefined
+        };
 
-        return this.listQuestionUseCase.list(paginationDto)
+
+        return this.listQuestionUseCase.list(paginationDto,questionFilters)
             .then((questioncategories: IQuestionDto[]) => res.status(200).json(ResponseObject.makeSuccessResponse(questioncategories)))
             .catch((err: Error) => res.status(400).json(ResponseObject.makeErrorResponse("400", err)));
     }

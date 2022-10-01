@@ -1,5 +1,6 @@
 import { ApiModel, ApiModelProperty } from 'swagger-express-ts';
-import { IsArray, IsNotEmpty, IsNumber } from "class-validator";
+import { IsArray, IsEnum, IsNotEmpty, IsNumber } from "class-validator";
+import { LEVELS } from '@constants/levels';
 
 @ApiModel({
     name: "RandomQuestionFilter"
@@ -17,10 +18,11 @@ export default class RandomQuestionFilter {
     @ApiModelProperty({
         description: "Level of questions",
         required: true,
+        enum: [String(LEVELS.LEVEL_1), String(LEVELS.LEVEL_2), String(LEVELS.LEVEL_3)]
     })
-    @IsNumber()
+    @IsEnum(LEVELS)
     @IsNotEmpty()
-    public level: number
+    public level: LEVELS
 
     @ApiModelProperty({
         description: "Amount of questions",
@@ -32,7 +34,7 @@ export default class RandomQuestionFilter {
 
     constructor(
         questionCategoriesId: Array<string>,
-        level: number,
+        level: LEVELS,
         size: number
     ) {
         this.questionCategoriesId = questionCategoriesId;

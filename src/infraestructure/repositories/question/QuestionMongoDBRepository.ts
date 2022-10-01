@@ -56,8 +56,24 @@ export default class QuestionMongoDBRepository implements IQuestionRepository {
     }
 
     public async random(filters?: RandomQuestionFilter): Promise<Question[]> {
-        const questionResults = await this.model.aggregate([ { $match: { "questionCategoryId" : {$in: filters.questionCategoriesId}}} , { $sample: { size : filters.size} } ]);
-        
+        const questionResults = await this.model.aggregate([
+            {
+                $match: {
+                    "questionCategoryId": {
+                        $in: filters.questionCategoriesId
+                    },
+                    "level": {
+                        $eq: filters.level
+                    }
+                }
+            },
+            {
+                $sample: {
+                    size: filters.size
+                }
+            }
+        ]);
+
         return questionResults.map((questionModel: any) => QuestionMongoDBMapper.toEntity(questionModel));
     }
 }

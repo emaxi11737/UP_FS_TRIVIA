@@ -5,6 +5,7 @@ const QuestionMongoDBSchema = new mongoose.Schema(
         name: String,
         description: String,
         questionCategoryId: String,
+        level: Number,
         deletedAt: Date
     },
     {

@@ -1,0 +1,10 @@
+settings.json
+node_modules
+/db
+yarn-error.log
+.nyc_output
+*.env
+/dist
+.idea/
+yarn.lock
+package-lock.json

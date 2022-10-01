@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+  trivia-db:
+    container_name: trivia-db
+    image: mongo:4.2.22
+    volumes:
+      - ./db:/data/db
+    environment:
+      - MONGO_INITDB_DATABASE=trivia_db
+    ports:
+      - 27017:27017
+    privileged: true
+
+  trivia-api:
+    depends_on:
+      - trivia-db
+    container_name: trivia-api
+    image: node:14
+    volumes:
+      - .:/app
+    ports:
+      - "${APP_PORT}:3000"
+    privileged: true
+    tty: true
+    working_dir: /app
+    env_file:
+      - .env
+    entrypoint: "yarn dev"

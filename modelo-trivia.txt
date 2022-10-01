@@ -23,17 +23,16 @@ questions: {
     questionCategoryId: string,
     createdAt: date,
     updatedAt: date,
-    deletedAt: date
+    deletedAt: date,
+    level: number
 },
 
 //(opciones del juego)
-game: {
+games: {
     _id: string,
-    time: timestamp, //tiempo inicio juego - tiempo fin juego    
-    user: User,
-    questionsQuantity: number,
-    chances: number,
-    isWinner: boolean,
+    userId: User,
+    score: number,
+    level: number,
     createdAt: date,
     updatedAt: date
 },    
@@ -46,10 +45,19 @@ answers: {
     updatedAt: date,
     deletedAt: date
 }
+ranking: {
+    _id: string,
+    userId: string,
+    score: number,
+    createdAt: date,
+    updatedAt: date,
+    deletedAt: date
+},
 }
 
-// endpoints
+// endpoints 
 - users:
+-------------------- OK ---------------------
 - POST /users
 StatusCode: 201
 Body:
@@ -59,14 +67,16 @@ Body:
     password: string,
 }
 
+-------------------- OK ---------------------
 // LOGIN
-- POST /login
+- POST /auth/signin
 StatusCode: 200
 Body: {
     email: string,
     password: string,
 }
 
+-------------------- OK ---------------------
 //TOKEN
 - PATCH /users/{:id}
 StatusCode: 200
@@ -77,6 +87,19 @@ body:
     newPassword: string,
 }
 
+-------------------- OK ---------------------
+- GET /users/{:id}
+StatusCode: 200
+
+
+-------------------- OK ---------------------
+- POST /token/refresh
+StatusCode: 200
+body: {
+    refreshToken: string
+}
+ 
+-------------------- OK ---------------------
 - DELETE /users/{:id}
 StatusCode: 204
 body: {} //vacío porque ya estás logueado
@@ -108,9 +131,10 @@ StatusCode: 201
 Body: {
     description: string,    
     questionCategoryName: string,
+    level: number // default 1
 }
 
-- GET /questions //paginado
+- GET /questions //paginado y filtros
 StatusCode: 200
 
 - GET /questionsRandom?quantity=10&questionsCategories=[]
@@ -122,29 +146,34 @@ body:
 {
     description: string,    
     questionCategoryName: string,
+    level: number
 }
 
 - DELETE /questions/{:id}
 StatusCode: 204
 body: {} //vacío porque ya estás logueado
 
-- POST /game
+-------------------- OK ---------------------
+- POST /games
 StatusCode: 201
 Body: {
-    time: timestamp,
-    user: User,
-    questionsQuantity: number,
-    chances: number,
+    user: User    
 }
 
-- PATCH /game/{:id}
+-------------------- OK ---------------------
+- PATCH /games/{:id}
 StatusCode: 200
 body: 
 {
-    time: timestamp,
-    isWinner: boolean
+    score: number,
+    level: number
 }
 
+-------------------- OK ---------------------
+- GET /games/{:id}
+StatusCode: 200
+
+-------------------- OK ---------------------
 - POST /answers
 StatusCode: 201
 Body: {
@@ -153,6 +182,7 @@ Body: {
     isRight: boolean
 }
 
+-------------------- OK ---------------------
 - PATCH /answers/{:id}
 StatusCode: 200
 Body: {
@@ -161,9 +191,45 @@ Body: {
     isRight: boolean
 }
 
+-------------------- OK ---------------------
 - DELETE /answers/{:id}
 StatusCode: 204
 body: {} //vacío porque ya estás logueado
 
-- GET /answers //paginado
+-------------------- OK ---------------------
+- GET /answers //paginado y filtros
 StatusCode: 200
+
+-------------------- OK ---------------------
+- POST /rankings
+StatusCode: 201
+Body: {
+    userId: string,
+    score: number,
+}
+
+-------------------- OK ---------------------
+- GET /ranking //paginado y filtros
+StatusCode: 200
+
+// FALTANTES
+- chequear Readme.md que esté ok(maxi)
+- tests unitarios(dividido entre los 2)
+
+------------------------------------------------------------------------------------------------------------------------------
+
+Requerimientos 
+
+Detalle de tecnologías utilizadas.
+Librerías frameworks
+Consideraciones funcionales especificas del juego elegido.
+
+El proyecto será la implementación técnica de un proyecto web, con capa API y capa de frontend.
+El mismo contará de dos entregables cuyas fechas están publicadas en el calendario de la materia.
+En la primer entrega se evaluará la capa API del sistema (endpoints, persistencia, etc).
+
+Requisitos mínimos:
+
+Al menos tres niveles
+Guardar la puntuación del usuario
+Generar un ranking

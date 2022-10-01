@@ -5,7 +5,8 @@ import IQuestionCategoryRepository from '@application/repositories/IQuestionCate
 import IRandomQuestionFilterDto from '@application/usecases/question/IRandomQuestionFilterDto';
 import RandomQuestionFilter from '@domain/question/RandomQuestionFilter';
 import { validate } from 'class-validator';
-import { Console } from 'console';
+import QuestionCategoryRead from '@domain/questioncategory/QuestionCategoryRead';
+
 export default class RandomQuestionUseCase implements IRandomQuestionUseCase {
 
     private questionRepository: IQuestionRepository;
@@ -21,6 +22,11 @@ export default class RandomQuestionUseCase implements IRandomQuestionUseCase {
         let questionFilter;
         if (!!randomQuestionFilterDto.questionCategoriesId) {
             for(var questionCategory of randomQuestionFilterDto.questionCategoriesId){
+                const randomQuestionCategoryReadEntity = new QuestionCategoryRead(
+                    questionCategory,
+                );
+                const errors = await validate(randomQuestionCategoryReadEntity);
+                if (errors.length > 0) throw Error("Please, check input params");
                 let questionCategoryExist = await this.questionCategoryRepository.read(questionCategory);
                 if (!questionCategoryExist) throw Error("Question category not found");
             }

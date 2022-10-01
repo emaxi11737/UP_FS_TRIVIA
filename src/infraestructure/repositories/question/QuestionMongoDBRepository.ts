@@ -20,9 +20,9 @@ export default class QuestionMongoDBRepository implements IQuestionRepository {
     }
 
     public async create(question: Question): Promise<Question> {
-        const questionExist: any = await this.model.findOne({ name: question.name });
+        const questionExist: any = await this.model.findOne({ name: question.name, description: question.description });
 
-        if (questionExist) return questionExist;
+        if (questionExist && !questionExist.deletedAt) return questionExist;
 
         const newQuestionObject = new this.model(question);
         const questionObject: any = await newQuestionObject.save();

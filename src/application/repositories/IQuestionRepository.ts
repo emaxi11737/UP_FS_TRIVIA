@@ -8,5 +8,5 @@ export default interface IQuestionRepository {
     read(questionId: string): Promise<Question>;
     update(question: Question): Promise<Question>;
     list(pagination: PaginationFilter, filters?: QuestionFilter): Promise<Question[]>;
-    random(pagination: PaginationFilter, filters?: RandomQuestionFilter): Promise<Question[]>;
+    random(filters?: RandomQuestionFilter): Promise<Question[]>;
 }

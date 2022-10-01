@@ -1,34 +1,37 @@
 import IRandomQuestionUseCase from '@application/usecases/question/random/IRandomQuestionUseCase';
 import IQuestionDto from '@application/usecases/question/IQuestionDto';
 import IQuestionRepository from '@application/repositories/IQuestionRepository';
-import IPaginationFilterDto from '@application/usecases/pagination/IPaginationFilterDto';
+import IQuestionCategoryRepository from '@application/repositories/IQuestionCategoryRepository';
 import IRandomQuestionFilterDto from '@application/usecases/question/IRandomQuestionFilterDto';
-import PaginationFilter from '@domain/pagination/PaginationFilter';
 import RandomQuestionFilter from '@domain/question/RandomQuestionFilter';
 import { validate } from 'class-validator';
 import { Console } from 'console';
 export default class RandomQuestionUseCase implements IRandomQuestionUseCase {
 
     private questionRepository: IQuestionRepository;
-
-    constructor(questionRepository: IQuestionRepository) {
+    private questionCategoryRepository: IQuestionCategoryRepository;
+    
+    constructor(questionRepository: IQuestionRepository, questionCategoryRepository: IQuestionCategoryRepository) {
         this.questionRepository = questionRepository;
+        this.questionCategoryRepository = questionCategoryRepository;
     }
 
-    public async random(paginationDto?: IPaginationFilterDto, questionFilterDto?: IRandomQuestionFilterDto): Promise<IQuestionDto[]> {
-        const pagination = new PaginationFilter(
-            paginationDto?.limit || 10,
-            paginationDto?.page || 0
-        );
-
+    public async random(randomQuestionFilterDto?: IRandomQuestionFilterDto): Promise<IQuestionDto[]> {
+    
         let questionFilter;
-        if (!!questionFilterDto.questionCategoriesId) {
-            questionFilter = new RandomQuestionFilter(questionFilterDto.questionCategoriesId);
+        if (!!randomQuestionFilterDto.questionCategoriesId) {
+            for(var questionCategory of randomQuestionFilterDto.questionCategoriesId){
+                let questionCategoryExist = await this.questionCategoryRepository.read(questionCategory);
+                if (!questionCategoryExist) throw Error("Question category not found");
+            }
+            questionFilter = new RandomQuestionFilter(randomQuestionFilterDto.questionCategoriesId,randomQuestionFilterDto.level,randomQuestionFilterDto.size);
             const errors = await validate(questionFilter);
             if (errors.length > 0) throw Error("Please, check input params");
         }
 
-        let questions = this.questionRepository.random(pagination, questionFilter);
+       
+
+        let questions = this.questionRepository.random(questionFilter);
 
         return questions;
     }

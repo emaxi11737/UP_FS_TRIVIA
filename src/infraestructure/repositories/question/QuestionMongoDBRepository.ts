@@ -55,13 +55,9 @@ export default class QuestionMongoDBRepository implements IQuestionRepository {
         return questionResults.map((questionModel: any) => QuestionMongoDBMapper.toEntity(questionModel));
     }
 
-    public async random(pagination: PaginationFilter, filters?: RandomQuestionFilter): Promise<Question[]> {
-        console.log(filters.questionCategoriesId);
-        const questionResults = await this.model.find({'questionCategoryId': {$in: filters.questionCategoriesId}})
-            // .sort({ createdAt: 'asc' })
-            // .skip(pagination.page * pagination.limit)
-            // .limit(pagination.limit);
-
+    public async random(filters?: RandomQuestionFilter): Promise<Question[]> {
+        const questionResults = await this.model.aggregate([ { $match: { "questionCategoryId" : {$in: filters.questionCategoriesId}}} , { $sample: { size : filters.size} } ]);
+        
         return questionResults.map((questionModel: any) => QuestionMongoDBMapper.toEntity(questionModel));
     }
 }

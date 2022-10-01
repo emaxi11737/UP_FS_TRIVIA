@@ -136,20 +136,17 @@ export default class QuestionController implements interfaces.Controller {
         description: "Random question categories",
         parameters: {
             query: {
-                page: {
-                    description: "Page of questions",
-                    type: SwaggerDefinitionConstant.Parameter.Type.NUMBER,
-                    required: false
-                },
-                limit: {
-                    description: "Limit of questions",
-                    type: SwaggerDefinitionConstant.Parameter.Type.NUMBER,
-                    required: false
-                },
                 questionCategoriesId: {
                     description: "Question categories id of questions",
                     type: SwaggerDefinitionConstant.Parameter.Type.ARRAY,
-                    required: true
+                    required: true,
+                    
+                },
+                level: {
+                    description: "Questions Level",
+                    type: SwaggerDefinitionConstant.Parameter.Type.NUMBER,
+                    required: true,
+                    
                 }
             },
         },
@@ -162,18 +159,14 @@ export default class QuestionController implements interfaces.Controller {
     })
     @httpGet("/random/")
     public async random(@request() req: express.Request, @response() res: express.Response) {
-        const paginationDto: IPaginationFilterDto = {
-            limit: Number(req.query.limit),
-            page: Number(req.query.page)
-        }
-
-        console.log(req.query.questionCategoriesId);
         const questionFilters: IRandomQuestionFilterDto = {
-            questionCategoriesId: req.query.questionCategoriesId ? req.query.questionCategoriesId.toString().split(',') : undefined
+            questionCategoriesId: req.query.questionCategoriesId.toString().split(','),
+            level: req.query.level ? Number(req.query.level) : undefined,
+            size: 10
         };
 
 
-        return this.randomQuestionUseCase.random(paginationDto,questionFilters)
+        return this.randomQuestionUseCase.random(questionFilters)
             .then((questioncategories: IQuestionDto[]) => res.status(200).json(ResponseObject.makeSuccessResponse(questioncategories)))
             .catch((err: Error) => res.status(400).json(ResponseObject.makeErrorResponse("400", err)));
     }

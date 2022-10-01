@@ -33,7 +33,7 @@ export default class QuestionService {
     }
     
     public getRandomQuestionUseCase() {
-        return new RandomQuestionUseCase(this.questionRepository);
+        return new RandomQuestionUseCase(this.questionRepository,this.questionCategoryRepository);
     }
 }
 

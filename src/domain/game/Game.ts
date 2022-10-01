@@ -1,5 +1,6 @@
 import { ApiModel, ApiModelProperty } from 'swagger-express-ts';
-import { IsString, IsNotEmpty, IsNumber, Matches } from "class-validator";
+import { IsString, IsNotEmpty, IsNumber, Matches, IsEnum } from "class-validator";
+import { LEVELS } from '@constants/levels';
 
 @ApiModel({
     name: "Game"
@@ -32,10 +33,11 @@ export default class Game {
     @ApiModelProperty({
         description: "Level of game",
         required: false,
+        enum: [String(LEVELS.LEVEL_1), String(LEVELS.LEVEL_2), String(LEVELS.LEVEL_3)]
     })
-    @IsNumber()
+    @IsEnum(LEVELS)
     @IsNotEmpty()
-    public level: number;
+    public level: LEVELS;
 
     public createdAt: Date;
     public updatedAt: Date;
@@ -44,14 +46,14 @@ export default class Game {
         id: string,
         userId: string,
         score: number,
-        level: number,
+        level: LEVELS,
         createdAt: Date,
         updatedAt: Date,
     ) {
         this.id = id;
         this.userId = userId;
         this.score = score || 0;
-        this.level = level || 0;
+        this.level = level || LEVELS.LEVEL_1;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }

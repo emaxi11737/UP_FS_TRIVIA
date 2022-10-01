@@ -1,5 +1,6 @@
 import { ApiModel, ApiModelProperty } from 'swagger-express-ts';
-import { IsString, Matches, IsOptional } from "class-validator";
+import { IsString, Matches, IsOptional, IsEnum } from "class-validator";
+import { LEVELS } from '@constants/levels';
 
 @ApiModel({
     name: "QuestionPatch"
@@ -38,15 +39,26 @@ export default class QuestionPatch {
     @IsOptional()
     public questionCategoryId?: string;
 
+    @ApiModelProperty({
+        description: "Level of game",
+        required: false,
+        enum: [String(LEVELS.LEVEL_1), String(LEVELS.LEVEL_2), String(LEVELS.LEVEL_3)]
+    })
+    @IsEnum(LEVELS)
+    @IsOptional()
+    public level: LEVELS;
+
     constructor(
         id: string,
         name?: string,
         description?: string,
-        questionCategoryId?: string
+        questionCategoryId?: string,
+        level?: LEVELS
     ) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.questionCategoryId = questionCategoryId;
+        this.level = level;
     }
 }

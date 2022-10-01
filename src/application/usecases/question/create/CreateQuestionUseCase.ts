@@ -10,8 +10,10 @@ export default class CreateQuestionUseCase implements ICreateQuestionUseCase {
     private questionRepository: IQuestionRepository;
     private questionCategoryRepository: IQuestionCategoryRepository;
 
-    constructor(questionRepository: IQuestionRepository,
-        questionCategoryRepository: IQuestionCategoryRepository) {
+    constructor(
+        questionRepository: IQuestionRepository,
+        questionCategoryRepository: IQuestionCategoryRepository
+    ) {
         this.questionRepository = questionRepository;
         this.questionCategoryRepository = questionCategoryRepository;
     }
@@ -23,6 +25,7 @@ export default class CreateQuestionUseCase implements ICreateQuestionUseCase {
             questionDto.name,
             questionDto.description,
             questionDto.questionCategoryId,
+            questionDto.level,
             questionDto.createdAt,
             questionDto.updatedAt,
             questionDto.deletedAt

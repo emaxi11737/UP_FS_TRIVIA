@@ -1,5 +1,6 @@
 import { ApiModel, ApiModelProperty } from 'swagger-express-ts';
-import { IsString } from "class-validator";
+import { IsEnum, IsNotEmpty, IsString } from "class-validator";
+import { LEVELS } from '@constants/levels';
 
 @ApiModel({
     name: "Question"
@@ -33,7 +34,14 @@ export default class Question {
     @IsString()
     public questionCategoryId: string;
 
-    
+    @ApiModelProperty({
+        description: "Level of game",
+        required: true,
+        enum: [String(LEVELS.LEVEL_1), String(LEVELS.LEVEL_2), String(LEVELS.LEVEL_3)]
+    })
+    @IsEnum(LEVELS)
+    @IsNotEmpty()
+    public level: LEVELS;
 
     public createdAt: Date;
     public updatedAt: Date;
@@ -44,6 +52,7 @@ export default class Question {
         name: string,
         description: string,
         questionCategoryId: string,
+        level: LEVELS,
         createdAt: Date,
         updatedAt: Date,
         deletedAt: Date | null
@@ -52,6 +61,7 @@ export default class Question {
         this.name = name;
         this.description = description;
         this.questionCategoryId = questionCategoryId;
+        this.level = level;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.deletedAt = deletedAt;

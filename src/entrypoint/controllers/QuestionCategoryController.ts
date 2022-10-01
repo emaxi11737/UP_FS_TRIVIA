@@ -14,11 +14,11 @@ import IQuestionCategoryPatchDto from '@application/usecases/questioncategory/IQ
 import IPaginationFilterDto from "@application/usecases/pagination/IPaginationFilterDto";
 
 @ApiPath({
-    path: "/questioncategories",
+    path: "/questionCategories",
     name: "QuestionCategory",
     security: { BearerToken: [] },
 })
-@controller("/questioncategories", TYPES.LoggerMiddleware)
+@controller("/questionCategories", TYPES.LoggerMiddleware)
 export default class QuestionCategoryController implements interfaces.Controller {
     private readonly createQuestionCategoryUseCase: ICreateQuestionCategoryUseCase;
     private readonly updateQuestionCategoryUseCase: IUpdateQuestionCategoryUseCase;

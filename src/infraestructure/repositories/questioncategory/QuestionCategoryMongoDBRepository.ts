@@ -18,9 +18,8 @@ export default class QuestionCategoryMongoDBRepository implements IQuestionCateg
     }
 
     public async create(questionCategory: QuestionCategory): Promise<QuestionCategory> {
-        const questionCategoryExist: any = await this.model.findOne({ name: questionCategory.name });
-
-        if (questionCategoryExist) return questionCategoryExist;
+        const questionCategoryExist: any = await this.model.findOne({ name: questionCategory.name, description: questionCategory.description });
+        if (questionCategoryExist && !questionCategoryExist.deletedAt) return questionCategoryExist;
 
         const newQuestionCategoryObject = new this.model(questionCategory);
         const questionCategoryObject: any = await newQuestionCategoryObject.save();
@@ -45,7 +44,7 @@ export default class QuestionCategoryMongoDBRepository implements IQuestionCateg
     }
 
     public async list(pagination: PaginationFilter, filters?: Filter): Promise<QuestionCategory[]> {
-        const questionCategoriesResults = await this.model.find()
+        const questionCategoriesResults = await this.model.find({ deletedAt: null })
             .sort({ createdAt: 'asc' })
             .skip(pagination.page * pagination.limit)
             .limit(pagination.limit);

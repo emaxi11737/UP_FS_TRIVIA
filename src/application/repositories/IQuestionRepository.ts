@@ -9,4 +9,5 @@ export default interface IQuestionRepository {
     update(question: Question): Promise<Question>;
     list(pagination: PaginationFilter, filters?: QuestionFilter): Promise<Question[]>;
     random(filters?: RandomQuestionFilter): Promise<Question[]>;
+    findAll(filters?: QuestionFilter): Promise<Question[]>;
 }

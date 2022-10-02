@@ -3,4 +3,5 @@ export default interface IQuestionPatchDto {
     name?: string;
     description?: string;
     questionCategoryId?: string;
+    level?: number;
 }

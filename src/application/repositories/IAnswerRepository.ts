@@ -7,4 +7,5 @@ export default interface IAnswerRepository {
     update(answer: Answer): Promise<Answer>;
     read(answerId: string): Promise<Answer>;
     list(pagination: PaginationFilter, filters?: AnswerFilter): Promise<Answer[]>;
+    findAll(filters?: AnswerFilter): Promise<Answer[]>;
 }

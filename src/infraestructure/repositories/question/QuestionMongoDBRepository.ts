@@ -47,11 +47,16 @@ export default class QuestionMongoDBRepository implements IQuestionRepository {
     }
 
     public async list(pagination: PaginationFilter, filters?: QuestionFilter): Promise<Question[]> {
-        const questionResults = await this.model.find(filters)
+        const questionResults = await this.model.find({ filters, deletedAt: null })
             .sort({ createdAt: 'asc' })
             .skip(pagination.page * pagination.limit)
             .limit(pagination.limit);
 
+        return questionResults.map((questionModel: any) => QuestionMongoDBMapper.toEntity(questionModel));
+    }
+
+    public async findAll(filters?: QuestionFilter): Promise<Question[]> {
+        const questionResults = await this.model.find(filters);
         return questionResults.map((questionModel: any) => QuestionMongoDBMapper.toEntity(questionModel));
     }
 

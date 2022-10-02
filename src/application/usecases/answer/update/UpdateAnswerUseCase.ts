@@ -29,12 +29,11 @@ export default class UpdateAnswerUseCase implements IUpdateAnswerUseCase {
 
         const errors = await validate(answerPatchEntity);
         if (errors.length > 0) throw Error("Please, check input params");
-        const answer = await this.answerRepository.read(answerDto.id);
 
+        const answer = await this.answerRepository.read(answerDto.id);
         if (answerPatchEntity.questionId) {
-            // TODO
-            // const questionExist = await this.questionRepository.read(answerEntity.questionId);
-            // if (!questionExist) throw Error("Question not found");
+            const questionExist = await this.questionRepository.read(answerPatchEntity.questionId);
+            if (!questionExist || !!questionExist.deletedAt) throw Error("Question not found");
 
             answer.questionId = answerPatchEntity.questionId;
         }

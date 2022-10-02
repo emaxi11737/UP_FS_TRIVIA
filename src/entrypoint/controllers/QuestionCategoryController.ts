@@ -98,7 +98,6 @@ export default class QuestionCategoryController implements interfaces.Controller
             limit: Number(req.query.limit),
             page: Number(req.query.page)
         }
-        // TODO add filters
 
         return this.listQuestionCategoryUseCase.list(paginationDto)
             .then((questioncategories: IQuestionCategoryDto[]) => res.status(200).json(ResponseObject.makeSuccessResponse(questioncategories)))

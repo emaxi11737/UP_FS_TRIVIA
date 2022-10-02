@@ -32,9 +32,8 @@ export default class CreateAnswerUseCase implements ICreateAnswerUseCase {
         const errors = await validate(answerEntity);
         if (errors.length > 0) throw Error("Please, check input params");
 
-        // TODO
-        // const questionExist = await this.questionRepository.read(answerEntity.questionId);
-        // if (!questionExist) throw Error("Question not found");
+        const questionExist = await this.questionRepository.read(answerEntity.questionId);
+        if (!questionExist || !!questionExist.deletedAt) throw Error("Question not found");
 
         return await this.answerRepository.create(answerEntity);
     }

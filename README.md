@@ -15,13 +15,11 @@ para poder mapear nuestros datos con nuestros objetos de dominio.
 <br>
 
 ## Requerimientos funcionales
--------------------------------------------------------------
 Especificar los requerimientos
 <br>
 <br>
 
 ## Pasos para levantar los servicios
-----------------------------------------------------------------------------
 1. Instalar **docker** y **docker-compose**.
 2. Clonar el repositorio.
 3. Copiar el archivo **.env.example** a uno nuevo llamado **.env**
@@ -35,7 +33,6 @@ Especificar los requerimientos
 <br>
 
 ## Tests
------------------------------------------------------------------------------
 Para correr los tests, es necesario tener levantado los servicios anteriormente mencionados.
 1. En caso que no se hayan levantado los servicios, ejecutar `'docker-compose up -d'`.
 2. Test a correr:
@@ -45,14 +42,12 @@ Para correr los tests, es necesario tener levantado los servicios anteriormente 
 <br>
 
 ## Documentación Swagger
------------------------------------------------------------------------------
 1. Abrir en una pestaña de un navegador la siguiente ruta: `'http://localhost:{APP_PORT}/api-docs/swagger'`, donde la variable APP_PORT corresponderá al puerto cargado en el archivo **.env**. 
 <br> A continuación presento un ejemplo de como sería la URL: http://localhost:3000/api-docs/swagger
 <br>
 <br>
 
 ## Documentación Postman
------------------------------------------------------------------------------
 1. Abrir Postman.
 2. Seleccionar:
     - Select File 

@@ -1,9 +1,10 @@
 # TRIVIA-BACKEND
 
 ## Sobre el proyecto
-Nuestro servicio backend está desarrollado en NodeJs, utilizando el framework ExpressJs con el lenguaje Typescript, brindando la ventaja de que es fuertemente tipado y así evitar errores tanto en la traspilación como en tiempo de ejecución. 
+
+Nuestro servicio backend está desarrollado en NodeJs, utilizando el framework ExpressJs con el lenguaje Typescript, brindando la ventaja de que es fuertemente tipado y así evitar errores tanto en la traspilación como en tiempo de ejecución.
 <br> Disponibilizamos una serie de endpoints, a fin de administrar los distintos objetos de dominio, específicamente los usuarios, juegos, categorías de preguntas, preguntas, respuestas y la autenticación.
-<br> La estructura del proyecto es en base a una arquitectura limpia o capa cebolla, dividiéndose en capa de dominio, capa de casos de uso, capa de servicios, capa de repositorios y por último capa de los controladores. 
+<br> La estructura del proyecto es en base a una arquitectura limpia o capa cebolla, dividiéndose en capa de dominio, capa de casos de uso, capa de servicios, capa de repositorios y por último capa de los controladores.
 <br> También usamos el patrón inyección de dependencias, service locator y singleton con los principios SOLID, para que nuestro producto sea robusto, fácil de mantener y escalable en el tiempo.
 <br> Implementamos una base de datos no relacional MongoDB y el ODM Mongoose,
 para poder mapear nuestros datos con nuestros objetos de dominio.
@@ -12,9 +13,24 @@ para poder mapear nuestros datos con nuestros objetos de dominio.
 <br> (PRÓXIMAMENTE) Como complemento, agregaremos tests unitarios a los casos de uso, para poder verificar que nuestro código es de calidad.
 
 ## Requerimientos funcionales
-Especificar los requerimientos
+
+1. Registrar un usuario, iniciar sesión y obtener un token para usar los endpoints.
+    - El endpoint **signin**, requiere las credenciales del usuario registrado. Este devuelve un objeto con 2 tokens:
+        - Access token, utilizado para consumir todos los endpoints.
+        - Refresh token, utilizado para pedir un nuevo token una vez vencido el access token.
+    - Cada uno dura 10 minutos y 1 hora respectivamente.
+2. Accesos del usuario con rol **admin**:
+    - CREATE, UPDATE y DELETE de categorías de preguntas
+    - CREATE, UPDATE y DELETE de preguntas
+    - CREATE, UPDATE y DELETE de respuestas
+    - DELETE de usuarios
+3. Resto de endpoints podrán ser accedidos por el usuario con el rol **user**
+4. Endpoint random dentro de las preguntas, retorna una lista de 10 preguntas de acuerdo al nivel y a una lista de categorías de preguntas especificadas.
+5. Juego con un máximo 3 niveles(fácil, medio y difícil).
+6. Registro de un ranking con las puntuaciones más altas. El endpoint nos devuelve un listado con las puntuaciones ordenadas ascendentes por la fecha más reciente.
 
 ## Pasos para levantar los servicios
+
 1. Instalar **docker** y **docker-compose**.
 2. Clonar el repositorio.
 3. Copiar el archivo **.env.example** a uno nuevo llamado **.env**
@@ -26,38 +42,26 @@ Especificar los requerimientos
 6. La api se levantará en el puerto especificado en el archivo .env, mientras que la base de datos correrá en el puerto 27017 por default especificado en el archivo **docker-compose.yml**.
 
 ## Tests
+
 Para correr los tests, es necesario tener levantado los servicios anteriormente mencionados.
+
 1. En caso que no se hayan levantado los servicios, ejecutar `'docker-compose up -d'`.
 2. Test a correr:
     - Casos de uso: `'docker exec -it trivia-api yarn test'`
     - Casos de uso con el detalle de la cobertura: `'docker exec -it trivia-api yarn test-coverage'`
 
 ## Documentación Swagger
-1. Abrir en una pestaña de un navegador la siguiente ruta: `'http://localhost:{APP_PORT}/api-docs/swagger'`, donde la variable APP_PORT corresponderá al puerto cargado en el archivo **.env**. 
-<br> A continuación presento un ejemplo de como sería la URL: http://localhost:3000/api-docs/swagger
+
+1. Abrir en una pestaña de un navegador la siguiente ruta: `'http://localhost:{APP_PORT}/api-docs/swagger'`, donde la variable APP_PORT corresponderá al puerto cargado en el archivo **.env**.
+   <br> A continuación presento un ejemplo de como sería la URL: http://localhost:3000/api-docs/swagger
 
 ## Documentación Postman
+
 1. Abrir Postman.
 2. Seleccionar:
-    - Select File 
-    - Import 
+    - Select File
+    - Import
     - Upload Files
 3. Buscar el archivo **API_TRIVIA.postman_collection** y el archivo **DEV.postman_environment.json** que se encuentran en este repositorio para cargar la collección de endpoints como el ambiente de desarrollo.
 4. Seleccionar el ambiente **DEV**.
 5. Usar Postman para enviar los requests a los endpoints.
-
-
-## A tener en cuenta
-1. Debemos registrar un usuario , loggearnos y obtener un token para usar las funcionalidades.
-El metood signin , usando nuestras crendeciales de usuario nos devolvera 2 token.Un access token que sirve para consumir los endpoints
-y el refresh token que sirve para pedir un nuevo token una vez vencido el primero.Cada uno dura 10 minutos y 1 hora respectivamente
-2. El usuario admin tendra acceso a 
-    - CRUD de categorias de preguntas
-    - CRUD de preguntas
-    - CRUD de respuestas
-  Acceder a estos endpoints desde un usuario comun resultara en un response sin autorizacion.
-<br>  El resto de endpoints sera accedido desde cualquier usuario
-3. Uno de los endpoints core de la API es random dentro de question la cual a partir de un nivel y de una lista de categorias
-obtengo 10 preguntas las cuales nos serviran para generar un nivel de los 3 que tendra el juego(facil,medio y dificil)
-4. Al terminar el juego ,si el puntaje obtenido esta dentro de los 10 primeros, este sera registrado en un ranking con las puntuaciones mas altas.El endpoint nos devolera un listado con las puntuaciones mas altas ordenadas por fecha mas reciente
-

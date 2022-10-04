@@ -22,7 +22,8 @@ export default class UpdateQuestionUseCase implements IUpdateQuestionUseCase {
             questionDto.id,
             questionDto.name,
             questionDto.description,
-            questionDto.questionCategoryId
+            questionDto.questionCategoryId,
+            questionDto.level
         );
 
         const errors = await validate(questionPatchEntity);
@@ -32,6 +33,7 @@ export default class UpdateQuestionUseCase implements IUpdateQuestionUseCase {
         const question = await this.questionRepository.read(questionDto.id);
         if (!!questionPatchEntity.name) question.name = questionPatchEntity.name;
         if (!!questionPatchEntity.description) question.description = questionPatchEntity.description;
+        if (!!questionPatchEntity.level) question.level = questionPatchEntity.level;
         if (!!questionPatchEntity.questionCategoryId) {
             const questionCategoryExist = await this.questionCategoryRepository.read(questionPatchEntity.questionCategoryId);
             if (!questionCategoryExist) throw Error("Question category not found");

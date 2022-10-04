@@ -45,3 +45,19 @@ Para correr los tests, es necesario tener levantado los servicios anteriormente 
 3. Buscar el archivo **API_TRIVIA.postman_collection** y el archivo **DEV.postman_environment.json** que se encuentran en este repositorio para cargar la collección de endpoints como el ambiente de desarrollo.
 4. Seleccionar el ambiente **DEV**.
 5. Usar Postman para enviar los requests a los endpoints.
+
+
+## A tener en cuenta
+1. Debemos registrar un usuario , loggearnos y obtener un token para usar las funcionalidades.
+El metood signin , usando nuestras crendeciales de usuario nos devolvera 2 token.Un access token que sirve para consumir los endpoints
+y el refresh token que sirve para pedir un nuevo token una vez vencido el primero.Cada uno dura 10 minutos y 1 hora respectivamente
+2. El usuario admin tendra acceso a 
+    - CRUD de categorias de preguntas
+    - CRUD de preguntas
+    - CRUD de respuestas
+  Acceder a estos endpoints desde un usuario comun resultara en un response sin autorizacion.
+<br>  El resto de endpoints sera accedido desde cualquier usuario
+3. Uno de los endpoints core de la API es random dentro de question la cual a partir de un nivel y de una lista de categorias
+obtengo 10 preguntas las cuales nos serviran para generar un nivel de los 3 que tendra el juego(facil,medio y dificil)
+4. Al terminar el juego ,si el puntaje obtenido esta dentro de los 10 primeros, este sera registrado en un ranking con las puntuaciones mas altas.El endpoint nos devolera un listado con las puntuaciones mas altas ordenadas por fecha mas reciente
+

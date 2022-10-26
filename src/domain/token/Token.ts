@@ -30,13 +30,21 @@ export default class Token {
     @IsNotEmpty()
     public expiresIn: number;
 
+    @ApiModelProperty({
+        description: "Id of user",
+        required: true,
+    })
+    public userId: string;
+
     constructor(
         accessToken: string,
         refreshToken: string,
-        expiresIn: number
+        expiresIn: number,
+        userId: string,
     ) {
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
         this.expiresIn = expiresIn;
+        this.userId = userId;
     }
 }

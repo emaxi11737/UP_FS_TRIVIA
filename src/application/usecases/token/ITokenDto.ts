@@ -3,4 +3,5 @@ export default interface ITokenDto {
     refreshToken: string;
     expiresIn: number;
     userId: string;
+    username: string;
 }

@@ -18,7 +18,7 @@ export default class AnswerMongoDBRepository implements IAnswerRepository {
     }
 
     public async list(pagination: PaginationFilter, filters?: AnswerFilter): Promise<Answer[]> {
-        const answerResults = await this.model.find({ filters, deletedAt: null })
+        const answerResults = await this.model.find({ ...filters, deletedAt: null })
             .sort({ createdAt: 'asc' })
             .skip(pagination.page * pagination.limit)
             .limit(pagination.limit);

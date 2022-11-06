@@ -44,7 +44,7 @@ export default class QuestionCategoryMongoDBRepository implements IQuestionCateg
     }
 
     public async list(pagination: PaginationFilter, filters?: Filter): Promise<QuestionCategory[]> {
-        const questionCategoriesResults = await this.model.find({ deletedAt: null })
+        const questionCategoriesResults = await this.model.find({filters, deletedAt: null })
             .sort({ createdAt: 'asc' })
             .skip(pagination.page * pagination.limit)
             .limit(pagination.limit);

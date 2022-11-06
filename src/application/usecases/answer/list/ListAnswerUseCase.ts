@@ -20,7 +20,7 @@ export default class ListAnswerUseCase implements IListAnswerUseCase {
             paginationDto?.limit || 10,
             paginationDto?.page || 0
         );
-
+            
         let answerFilter;
         if (!!answerFilterDto.questionId) {
             answerFilter = new AnswerFilter(answerFilterDto.questionId);

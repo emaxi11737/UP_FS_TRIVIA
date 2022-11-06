@@ -26,7 +26,6 @@ export default class UpdateAnswerUseCase implements IUpdateAnswerUseCase {
             answerDto.description,
             answerDto.isRight
         );
-
         const errors = await validate(answerPatchEntity);
         if (errors.length > 0) throw Error("Please, check input params");
 

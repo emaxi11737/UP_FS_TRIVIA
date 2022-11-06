@@ -28,7 +28,7 @@ export default class CreateQuestionUseCase implements ICreateQuestionUseCase {
             questionDto.level,
             questionDto.createdAt,
             questionDto.updatedAt,
-            questionDto.deletedAt
+            undefined
         );
 
         const errors = await validate(questionEntity);

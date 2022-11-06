@@ -5,26 +5,31 @@ import md5 from "md5";
 
 export default class FakeUserRepository implements IUserRepository {
 
+
     public users = [{
         id: "5ed8240576820810650d8f61",
         username: "test.test",
+        email: "test@test.com",
         password: md5("1234"),
-        createdAt: "2022-08-30T14:29:04.959Z",
-        updatedAt: "2022-08-30T14:29:04.959Z"
+        createdAt: new Date("2022-08-30T14:29:04.959Z"),
+        updatedAt: new Date("2022-08-30T14:29:04.959Z"),
     },
     {
         id: "5ed8240576820810650d8f62",
         username: "damian.sciutto",
-        password: md5("12345"),
-        createdAt: "2022-08-30T14:29:04.959Z",
-        updatedAt: "2022-08-30T14:29:04.959Z"
+        email: "damian.sciutto@gmail.com",
+        password: md5("123456"),
+        createdAt: new Date("2022-08-30T14:29:04.959Z"),
+        updatedAt: new Date("2022-08-30T14:29:04.959Z")
     },
     {
         id: "5ed8240576820810650d8f63",
         username: "pepe.argento",
+        email: "pargentino@gmail.com",
         password: md5("12346"),
-        createdAt: "2022-08-30T14:29:04.959Z",
-        updatedAt: "2022-08-30T14:29:04.959Z"
+        createdAt: new Date("2022-08-30T14:29:04.959Z"),
+        updatedAt: new Date("2022-08-30T14:29:04.959Z"),
+        deletedAt: new Date("2022-09-30T14:29:04.959Z")
     }];
 
     public async create(user: User): Promise<User> {
@@ -32,20 +37,18 @@ export default class FakeUserRepository implements IUserRepository {
 
         if (userExist) throw Error("User exist");
 
-        user.createdAt = "2022-08-30T14:29:04.959Z";
-        user.updatedAt = "2022-08-30T14:29:04.959Z";
+        user.createdAt = new Date("2022-08-30T14:29:04.959Z");
+        user.updatedAt = new Date("2022-08-30T14:29:04.959Z");
 
         return user;
     }
 
-    public async read(user: User): Promise<User> {
-        const userObject = this.users.find((userList) => userList.username === user.username);
+    public async read(userId: string): Promise<User> {
+        const userObject = this.users.find((userList) => userList.id === userId);
 
         if (!userObject) throw Error("User not found");
 
-        if (userObject.password !== user.password) throw Error("Invalid username or password");
-
-        return user;
+        return userObject;
     }
 
     public async updatePartial(user: UserPatch): Promise<User> {
@@ -54,5 +57,20 @@ export default class FakeUserRepository implements IUserRepository {
         if (!userObject) throw Error("User not found");
 
         return userObject;
+    }
+
+    public async readByEmail(email: string): Promise<User> {
+        const userObject = this.users.find((userList) => userList.email === email);
+
+        if (!userObject) throw Error("User not found");
+
+        return userObject;
+    }
+    public async update(user: User): Promise<User> {
+        const userObject = this.users.find((userList) => userList.id === user.id);
+
+        if (!userObject) throw Error("User not found");
+        
+        return user;
     }
 }

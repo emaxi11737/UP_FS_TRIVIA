@@ -5,5 +5,5 @@ export default interface IAnswerDto {
     isRight: boolean;
     createdAt: Date;
     updatedAt: Date;
-    deletedAt: Date;
+    deletedAt?: Date;
 }

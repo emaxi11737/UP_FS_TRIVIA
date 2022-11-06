@@ -30,7 +30,7 @@ export default class QuestionCategory {
 
     public createdAt: Date;
     public updatedAt: Date;
-    deletedAt: Date | null;
+    public deletedAt?: Date | null;
 
     constructor(
         id: string,
@@ -38,7 +38,7 @@ export default class QuestionCategory {
         description: string,
         createdAt: Date,
         updatedAt: Date,
-        deletedAt: Date | null
+        deletedAt?: Date | null
     ) {
         this.id = id;
         this.name = name;

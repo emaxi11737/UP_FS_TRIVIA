@@ -51,7 +51,6 @@ export default class QuestionMongoDBRepository implements IQuestionRepository {
             .sort({ createdAt: 'asc' })
             .skip(pagination.page * pagination.limit)
             .limit(pagination.limit);
-
         return questionResults.map((questionModel: any) => QuestionMongoDBMapper.toEntity(questionModel));
     }
 
@@ -78,7 +77,10 @@ export default class QuestionMongoDBRepository implements IQuestionRepository {
                 }
             }
         ]);
+        return questionResults.map((questionModel: any) => {
+            questionModel.id = questionModel._id;
 
-        return questionResults.map((questionModel: any) => QuestionMongoDBMapper.toEntity(questionModel));
+            return QuestionMongoDBMapper.toEntity(questionModel);
+        });
     }
 }

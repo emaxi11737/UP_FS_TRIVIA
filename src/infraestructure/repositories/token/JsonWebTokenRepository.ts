@@ -22,7 +22,9 @@ export default class JsonWebTokenRepository implements ITokenRepository {
         const tokenEntity = new Token(
             accessToken,
             refreshToken,
-            JsonWebTokenRepository.TOKEN_EXPIRES
+            JsonWebTokenRepository.TOKEN_EXPIRES,
+            user.id,
+            user.username
         );
 
         const errors = await validate(tokenEntity);
@@ -39,7 +41,9 @@ export default class JsonWebTokenRepository implements ITokenRepository {
         const tokenEntity = new Token(
             accessToken,
             refreshToken,
-            JsonWebTokenRepository.TOKEN_EXPIRES
+            JsonWebTokenRepository.TOKEN_EXPIRES,
+            user.id,
+            user.username
         );
 
         const errors = await validate(tokenEntity);

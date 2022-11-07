@@ -11,11 +11,11 @@ export default class TokenFilter {
         required: true,
     })
     @IsString()
-    @Matches(/^[0-9a-fA-F]{24}$/)
-    public token?: string;
+    @Matches(/^[\w-]*\.[\w-]*\.[\w-]*$/)
+    public token: string;
 
     constructor(
-        token?: string,
+        token: string,
     ) {
         this.token = token;
     }

@@ -13,8 +13,9 @@ export default class VerifyTokenUseCase implements IVerifyTokenUseCase {
 
     public async verify(token: string): Promise<boolean> {
         const tokenFilter = new TokenFilter(token);
+
         const errors = await validate(tokenFilter);
-        if (errors.length > 0) throw Error("Please, check input params");
+        if (errors.length > 0) return false;
 
         return await this.tokenRepository.verifyAccessToken(token);
     }

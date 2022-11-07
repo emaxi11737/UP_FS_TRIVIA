@@ -33,10 +33,6 @@ export default class FakeUserRepository implements IUserRepository {
     }];
 
     public async create(user: User): Promise<User> {
-        const userExist = this.users.find((userList) => userList.username === user.username);
-
-        if (userExist) throw Error("User exist");
-
         user.createdAt = new Date("2022-08-30T14:29:04.959Z");
         user.updatedAt = new Date("2022-08-30T14:29:04.959Z");
 
@@ -59,10 +55,10 @@ export default class FakeUserRepository implements IUserRepository {
         return userObject;
     }
 
-    public async readByEmail(email: string): Promise<User> {
+    public async readByEmail(email: string): Promise<User | undefined> {
         const userObject = this.users.find((userList) => userList.email === email);
 
-        if (!userObject) throw Error("User not found");
+        if (!userObject) return;
 
         return userObject;
     }
@@ -70,7 +66,7 @@ export default class FakeUserRepository implements IUserRepository {
         const userObject = this.users.find((userList) => userList.id === user.id);
 
         if (!userObject) throw Error("User not found");
-        
+
         return user;
     }
 }

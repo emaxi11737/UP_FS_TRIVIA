@@ -30,10 +30,10 @@ export default class UserMongoDBRepository implements IUserRepository {
         return UserMongoDBMapper.toEntity(userObject);
     }
 
-    public async readByEmail(email: string): Promise<User> {
+    public async readByEmail(email: string): Promise<User | undefined> {
         const userObject: any = await this.model.findOne({ email });
 
-        if (!userObject) throw Error("User not found");
+        if (!userObject) return;
 
         return UserMongoDBMapper.toEntity(userObject);
     }

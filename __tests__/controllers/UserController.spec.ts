@@ -1,6 +1,6 @@
 import "reflect-metadata";
 // tslint:disable-next-line:ordered-imports
-import chai from "chai";
+import chai, { use } from "chai";
 import "mocha";
 import { it } from "mocha";
 import sinon, { SinonSandbox } from "sinon";
@@ -146,6 +146,16 @@ describe("UserController", () => {
             expect(response.json).to.have.been.calledWithMatch(ResponseObject.makeErrorResponse("400", new Error("Please, check input params")));
         });
 
+        it("Should return 204 as deleted user", async () => {
+            sandbox.spy(response, "status");
+            sandbox.spy(response, "json");
+
+            const emptyReq: any = { body: {} };
+
+            await userController.delete("5ed8240576820810650d8f61", emptyReq, response);
+
+            expect(response.status).to.have.been.calledWith(204);
+        });
 
     });
 });

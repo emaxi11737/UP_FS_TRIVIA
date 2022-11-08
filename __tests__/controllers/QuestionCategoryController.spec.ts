@@ -128,14 +128,15 @@ describe("QuestionCategoryController", () => {
             expect(response.status).to.have.been.calledWith(400);
             expect(response.json).to.have.been.calledWithMatch(ResponseObject.makeErrorResponse("400", new Error("Please, check input params")));
         });
-        it("Should return 204 and a deleted answer", async () => {
+
+        it("Should return 204 as deleted question category", async () => {
             sandbox.spy(response, "status");
             sandbox.spy(response, "json");
 
             const emptyReq: any = { body: {} };
 
             await questionCategoryController.delete("5ed8240576820810650d8f61", emptyReq, response);
-            
+
             expect(response.status).to.have.been.calledWith(204);
         });
 

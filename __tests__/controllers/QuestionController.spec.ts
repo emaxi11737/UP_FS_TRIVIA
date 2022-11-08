@@ -141,9 +141,9 @@ describe("QuestionController", () => {
             const emptyReq: any = { body: {} };
 
             await questionController.delete("633a07b4f30be8780cd00c33", emptyReq, response);
-
+            
             expect(response.status).to.have.been.calledWith(204);
-        });
 
+        });
     });
 });

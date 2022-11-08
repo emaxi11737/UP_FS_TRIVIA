@@ -39,6 +39,7 @@ describe("QuestionController", () => {
     beforeEach(() => {
         fakeQuestionRepository = new FakeQuestionRepository();
         fakeQuestionCategoryRepository = new FakeQuestionCategoryRepository();
+        fakeAnswerRepository = new FakeAnswerRepository();
         answerService = new QuestionService(fakeQuestionRepository, fakeQuestionCategoryRepository, fakeAnswerRepository);
         questionController = new QuestionController(answerService);
 
@@ -133,7 +134,16 @@ describe("QuestionController", () => {
             expect(response.status).to.have.been.calledWith(400);
             expect(response.json).to.have.been.calledWithMatch(ResponseObject.makeErrorResponse("400", new Error("Please, check input params")));
         });
+        it("Should return 204 and a deleted answer", async () => {
+            sandbox.spy(response, "status");
+            sandbox.spy(response, "json");
 
+            const emptyReq: any = { body: {} };
+
+            await questionController.delete("633a07b4f30be8780cd00c33", emptyReq, response);
+
+            expect(response.status).to.have.been.calledWith(204);
+        });
 
     });
 });

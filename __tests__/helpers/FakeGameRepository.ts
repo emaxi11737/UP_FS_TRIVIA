@@ -13,7 +13,7 @@ export default class FakeGameRepository implements IGameRepository {
     },
     {
         id: "5ed8240576820810650d8fm12",
-        userId: "test.test",
+        userId: "5ed8240576820810650d8f61",
         score: 90,
         level: 1,
         createdAt: new Date("2022-08-30T14:29:04.959Z"),
@@ -21,7 +21,7 @@ export default class FakeGameRepository implements IGameRepository {
     },
     {
         id: "5ed8240576820810650d8fn12",
-        userId: "test.test",
+        userId: "5ed8240576820810650d8f61",
         score: 40,
         level: 1,
         createdAt: new Date("2022-08-30T14:29:04.959Z"),

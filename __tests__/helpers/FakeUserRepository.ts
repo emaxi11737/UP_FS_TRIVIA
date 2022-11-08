@@ -5,6 +5,14 @@ import md5 from "md5";
 
 export default class FakeUserRepository implements IUserRepository {
 
+    public updatedUser = {
+        id: "5ed8240576820810650d8f61",
+        username: "test.test",
+        email: "test@test.com",
+        password: md5("1234"),
+        createdAt: new Date("2022-08-30T14:29:04.959Z"),
+        updatedAt: new Date("2022-08-30T14:29:04.959Z"),
+    };
 
     public users = [{
         id: "5ed8240576820810650d8f61",

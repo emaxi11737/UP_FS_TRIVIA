@@ -10,8 +10,7 @@ export default class FakeQuestionCategoryRepository implements IQuestionCategory
         name: "Categoria 1",
         description: "Esta es la categoria 1",
         createdAt: new Date("2022-08-30T14:29:04.959Z"),
-        updatedAt: new Date("2022-08-30T14:29:04.959Z"),
-        deletedAt: new Date("2022-09-30T14:29:04.959Z")
+        updatedAt: new Date("2022-08-30T14:29:04.959Z")
     },
     {
         id: "5ed8240576820810650d8f62",

@@ -29,6 +29,14 @@ describe("UserController", () => {
         createdAt: new Date("2022-08-30T14:29:04.959Z"),
         updatedAt: new Date("2022-08-30T14:29:04.959Z"),
     };
+    let updatedUser = {
+        id: "5ed8240576820810650d8f62",
+        username: "test.test.modified",
+        email: "test@test.com",
+        password: md5("1234"),
+        createdAt: new Date("2022-08-30T14:29:04.959Z"),
+        updatedAt: new Date("2022-08-30T14:29:04.959Z"),
+    };
 
     const response: any = mockResponse();
 
@@ -89,9 +97,9 @@ describe("UserController", () => {
             sandbox.spy(response, "status");
             sandbox.spy(response, "json");
 
-            const emptyReq: any = { body: {} };
+            const request: any = mockRequest(updatedUser);
 
-            await userController.read("", emptyReq, response);
+            await userController.read("", request, response);
 
             expect(response.status).to.have.been.calledWith(400);
             expect(response.json).to.have.been.calledWithMatch(ResponseObject.makeErrorResponse("400", new Error("Please, check input params")));
@@ -105,15 +113,24 @@ describe("UserController", () => {
             sandbox.spy(response, "status");
             sandbox.spy(response, "json");
 
-            const emptyReq: any = { body: {} };
+            const request: any = mockRequest(updatedUser);
 
-            await userController.update("", emptyReq, response);
+            await userController.update("", request, response);
 
             expect(response.status).to.have.been.calledWith(400);
             expect(response.json).to.have.been.calledWithMatch(ResponseObject.makeErrorResponse("400", new Error("Please, check input params")));
         });
+        
+        it("Should return 200 and an unpdated user", async () => {
+            sandbox.spy(response, "status");
+            sandbox.spy(response, "json");
 
+            const emptyReq: any = { body: {} };
 
+            await userController.update("5ed8240576820810650d8f62", emptyReq, response);
+
+            expect(response.status).to.have.been.calledWith(200);
+        });
     });
 
     describe("delete", () => {

@@ -55,17 +55,17 @@ export default class FakeQuestionRepository implements IQuestionRepository {
         return question;
     }
     public async list(pagination: PaginationFilter, filters?: any): Promise<Question[]> {
-        const questionsResults = this.questions.filter(question => question.deletedAt != null)
+        const questionsResults = this.questions.filter(question => question.deletedAt == null)
 
         return questionsResults;
     }
     public async random(filters?: any): Promise<Question[]> {
-        const questionsResults = this.questions.filter(question => question.deletedAt != null)
+        const questionsResults = this.questions.filter(question => question.deletedAt == null)
 
         return questionsResults;
     }
     public async findAll(filters?: any): Promise<Question[]> {
-        const questionsResults = this.questions.filter(question => question.deletedAt != null)
+        const questionsResults = this.questions.filter(question => question.deletedAt == null && question.questionCategoryId == filters.questionCategoryId)
 
         return questionsResults;
     }

@@ -103,4 +103,19 @@ describe("GameController", () => {
 
 
     });
+
+    describe("ranking", () => {
+        it("Should return 200 and a ranking", async () => {
+            sandbox.spy(response, "status");
+            sandbox.spy(response, "json");
+
+            const emptyReq: any = { body: {} };
+
+            await gameController.ranking(emptyReq, response);
+
+            expect(response.status).to.have.been.calledWith(200);
+        });
+
+
+    });
 });

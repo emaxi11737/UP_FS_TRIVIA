@@ -23,12 +23,21 @@ describe("AnswerController", () => {
     let fakeAnswerRepository: FakeAnswerRepository;
     let fakeQuestionRepository: FakeQuestionRepository;
     let answer = {
-        id: "5ed8240576820810650d8fg3",
+        id: "633a07b4f30be8780cd00f16",
         description: "Esta es la respuesta 4",
         questionId: "633a07b4f30be8780cd00c33",
         isRight: true,
         createdAt: new Date("2022-08-30T14:29:04.959Z"),
         updatedAt: new Date("2022-08-30T14:29:04.959Z"),
+    };
+    let modifiedAnswer = {
+        id: "633a07b4f30be8780cd00f13",
+        description: "Esta es la respuesta 1",
+        questionId: "633a07b4f30be8780cd00c33",
+        level: 1,
+        isRight: true,
+        createdAt: new Date("2022-08-30T14:29:04.959Z"),
+        updatedAt: new Date("2022-08-30T14:29:04.959Z")
     };
     const response: any = mockResponse();
 
@@ -84,7 +93,16 @@ describe("AnswerController", () => {
             expect(response.status).to.have.been.calledWith(400);
             expect(response.json).to.have.been.calledWithMatch(ResponseObject.makeErrorResponse("400", new Error("Please, check input params")));
         });
+        it("Should return 200 and an updated answer", async () => {
+            sandbox.spy(response, "status");
+            sandbox.spy(response, "json");
 
+            const request: any = mockRequest(modifiedAnswer);
+
+            await answerController.update("633a07b4f30be8780cd00f13", request, response);
+
+            expect(response.status).to.have.been.calledWith(200);
+        });
     });
 
     describe("read", () => {
@@ -132,6 +150,16 @@ describe("AnswerController", () => {
             expect(response.json).to.have.been.calledWithMatch(ResponseObject.makeErrorResponse("400", new Error("Please, check input params")));
         });
 
+        it("Should return 200 and a deleted answer", async () => {
+            sandbox.spy(response, "status");
+            sandbox.spy(response, "json");
+
+            const emptyReq: any = { body: {} };
+
+            await answerController.delete("633a07b4f30be8780cd00f13", emptyReq, response);
+
+            expect(response.status).to.have.been.calledWith(204);
+        });
 
     });
 

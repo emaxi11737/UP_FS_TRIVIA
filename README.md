@@ -10,7 +10,7 @@ Nuestro servicio backend está desarrollado en NodeJs, utilizando el framework E
 para poder mapear nuestros datos con nuestros objetos de dominio.
 <br> También sumamos una capa de seguridad, siendo JWT la librería que maneja los tokens, tanto para la creación como para la verificación de los mismos.
 <br> Por último, adicionamos middlewares para verificar los tokens y los roles de los usuarios(de tipo admin y user).
-<br> (PRÓXIMAMENTE) Como complemento, agregaremos tests unitarios a los casos de uso, para poder verificar que nuestro código es de calidad.
+<br> Como complemento, agregamos tests unitarios a los casos de uso, para poder verificar que nuestro código es de calidad.
 
 ## Requerimientos funcionales
 

@@ -7,6 +7,6 @@ export default interface IUserDto {
     email: string;
     createdAt: Date;
     updatedAt: Date;
-    deletedAt: Date | null;
+    deletedAt?: Date | null;
     roles?: Role[];
 }

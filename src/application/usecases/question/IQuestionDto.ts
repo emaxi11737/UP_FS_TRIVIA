@@ -8,5 +8,5 @@ export default interface IQuestionDto {
     level: LEVELS;
     createdAt: Date;
     updatedAt: Date;
-    deletedAt: Date | null;
+    deletedAt?: Date | null;
 }

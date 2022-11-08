@@ -119,12 +119,12 @@ export default class AnswerController implements interfaces.Controller {
     @httpGet("/")
     public async list(@request() req: express.Request, @response() res: express.Response) {
         const paginationDto: IPaginationFilterDto = {
-            limit: Number(req.query.limit),
-            page: Number(req.query.page)
+            limit: req?.query?.limit ? Number(req.query.limit) : undefined,
+            page: req?.query?.limit ? Number(req.query.page) : undefined,
         }
 
         const answersFilters: IAnswerFilterDto = {
-            questionId: req.query.questionId ? String(req.query.questionId) : undefined
+            questionId: req?.query?.questionId ? String(req.query.questionId) : undefined
         };
 
         return this.listAnswerUseCase.list(paginationDto, answersFilters)

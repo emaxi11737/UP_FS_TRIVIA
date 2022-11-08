@@ -47,7 +47,7 @@ export default class User {
 
     public createdAt: Date;
     public updatedAt: Date;
-    public deletedAt: Date | null;
+    public deletedAt?: Date | null;
 
     constructor(
         id: string,
@@ -56,7 +56,7 @@ export default class User {
         email: string,
         createdAt: Date,
         updatedAt: Date,
-        deletedAt: Date | null,
+        deletedAt?: Date | null,
         roles?: Role[]
     ) {
         this.id = id;

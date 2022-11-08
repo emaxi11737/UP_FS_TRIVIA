@@ -160,8 +160,8 @@ export default class QuestionController implements interfaces.Controller {
     @httpGet("/random")
     public async random(@request() req: express.Request, @response() res: express.Response) {
         const questionFilters: IRandomQuestionFilterDto = {
-            questionCategoriesId: req.query.questionCategoriesId ? req.query.questionCategoriesId.toString().split(',') : [],
-            level: Number(req.query.level),
+            questionCategoriesId: req?.query?.questionCategoriesId ? req.query.questionCategoriesId.toString().split(',') : [],
+            level:  req?.query?.level ? Number(req.query.level) : undefined, 
         };
 
         return this.randomQuestionUseCase.random(questionFilters)

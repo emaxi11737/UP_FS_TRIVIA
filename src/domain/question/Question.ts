@@ -45,7 +45,7 @@ export default class Question {
 
     public createdAt: Date;
     public updatedAt: Date;
-    public deletedAt: Date | null;
+    public deletedAt?: Date | null;
 
     constructor(
         id: string,
@@ -55,7 +55,7 @@ export default class Question {
         level: LEVELS,
         createdAt: Date,
         updatedAt: Date,
-        deletedAt: Date | null
+        deletedAt?: Date | null
     ) {
         this.id = id;
         this.name = name;

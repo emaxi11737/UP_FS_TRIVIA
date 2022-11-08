@@ -29,6 +29,7 @@ export default class SignInUseCase implements ISignInUseCase {
         if (errors.length > 0) throw Error("Please, check input params");
 
         const user = await this.userRepository.readByEmail(userEntity.email);
+        if (!user) throw Error("User not found");
         if (user.password !== userEntity.password) throw Error("Invalid password");
 
         return await this.tokenRepository.create(user);

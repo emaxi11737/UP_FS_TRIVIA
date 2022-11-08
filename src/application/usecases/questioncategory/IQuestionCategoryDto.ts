@@ -4,5 +4,5 @@ export default interface IQuestionCategoryDto {
     description: string;
     createdAt: Date;
     updatedAt: Date;
-    deletedAt: Date | null;
+    deletedAt?: Date | null;
 }

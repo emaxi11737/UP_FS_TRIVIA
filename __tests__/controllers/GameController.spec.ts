@@ -5,10 +5,10 @@ import "mocha";
 import { it } from "mocha";
 import sinon, { SinonSandbox } from "sinon";
 import sinonChai from "sinon-chai";
-import AuthService from "../../src/configuration/usecases/AuthService";
-import AuthController from "../../src/entrypoint/controllers/AuthController";
+import GameService from "../../src/configuration/usecases/GameService";
+import GameController from "../../src/entrypoint/controllers/GameController";
+import FakeGameRepository from "../helpers/FakeGameRepository";
 import FakeUserRepository from "../helpers/FakeUserRepository";
-import FakeTokenRepository from "../helpers/FakeTokenRepository";
 import { mockRequest, mockResponse } from "../helpers/helpers";
 import ResponseObject from "../../src/helpers/ResponseObject";
 
@@ -16,28 +16,28 @@ const { expect } = chai;
 
 chai.use(sinonChai);
 
-describe("AuthController", () => {
-    let authController: AuthController;
+describe("GameController", () => {
+    let gameController: GameController;
     let sandbox: SinonSandbox;
-    let authService: AuthService;
+    let gameService: GameService;
+    let fakeGameRepository: FakeGameRepository;
     let fakeUserRepository: FakeUserRepository;
-    let fakeTokenRepository: FakeTokenRepository
-    let user = {
-        id: "5ed8240576820810650d8f62",
-        username: "damian.sciutto",
-        email: "damian.sciutto@gmail.com",
-        password: "123456",
+    let game = {
+        id: "5ed8240576820810650d8g32",
+        userId: "5ed8240576820810650d8f61",
+        score: 100,
+        level: 1,
         createdAt: new Date("2022-08-30T14:29:04.959Z"),
-        updatedAt: new Date("2022-08-30T14:29:04.959Z")
-    };
+        updatedAt: new Date("2022-08-30T14:29:04.959Z"),
+    }
 
     const response: any = mockResponse();
 
     beforeEach(() => {
+        fakeGameRepository = new FakeGameRepository();
         fakeUserRepository = new FakeUserRepository();
-        fakeTokenRepository = new FakeTokenRepository();
-        authService = new AuthService(fakeUserRepository, fakeTokenRepository);
-        authController = new AuthController(authService);
+        gameService = new GameService(fakeGameRepository, fakeUserRepository);
+        gameController = new GameController(gameService);
 
         sandbox = sinon.createSandbox();
     });
@@ -46,57 +46,76 @@ describe("AuthController", () => {
         sandbox.restore();
     });
 
-    describe("sign", () => {
+    describe("create", () => {
         it("Should return 400 on empty request", async () => {
             sandbox.spy(response, "status");
             sandbox.spy(response, "json");
 
             const emptyReq: any = { body: {} };
 
-            await authController.signin(emptyReq, response);
+            await gameController.create(emptyReq, response);
 
             expect(response.status).to.have.been.calledWith(400);
             expect(response.json).to.have.been.calledWithMatch(ResponseObject.makeErrorResponse("400", new Error("Please, check input params")));
         });
 
-        it("Should return 200 and a user", async () => {
+        it("Should return 201 and a answer", async () => {
             sandbox.spy(response, "status");
             sandbox.spy(response, "json");
 
-            const request: any = mockRequest(user);
+            const request: any = mockRequest(game);
 
-            await authController.signin(request, response);
+            await gameController.create(request, response);
+
+            expect(response.status).to.have.been.calledWith(201);
+            
+        });
+    });
+
+    describe("update", () => {
+        it("Should return 400 on empty request", async () => {
+            sandbox.spy(response, "status");
+            sandbox.spy(response, "json");
+
+            const emptyReq: any = { body: {} };
+
+            await gameController.update("", emptyReq, response);
+
+            expect(response.status).to.have.been.calledWith(400);
+            expect(response.json).to.have.been.calledWithMatch(ResponseObject.makeErrorResponse("400", new Error("Please, check input params")));
+        });
+
+
+    });
+
+    describe("read", () => {
+        it("Should return 400 on empty request", async () => {
+            sandbox.spy(response, "status");
+            sandbox.spy(response, "json");
+
+            const emptyReq: any = { body: {} };
+
+            await gameController.read("", emptyReq, response);
+
+            expect(response.status).to.have.been.calledWith(400);
+            expect(response.json).to.have.been.calledWithMatch(ResponseObject.makeErrorResponse("400", new Error("Please, check input params")));
+        });
+
+
+    });
+
+    describe("ranking", () => {
+        it("Should return 200 and a ranking", async () => {
+            sandbox.spy(response, "status");
+            sandbox.spy(response, "json");
+
+            const emptyReq: any = { body: {} };
+
+            await gameController.ranking(emptyReq, response);
 
             expect(response.status).to.have.been.calledWith(200);
         });
 
-        it("Should return 400 on user not found", async () => {
-            sandbox.spy(response, "status");
-            sandbox.spy(response, "json");
-
-            user.email = "dami@fake.com";
-
-            const request: any = mockRequest(user);
-
-            await authController.signin(request, response);
-
-            expect(response.status).to.have.been.calledWith(400);
-            expect(response.json).to.have.been.calledWithMatch(ResponseObject.makeErrorResponse("400", new Error("User not found")));
-        });
 
     });
-    describe("refresh", () => {
-        it("Should return 400 on empty request", async () => {
-            sandbox.spy(response, "status");
-            sandbox.spy(response, "json");
-
-            const emptyReq: any = { body: {} };
-
-            await authController.refresh(emptyReq, response);
-
-            expect(response.status).to.have.been.calledWith(400);
-            expect(response.json).to.have.been.calledWithMatch(ResponseObject.makeErrorResponse("400", new Error("Please, check input params")));
-        });
-    });
-
 });
